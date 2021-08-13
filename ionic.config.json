@@ -1,7 +1,0 @@
-{
-  "name": "LoveAlarm",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
