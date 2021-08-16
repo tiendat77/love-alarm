@@ -1,0 +1,39 @@
+ion-tab-bar {
+  height: 3rem;
+  border: unset;
+}
+
+ion-tab-button ion-icon {
+  background-size:contain;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+ion-tab-button.tab-selected ion-icon{
+  // color: white;
+  padding-bottom: 8px;
+}
+
+ion-tab-button.profile > ion-icon {
+  background-image: url(/assets/icon/profile-outline.svg);
+}
+
+ion-tab-button.tab-selected.profile > ion-icon {
+  background-image: url(/assets/icon/profile-filled.svg);
+}
+
+ion-tab-button.history > ion-icon {
+  background-image: url(/assets/icon/search-outline.svg);
+}
+
+ion-tab-button.tab-selected.history > ion-icon {
+  background-image: url(/assets/icon/search-filled.svg);
+}
+
+ion-tab-button.home > ion-icon {
+  background-image: url(/assets/icon/heart-outline.svg);
+}
+
+ion-tab-button.tab-selected.home > ion-icon {
+  background-image: url(/assets/icon/heart-filled.svg);
+}
