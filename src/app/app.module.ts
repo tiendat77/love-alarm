@@ -2,12 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
+import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
-import { CommonModule } from './common/common.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { CommonModule } from './common/common.module';
+import { ComponentsModule } from './components/components.module';
 
 @NgModule({
   declarations: [
@@ -16,11 +18,13 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     CommonModule,
+    ComponentsModule,
     AppRoutingModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
   ],
   providers: [
+    NativeAudio,
     {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy

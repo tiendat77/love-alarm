@@ -1,4 +1,6 @@
 <ion-app [class.dark-theme]="dark">
+  <la-splash-screen></la-splash-screen>
+
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" class="menu">
       <ion-content>
@@ -11,6 +13,10 @@
             <ion-item>
               <ion-icon slot="start" name="calendar"></ion-icon>
               <ion-label>Calendar</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-button (click)="hihi()">hihi</ion-button>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>

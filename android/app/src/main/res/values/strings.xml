@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Love Alarm</string>
-    <string name="title_activity_main">Love Alarm</string>
-    <string name="package_name">com.dat_huynh.love_alarm</string>
-    <string name="custom_url_scheme">com.dat_huynh.love_alarm</string>
-</resources>

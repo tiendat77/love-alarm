@@ -6,9 +6,12 @@ import { StatusBar } from '@capacitor/status-bar';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 /** Ionic */
-import { NativeAudio } from '@ionic-native/native-audio';
 import { Storage } from '@ionic/storage-angular';
 import { MenuController, Platform } from '@ionic/angular';
+import { NativeAudio } from '@ionic-native/native-audio/ngx';
+
+/** Services */
+import { SplashScreenService } from './services/splash-screen.service';
 
 @Component({
   selector: 'app-root',
@@ -21,20 +24,24 @@ export class AppComponent {
     private storage: Storage,
     private platform: Platform,
     private menu: MenuController,
+    private audio: NativeAudio,
+    private splash: SplashScreenService
   ) {
-    this.welcome();
     this.initialize();
   }
 
   private initialize() {
+    SplashScreen.hide();
+
     this.platform.ready().then(() => {
-      SplashScreen.hide();
+      this.welcome();
+      this.splash.hide(3);
     });
   }
 
   private welcome() {
-    NativeAudio.preloadSimple('welcome','/assets/sound/welcome.mp3');
-    NativeAudio.play('welcome');
+    this.audio.preloadSimple('welcome','/assets/sound/welcome.mp3');
+    this.audio.play('welcome').then(() => console.log('done'));
   }
 
 }
