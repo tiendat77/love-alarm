@@ -15,7 +15,7 @@ export class SplashScreenService {
     element.classList.remove('hidden');
   }
 
-  hide(timeout = 3) {
+  hide(timeout = 5) {
     setTimeout(() => {
       const element = this.document.getElementById('splash-screen');
       element.classList.add('hidden');
