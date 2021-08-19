@@ -11,6 +11,7 @@ interface Sounds {
 })
 export class AudioService {
 
+  private isNative = false;
   private sounds: Sounds = {};
   private player: HTMLAudioElement = new Audio();
 
@@ -28,12 +29,16 @@ export class AudioService {
      */
     this.player.muted = false;
     this.player.autoplay = true;
+
+    if (this.platform.is('hybrid')) {
+      this.isNative = true;
+    }
   }
 
   preload(key: string, location: string) {
     this.sounds[key] = location;
 
-    if (this.platform.is('hybrid')) {
+    if (this.isNative) {
       return this.audio.preloadSimple(key, location);
     }
 
@@ -47,7 +52,7 @@ export class AudioService {
       return;
     }
 
-    if (this.platform.is('hybrid')) {
+    if (this.isNative) {
       this.audio.play(key);
 
     } else {
