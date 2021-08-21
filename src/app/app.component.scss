@@ -1,0 +1,44 @@
+.menu {
+  .user-info {
+    width: 100%;
+    height: 8rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .user-name, .user-profile {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .user-name {
+    color: #68d1f3;
+    line-height: 1.5;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .user-profile {
+    color: #b3b3b3;
+    font-weight: 300;
+  }
+
+  .avatar {
+    flex: 1 1 100%;
+    max-width: 4rem;
+    width: 4rem;
+    height: 4rem;
+    margin-right: 1rem;
+    border-radius: 50%;
+    border: 1px solid #e7e7e7;
+  }
+
+  .user {
+    flex: 1 1 100%;
+    overflow: hidden;
+  }
+}

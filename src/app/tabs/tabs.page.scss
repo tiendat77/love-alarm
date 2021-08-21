@@ -3,6 +3,22 @@ ion-tab-bar {
   border: unset;
 }
 
+ion-tabs {
+  background-image: linear-gradient(
+    to bottom,
+    #f4beef,
+    #f5cdef,
+    #efefef,
+    #bdd9ed,
+    #a3b9ed
+  );
+}
+
+ion-tab-bar {
+  --color: #fff;
+  --background: transparent;
+}
+
 ion-tab-button ion-icon {
   background-size:contain;
   background-position:center;

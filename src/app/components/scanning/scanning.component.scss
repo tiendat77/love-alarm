@@ -1,0 +1,64 @@
+.spinner {
+  width: 17rem;
+  height: 17rem;
+  position: relative;
+}
+
+.circle {
+  position: absolute;
+
+  border-radius: 50%;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: #ffffffcf;
+  background-color: transparent;
+
+  animation-name: spinner;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.circle.primary {
+  top: 0;
+  left: 0;
+  width: 17rem;
+  height: 17rem;
+  animation-duration: 2s;
+}
+
+.circle.secondary {
+  top: 1rem;
+  left: 1rem;
+  width: 15rem;
+  height: 15rem;
+  animation-duration: 3.5s;
+}
+
+.circle.tertiary {
+  top: 2rem;
+  left: 2rem;
+  width: 13rem;
+  height: 13rem;
+  animation-duration: 1.75s;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotator {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

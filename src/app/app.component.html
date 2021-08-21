@@ -2,17 +2,35 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" class="menu">
       <ion-content>
-        <ion-list lines="none">
-          <ion-list-header>
-            Navigate
-          </ion-list-header>
+        <ion-item>
+          <div class="user-info">
+            <div class="avatar">
+              <img src="" alt="avatar">
+            </div>
+            <div class="user">
+              <div class="user-name">Tien Dat Huynh</div>
+              <div class="user-profile">My Profile / My badge</div>
+            </div>
+          </div>
+        </ion-item>
 
-          <ion-menu-toggle autoHide="false">
-            <ion-item>
-              <ion-icon slot="start" name="calendar"></ion-icon>
-              <ion-label>Calendar</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+        <ion-list lines="none">
+          <ion-item>
+            <ion-icon slot="start" name="settings-outline"></ion-icon>
+            <ion-label>Settings</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon slot="start" name="contrast-outline"></ion-icon>
+            <ion-label>Themes</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon slot="start" name="share-social-outline"></ion-icon>
+            <ion-label>Invite Friends</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            <ion-label>Version</ion-label>
+          </ion-item>
         </ion-list>
       </ion-content>
     </ion-menu>

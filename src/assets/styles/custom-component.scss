@@ -2,3 +2,7 @@ ion-menu::part(container) {
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
 }
+
+ion-content::part(background) {
+  background: transparent;
+}
