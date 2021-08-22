@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
+import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -25,6 +26,7 @@ import { ComponentsModule } from './components/components.module';
   ],
   providers: [
     NativeAudio,
+    AndroidFullScreen,
     {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy

@@ -2,12 +2,12 @@
 import { Component } from '@angular/core';
 
 /** Capacitor */
-import { StatusBar } from '@capacitor/status-bar';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 /** Ionic */
 import { Storage } from '@ionic/storage-angular';
 import { MenuController, Platform } from '@ionic/angular';
+import { AndroidFullScreen, AndroidSystemUiFlags } from '@ionic-native/android-full-screen/ngx';
 
 /** Services */
 import { AudioService } from './services/audio.service';
@@ -24,6 +24,8 @@ export class AppComponent {
     private storage: Storage,
     private platform: Platform,
     private menu: MenuController,
+    private fullscreen: AndroidFullScreen,
+
     private audio: AudioService,
     private splash: SplashScreenService,
   ) {
@@ -35,7 +37,11 @@ export class AppComponent {
 
     this.platform.ready().then(() => {
       this.welcome();
-      this.splash.hide(0);
+      this.splash.hide();
+      this.fullscreen.setSystemUiVisibility(
+        AndroidSystemUiFlags.Fullscreen |
+        AndroidSystemUiFlags.ImmersiveSticky
+      );
     });
   }
 

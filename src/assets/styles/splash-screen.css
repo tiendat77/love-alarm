@@ -55,7 +55,7 @@
   height: 13rem;
 
   opacity: 0.6;
-  animation: beating 2s ease-in-out 1s infinite;
+  animation: splash-beating 2s ease-in-out 1s infinite;
 }
 
 .logo .tertiary-ring {
@@ -67,7 +67,7 @@
   height: 9rem;
 
   opacity: 0.8;
-  animation: beating 2s ease-in-out 0.8s infinite;
+  animation: splash-beating 2s ease-in-out 0.8s infinite;
 }
 
 .logo .heart {
