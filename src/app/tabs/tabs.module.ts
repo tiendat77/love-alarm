@@ -8,7 +8,7 @@ import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { HomePageModule } from '../pages/home/home.module';
 import { ProfilePageModule } from '../pages/profile/profile.module';
-import { HistoryPageModule } from '../pages/history/history.module';
+import { DiscoverPageModule } from '../pages/discover/discover.module';
 
 @NgModule({
   imports: [
@@ -17,7 +17,7 @@ import { HistoryPageModule } from '../pages/history/history.module';
     IonicModule,
     HomePageModule,
     ProfilePageModule,
-    HistoryPageModule,
+    DiscoverPageModule,
     TabsPageRoutingModule
   ],
   declarations: [

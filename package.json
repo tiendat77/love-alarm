@@ -27,6 +27,7 @@
     "@capacitor/ios": "^3.1.2",
     "@capacitor/keyboard": "1.0.2",
     "@capacitor/splash-screen": "^1.1.0",
+    "@capacitor/status-bar": "^1.0.2",
     "@ionic-native/android-full-screen": "^5.36.0",
     "@ionic-native/core": "^5.35.0",
     "@ionic-native/native-audio": "^5.35.0",

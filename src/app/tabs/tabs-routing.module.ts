@@ -18,8 +18,8 @@ const routes: Routes = [
         loadChildren: () => import('../pages/home/home.module').then( m => m.HomePageModule)
       },
       {
-        path: 'history',
-        loadChildren: () => import('../pages/history/history.module').then( m => m.HistoryPageModule)
+        path: 'discover',
+        loadChildren: () => import('../pages/discover/discover.module').then( m => m.DiscoverPageModule)
       },
       {
         path: 'profile',
