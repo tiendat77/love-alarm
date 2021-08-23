@@ -37,7 +37,7 @@ export class AppComponent {
 
     this.platform.ready().then(() => {
       this.welcome();
-      this.splash.hide();
+      this.splash.hide(0);
       this.fullscreen.setSystemUiVisibility(
         AndroidSystemUiFlags.Fullscreen |
         AndroidSystemUiFlags.ImmersiveSticky

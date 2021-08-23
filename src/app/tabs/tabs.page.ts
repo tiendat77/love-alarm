@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./tabs.page.scss'],
 })
 export class TabsPage {
+
+  isHome: boolean;
+
   constructor() { }
+
+  navigated({tab}) {
+    this.isHome = tab === 'home';
+  }
+
 }
