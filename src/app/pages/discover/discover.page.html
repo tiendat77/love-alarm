@@ -1,16 +1,31 @@
 <ion-content>
   <div class="container center">
     <div class="scanner">
-
+      <div class="ripple"></div>
+      <div class="ripple"></div>
+      <div class="ripple"></div>
+      <div class="point">
+        <img width="100%" height="100%" src="assets/image/search-people.png">
+      </div>
     </div>
 
-    <div>
-      <ion-button>
-        Scan QR Code
+    <h1>
+      Searching for devices nearby...
+    </h1>
+
+    <div class="break"></div>
+
+    <div style="width: 80%;">
+      <ion-button expand="block" size="large"
+                  style="margin-bottom: 1.5rem;"
+                  (click)="scan()">
+        <ion-icon slot="start" name="scan-qr-code"></ion-icon>
+        <ion-label>Scan QR Code</ion-label>
       </ion-button>
 
-      <ion-button>
-        My QR Code
+      <ion-button expand="block" size="large" (click)="qrcode()">
+        <ion-icon slot="start" name="just-qr-code"></ion-icon>
+        <ion-label>My QR Code</ion-label>
       </ion-button>
     </div>
   </div>

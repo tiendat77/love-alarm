@@ -6,3 +6,11 @@ ion-menu::part(container) {
 ion-content::part(background) {
   background: transparent;
 }
+
+ion-button {
+  text-transform: none;
+}
+
+ion-label {
+  font-family: 'Montserrat', sans-serif !important;
+}

@@ -1,0 +1,34 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Your QR Code</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div class="container">
+    <img #qrcode src="" alt="" style="margin-bottom: 1rem;">
+
+    <h1 style="margin-bottom: 1rem;">
+      Share this QR Code with your friend
+    </h1>
+
+    <div style="margin-top: 1rem; width: 80%;">
+      <ion-button expand="block" size="large"
+                  style="margin-bottom: 1.5rem;"
+                  (click)="save()">
+        <ion-icon slot="start" name="download-outline"></ion-icon>
+        Save
+      </ion-button>
+
+      <ion-button expand="block" size="large" (click)="share()">
+        <ion-icon slot="start" name="share-social-outline"></ion-icon>
+        Share
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
