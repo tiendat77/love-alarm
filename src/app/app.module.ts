@@ -22,8 +22,8 @@ import { ComponentsModule } from './components/components.module';
     CommonModule,
     ComponentsModule,
     AppRoutingModule,
-    IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
+    IonicModule.forRoot({_forceStatusbarPadding: true}),
   ],
   providers: [
     NativeAudio,

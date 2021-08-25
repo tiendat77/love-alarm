@@ -12,11 +12,10 @@ export class DiscoverPage implements OnInit {
 
   constructor(
     private modal: ModalController,
-    private barcode: BarcodeScanner,
+    private barcode: BarcodeScanner
   ) { }
 
   ngOnInit() {
-
   }
 
   scan() {

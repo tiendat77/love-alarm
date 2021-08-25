@@ -5,10 +5,10 @@
         <ion-item>
           <div class="user-info">
             <div class="avatar">
-              <img src="" alt="avatar">
+              <img [src]="user.info.avatar" alt="avatar">
             </div>
             <div class="user">
-              <div class="user-name">Tien Dat Huynh</div>
+              <div class="user-name">{{ user.info.name }}</div>
               <div class="user-profile">My Profile / My badge</div>
             </div>
           </div>

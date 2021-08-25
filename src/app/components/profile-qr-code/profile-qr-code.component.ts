@@ -28,24 +28,22 @@ export class ProfileQrCodeComponent implements AfterViewInit {
       width: 500,
       download: false,
       logo: {
-        src: 'https://avatars.githubusercontent.com/u/37741900?v=4'
+        src: this.user.info.avatar
       }
     }).toImage();
   }
 
   save() {
     const image: string = this.qrcode.nativeElement?.src;
-    const data = image.split(',')[1];
 
     Filesystem.writeFile({
-      data: data,
-      path: 'love_alarm_' + this.user.info.id + '.png',
-      directory: Directory.Documents
-    })
-    .then(() => {
+      data: image,
+      path: 'LoveAlarm/love_alarm_' + this.user.info.id + '.png',
+      recursive: true,
+      directory: Directory.ExternalStorage,
+    }).then(() => {
       this.toast.show('Saved your QR Code');
-    })
-    .catch(() => {
+    }).catch(() => {
       this.toast.show('Error occurred while saving your QR Code');
     });
   }
