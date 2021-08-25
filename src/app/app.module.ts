@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from './common/common.module';
 import { ComponentsModule } from './components/components.module';
+import { DirectivesModule } from './directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ComponentsModule } from './components/components.module';
     BrowserModule,
     CommonModule,
     ComponentsModule,
+    DirectivesModule,
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot({_forceStatusbarPadding: true}),

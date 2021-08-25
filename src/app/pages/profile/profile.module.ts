@@ -6,11 +6,14 @@ import { IonicModule } from '@ionic/angular';
 import { ProfilePage } from './profile.page';
 import { ProfilePageRoutingModule } from './profile-routing.module';
 
+import { DirectivesModule } from '../../directives/directives.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    DirectivesModule,
     ProfilePageRoutingModule
   ],
   declarations: [ProfilePage]
