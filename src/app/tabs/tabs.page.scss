@@ -1,0 +1,76 @@
+ion-tabs.special {
+  background-image: linear-gradient(
+    to bottom,
+    #f4beef,
+    #f5cdef,
+    #efefef,
+    #bdd9ed,
+    #a3b9ed
+  );
+
+  ion-tab-bar {
+    --color: #fff;
+  }
+
+  ion-tab-button.profile > ion-icon {
+    filter: none;
+    background-image: url(/assets/icon/profile-white-outline.svg);
+  }
+
+  ion-tab-button.discover > ion-icon {
+    filter: none;
+    background-image: url(/assets/icon/search-white-outline.svg);
+  }
+
+  ion-tab-button.home > ion-icon {
+    filter: none;
+    background-image: url(/assets/icon/heart-white-outline.svg);
+  }
+
+  ion-tab-button.tab-selected.home > ion-icon {
+    filter: none;
+    background-image: url(/assets/icon/heart-white-filled.svg);
+  }
+}
+
+ion-tab-bar {
+  height: 3rem;
+  border: unset;
+  --background: transparent;
+}
+
+ion-tab-button ion-icon {
+  background-size:contain;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+ion-tab-button.profile > ion-icon {
+  filter: contrast(0.1);
+  background-image: url(/assets/icon/profile-outline.svg);
+}
+
+ion-tab-button.tab-selected.profile > ion-icon {
+  filter: none;
+  background-image: url(/assets/icon/profile-filled.svg);
+}
+
+ion-tab-button.discover > ion-icon {
+  filter: contrast(0.1);
+  background-image: url(/assets/icon/search-outline.svg);
+}
+
+ion-tab-button.tab-selected.discover > ion-icon {
+  filter: none;
+  background-image: url(/assets/icon/search-filled.svg);
+}
+
+ion-tab-button.home > ion-icon {
+  filter: contrast(0.1);
+  background-image: url(/assets/icon/heart-outline.svg);
+}
+
+ion-tab-button.tab-selected.home > ion-icon {
+  filter: none;
+  background-image: url(/assets/icon/heart-filled.svg);
+}

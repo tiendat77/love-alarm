@@ -1,0 +1,15 @@
+<ion-tabs [class.special]="isHome" (ionTabsDidChange)="navigated($event)">
+  <ion-tab-bar slot="bottom" translucent>
+    <ion-tab-button tab="discover" class="discover">
+      <ion-icon></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="home" class="home">
+      <ion-icon></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="profile" class="profile">
+      <ion-icon></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
