@@ -29,6 +29,19 @@
   margin-bottom: 1em;
 }
 
+.form-message {
+  font-size: 16px;
+  text-align: center;
+  font-weight: normal;
+  color: var(--color-cloud);
+
+  margin-bottom: 1rem;
+}
+
+.form-message.error {
+  color: #ff3d3d;
+}
+
 .forgot-password {
   width: 100%;
   text-align: right;

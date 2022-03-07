@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SupabaseService } from '../../../services';
 
 @Component({
   selector: 'app-auth',
@@ -7,9 +8,14 @@ import { Component } from '@angular/core';
 })
 export class AuthPage {
 
-  constructor() { }
+  constructor(
+    private readonly supabase: SupabaseService,
+  ) { }
 
-  navigateSignInWithGoogle() {
+  async navigateSignInWithGoogle() {
+    await this.supabase.signInWithProvider('google').catch(error => {
+      console.error('Error: ', error.message);
+    });
   }
 
 }

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { UserService } from './user.service';
 import { environment } from '../../environments/environment';
 
 import {
-  AuthChangeEvent,
   createClient,
   Provider,
   Session,
@@ -13,66 +14,79 @@ import {
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
 
-  private supabaseClient: SupabaseClient;
   token: string | undefined;
+  private client: SupabaseClient;
 
-  constructor(private readonly router: Router) {
-    this.supabaseClient = createClient(
+  constructor(
+    private readonly router: Router,
+    private readonly user: UserService,
+  ) {
+    this.client = createClient(
       environment.supabaseUrl,
       environment.supabaseKey
     );
   }
 
   init() {
-    this.supabaseClient.auth.onAuthStateChange((event, session) => {
-      // console.log('Auth state changed', event, session);
+    this.client.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed', event, session);
       if (session?.user && event === 'SIGNED_IN') {
-        this.router.navigate(['/']);
+        this.onSignedIn(session);
+      }
+
+      if (event === 'SIGNED_OUT') {
+        this.onSignedOut();
       }
     });
   }
 
+  onSignedIn(session: Session) {
+    this.token = session?.access_token;
+    this.user.set(session.user?.id, session?.user?.user_metadata);
+    this.router.navigate(['/']);
+  }
+
+  onSignedOut() {
+    this.router.navigate(['/auth/sign-in']);
+  }
+
   getSession(): Session | null {
-    return this.supabaseClient.auth.session();
+    return this.client.auth.session();
   }
 
   refreshSession() {
-    return this.supabaseClient.auth.refreshSession();
+    return this.client.auth.refreshSession();
   }
 
-  signUp(email: string, password: string) {
-    return this.supabaseClient.auth.signUp({ email, password });
+  signUp(email: string, password: string, name: string) {
+    return this.client.auth.signUp({ email, password }, {data: { name }});
   }
 
   signIn(email: string, password: string) {
-    return this.supabaseClient.auth.signIn({ email, password });
+    return this.client.auth.signIn({ email, password });
   }
 
   signInWithProvider(provider: Provider) {
-    return this.supabaseClient.auth.signIn({ provider });
+    return this.client.auth.signIn({ provider });
   }
 
   signOut() {
-    return this.supabaseClient.auth.signOut();
-  }
-
-  authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {
-    return this.supabaseClient.auth.onAuthStateChange(callback);
+    return this.client.auth.signOut();
   }
 
   resetPassword(email: string) {
-    return this.supabaseClient.auth.api.resetPasswordForEmail(email);
+    return this.client.auth.api.resetPasswordForEmail(email);
   }
 
   changePassword(newPassword: string) {
     const session = this.getSession();
-    return this.supabaseClient.auth.api.updateUser(session.access_token as string, {
+    return this.client.auth.api.updateUser(session.access_token as string, {
       password: newPassword,
     });
   }
 
   fetchLog() {
-    return this.supabaseClient
+    return this.client
       .from('laso')
       .select('*')
       .order('id', { ascending: false });
@@ -80,7 +94,7 @@ export class SupabaseService {
 
   addLog(log) {
     const userId = this.getSession()?.user?.id as string;
-    return this.supabaseClient
+    return this.client
       .from('laso')
       .insert({
         data: log,
@@ -90,7 +104,7 @@ export class SupabaseService {
   }
 
   removeLog(id: string) {
-    return this.supabaseClient
+    return this.client
       .from('laso')
       .delete()
       .eq('id', id);
@@ -98,7 +112,7 @@ export class SupabaseService {
 
   removeAllLog() {
     const userId = this.getSession()?.user?.id as string;
-    return this.supabaseClient
+    return this.client
       .from('laso')
       .delete()
       .match({ user_id: userId })

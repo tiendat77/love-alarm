@@ -21,8 +21,13 @@
   <div class="page-content">
     <img avatar
       style="width: 150x;height:150px"
+      referrerpolicy="no-referrer"
       [name]="user.name"
       [src]="user.avatar"
     >
+
+    <button raised-button (click)="supabase.signOut()">
+      Log out
+    </button>
   </div>
 </div>
