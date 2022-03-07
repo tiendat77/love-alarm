@@ -1,6 +1,15 @@
 .page-content {
   padding-bottom: 16px;
   justify-content: space-between;
+
+  button {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  button:not(:last-child) {
+    margin-bottom: 1rem;
+  }
 }
 
 .center {
@@ -21,15 +30,6 @@
   text-align: center;
   font-weight: normal;
   color: var(--color-cloud);
-}
-
-button {
-  width: 100%;
-  justify-content: space-between;
-}
-
-button:not(:last-child) {
-  margin-bottom: 1rem;
 }
 
 .scanner {
