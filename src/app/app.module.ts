@@ -9,7 +9,10 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
+
+import { Drivers } from '@ionic/storage';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 
 /* Modules */
 import { TranslateModule } from '@ngx-translate/core';
@@ -34,9 +37,18 @@ import { environment } from '../environments/environment';
     ComponentsModule,
     AppRoutingModule,
 
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot({
+      driverOrder: [
+        CordovaSQLiteDriver._driver,
+        Drivers.IndexedDB,
+        Drivers.LocalStorage
+      ]
+    }),
+
     IonicModule.forRoot({_forceStatusbarPadding: true}),
+
     TranslateModule.forRoot({loader: TranslateProvider}),
+
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
