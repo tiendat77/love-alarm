@@ -9,6 +9,8 @@ import { UserService } from '../../services';
 })
 export class MenuComponent {
 
-  constructor(public user: UserService) {}
+  constructor(
+    public user: UserService
+  ) {}
 
 }
