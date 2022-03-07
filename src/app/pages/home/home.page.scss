@@ -1,0 +1,92 @@
+.page {
+  color: #fff;
+  background: transparent;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.banner {
+  max-width: 80%;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.scanner {
+  height: 300px;
+  max-height: 350px;
+  width: auto;
+  aspect-ratio: 1 / 1;
+  position: relative;
+
+  text-align: center;
+  overflow: hidden;
+
+  .circle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: rotate 3s linear infinite;
+  }
+
+  .heart {
+    fill: #fff;
+    width: 3.5rem;
+    height: 3.5rem;
+    animation: beating 1s linear infinite;
+  }
+}
+
+.loves {
+  margin-top: 4rem;
+  font-size: 3.5rem;
+  font-weight: normal;
+  font-family: OpenSansCondensed;
+}
+
+h2 {
+  margin: 0;
+  margin-bottom: 0.25rem;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes beating {
+  0% {
+    transform: scale(0.8);
+  }
+
+  5% {
+    transform: scale(0.9);
+  }
+
+  10% {
+    transform: scale(0.8);
+  }
+
+  15% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.8);
+  }
+
+  100% {
+    transform: scale(0.8);
+  }
+}

@@ -1,0 +1,9 @@
+<svg version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="256" cy="256" r="230" fill="none" stroke="#f874b7" stroke-width="30"/>
+  <circle cx="256" cy="256" r="160" fill="none" stroke="#f874b7" stroke-width="30"/>
+  <circle cx="256" cy="256" r="90" fill="none" stroke="#f874b7" stroke-width="30"/>
+  <g class="heart">
+    <path d="m276 214c-8.3 0-16 4.7-19 12-4-7.7-11-12-19-12-13 0-23 12-23 26 0 34 42 58 42 58s42-24 42-58c0-13-10-26-23-26z" fill="#f874b7"/>
+    <path d="m240 214c-.99-.14-2-.19-3-.19-13 0-23 12-23 26 0 33 42 58 42 58l3-1.8c-9.6-6.1-40-28-40-55 1-16 6.6-25 20-27z" fill="#f365ac"/>
+  </g>
+</svg>

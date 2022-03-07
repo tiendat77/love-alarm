@@ -1,0 +1,11 @@
+/* Custom Ionic components */
+ion-menu::part(container) {
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  background-color: var(--page-background-color);
+}
+
+/* Swiper Js */
+.swiper-slide {
+  display: block;
+}

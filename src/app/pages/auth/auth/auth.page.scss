@@ -1,0 +1,83 @@
+.page-content {
+  padding: 0 24px;
+  justify-content: space-between;
+}
+
+.top-content,
+.bottom-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.top-content {
+  margin-top: 1rem;
+}
+
+.bottom-content {
+  padding-bottom: 24px;
+}
+
+.love-alarm {
+  font-size: 54px;
+  font-family: "Baloo2";
+  font-style: normal;
+  font-weight: bold;
+  line-height: 60px;
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+
+  background: linear-gradient(
+    to right,
+    #f858a5 0.4%,
+    #fb74b5 60%,
+    rgba(255, 101, 240, 0.61) 126%
+  );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.love-alarm-logo {
+  width: 150px;
+  height: 150px;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+
+  .heart {
+    opacity: 1;
+    transform-origin: center;
+    animation: beating 2s ease-in-out infinite;
+  }
+}
+
+.text {
+  margin: 0;
+  font-size: 18px;
+  text-align: center;
+  font-weight: normal;
+  color: var(--color-cloud);
+}
+
+.sign-in-options {
+  margin-top: 2.5rem;
+
+  button {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  button:not(:last-child) {
+    margin-bottom: 1em;
+  }
+}
+
+.sign-up {
+  font-size: 16px;
+  padding: 12px 10px;
+}

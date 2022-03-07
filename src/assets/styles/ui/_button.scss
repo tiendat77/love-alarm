@@ -1,0 +1,94 @@
+button[icon-button] {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  background-color: transparent;
+
+  margin: 0;
+  padding: 0;
+
+  flex-shrink: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: inherit;
+  user-select: none;
+
+  white-space: nowrap;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: baseline;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    display: inline-block;
+  }
+
+  &:active {
+    opacity: 0.7;
+    transform: scale(0.9);
+  }
+}
+
+.flat-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  color: var(--color-cloud);
+
+  position: relative;
+
+  font-size: 1em;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+
+  margin: auto;
+  padding: 16px 32px;
+
+  border-radius: 32px;
+  background-color: transparent;
+  // box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+
+  .svg-icon, .icon, *[icon] {
+    margin-right: 12px;
+  }
+
+  &:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+    box-shadow: none;
+  }
+}
+
+button[flat-button] {
+  @extend .flat-button;
+
+  color: #465671;
+  background-color: #f1f5f6;
+}
+
+button[stroked-button] {
+  @extend .flat-button;
+
+  border: 1px solid rgba(170, 184, 206, 0.5);
+}
+
+button[raised-button] {
+  @extend .flat-button;
+
+  color: #fff;
+  background-color: var(--color-fuschia);
+}

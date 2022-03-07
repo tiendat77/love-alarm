@@ -1,0 +1,93 @@
+.page-content {
+  padding-bottom: 16px;
+  justify-content: space-between;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.top-content, .bottom-content {
+  width: 100%;
+}
+
+.text {
+  margin: 0;
+  font-size: 18px;
+  text-align: center;
+  font-weight: normal;
+  color: var(--color-cloud);
+}
+
+button {
+  width: 100%;
+  justify-content: space-between;
+}
+
+button:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.scanner {
+  width: 100%;
+  max-width: 300px;
+  max-height: 300px;
+  aspect-ratio: 1 / 1;
+  position: relative;
+
+  border-radius: 50%;
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  .point {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .heart {
+    transform-origin: center;
+    animation: beating 1s linear infinite;
+  }
+
+  .ripple {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: 50%;
+
+    animation: ripple 1.8s linear infinite;
+    background-image: radial-gradient(
+      rgba(255, 188, 217, 0.1),
+      rgba(255, 188, 217, 0.15)
+    );
+  }
+
+  .ripple:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+
+  .ripple:nth-child(3) {
+    animation-delay: -0.6s;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    opacity: 1;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}

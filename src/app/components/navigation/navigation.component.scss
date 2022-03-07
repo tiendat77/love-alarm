@@ -1,0 +1,118 @@
+.tabs {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  position: absolute;
+  contain: size layout style;
+  z-index: 0;
+
+  background-color: var(--page-background-color);
+}
+
+.tabs.home {
+  background: linear-gradient(
+    187deg,
+    #ffb0f7 -4%,
+    #ffcdfa 26%,
+    #fcdbff 50%,
+    #abcdff 76%,
+    #9eaeff 100%
+  );
+
+  .tab-button {
+    color: #282828;
+  }
+
+  .tab-bar {
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: saturate(200%) blur(30px);
+    box-shadow:
+      inset 0 0 1px 1px rgba(255, 255, 255, 0.48),
+      0 20px 27px 0 rgba(0, 0, 0, 0.05);
+  }
+}
+
+.tab {
+  overflow: auto;
+  flex: 1 1 0%;
+  position: relative;
+  contain: size layout style;
+}
+
+.tab-bar {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 24px;
+  height: 58px;
+  border-radius: 40px;
+
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+
+  background-color: #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.tab-button {
+  color: #282828;
+
+  flex: 1;
+  cursor: pointer;
+  position: relative;
+  transform-origin: center center;
+  transition-duration: 0.3s;
+
+  svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .tab-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    opacity: 0.2;
+    transition-duration: 0.2s;
+    transform: translate(-50%, -50%);
+  }
+
+  .tab-icon-colored {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+
+    transform: translate(-50%, -50%);
+    transition-duration: 0.2s;
+    transition-timing-function: cubic-bezier(0, 0.66, 0.83, 0.67);
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+  }
+}
+
+.tab-button:active {
+  transform: scale(0.9);
+}
+
+.tab-button.active {
+  .tab-icon-colored {
+    transition-delay: 0.2s;
+    clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 0);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .tab-bar {
+    background-color: #2d333b;
+    box-shadow: 0 3px 10px rgba(68, 76, 86, 0.2);
+  }
+
+  .tab-button {
+    color: #fff;
+  }
+}
