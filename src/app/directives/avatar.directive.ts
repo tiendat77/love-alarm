@@ -4,8 +4,6 @@ import { Directive, ElementRef, Input } from '@angular/core';
   selector: '[avatar], avatar',
   host: {
     'class': 'la-avatar',
-    '[style.width]': 'size',
-    '[style.height]': 'size',
     '[style.min-width]': 'size',
     '[style.min-height]': 'size',
     '(error)': 'onError($event)'

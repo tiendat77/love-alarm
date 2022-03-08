@@ -1,41 +1,85 @@
 .menu {
-  .user-info {
-    width: 100%;
-    height: 8rem;
+}
+
+.truncate {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+
+  padding: 16px;
+  max-width: 100%;
+  overflow: hidden;
+
+  .avatar {
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 14px;
+
+    flex: 1 1 100%;
+    max-width: 70px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .info {
+    flex: 1 1 100%;
+    @extend .truncate;
+  }
+
+  .name {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .profile {
+    color: var(--color-cloud);
+  }
+}
+
+.menu-items {
+  padding-left: 16px;
+  padding-right: 16px;
+
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  .menu-item {
     display: flex;
     flex-direction: row;
     align-items: center;
-    box-sizing: border-box;
-  }
+    position: relative;
 
-  .user-name, .user-profile {
-    max-width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+    padding: 16px 6px;
 
-  .user-name {
-    color: #68d1f3;
-    line-height: 1.5;
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
+    .menu-icon {
+      width: 30px;
+      height: 30px;
+      margin-right: 12px;
+    }
 
-  .user-profile {
-    color: #7b7b7b;
-  }
+    .menu-content {
+      @extend .truncate;
+    }
 
-  .avatar {
-    flex: 1 1 100%;
-    max-width: 4rem;
-    margin-right: 1rem;
-  }
-
-  .user {
-    flex: 1 1 100%;
-    overflow: hidden;
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
   }
 }
 

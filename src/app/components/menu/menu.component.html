@@ -1,6 +1,25 @@
 <ion-split-pane contentId="main">
   <ion-menu menuId="first" contentId="main" class="menu">
-    <div>Menu</div>
+    <div class="user-info">
+      <div class="avatar">
+        <img avatar referrerpolicy="no-referrer" alt=""
+          [src]="user.avatar"
+          [name]="user.name"
+        >
+      </div>
+
+      <div class="info">
+        <div class="name">
+          {{ user.name }}
+        </div>
+
+        <div class="profile">
+          My profile / My badges
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-items"></div>
   </ion-menu>
 
   <div id="main">

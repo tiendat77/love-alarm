@@ -13,7 +13,7 @@ export class RippleDirective {
   public rippleDuration = 600;
 
   @Input('rippleCentered')
-  public centered = false;
+  public centered = true;
 
   protected get nativeElement(): HTMLElement {
     return this.elementRef.nativeElement;
