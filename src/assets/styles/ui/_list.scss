@@ -1,0 +1,63 @@
+/*
+  ul.list
+    li.list-item
+      a.list-item-content
+        div.list-item-icon
+        div.list-item-text
+*/
+ul.list {
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li.list-item {
+    text-align: left;
+    width: 100%;
+    margin-top: 2px;
+  }
+
+  .list-item-content {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+
+    border-radius: 8px;
+    padding: 8px 16px;
+    margin: 0 16px;
+
+    &:active {
+      background-color: rgba(255, 209, 251, 0.2);
+    }
+  }
+
+  .list-item-icon {
+    width: 32px;
+    height: 32px;
+    max-width: 32px;
+
+    flex: 1 1 100%;
+    box-sizing: border-box;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .list-item-text {
+    flex: 1 1 100%;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    margin-left: 8px;
+  }
+}
