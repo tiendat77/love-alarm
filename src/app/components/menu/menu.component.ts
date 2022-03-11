@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { UserService } from '../../services';
+import { SupabaseService, UserService } from '../../services';
 
 @Component({
   selector: 'app-menu',
@@ -10,7 +10,18 @@ import { UserService } from '../../services';
 export class MenuComponent {
 
   constructor(
-    public user: UserService
+    public user: UserService,
+    private supabase: SupabaseService,
   ) {}
+
+  themes() {
+  }
+
+  settings() {
+  }
+
+  signOut() {
+    this.supabase.auth.signOut();
+  }
 
 }

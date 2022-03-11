@@ -19,15 +19,57 @@
   </div>
 
   <div class="page-content">
-    <img avatar
-      style="width: 150x;height:150px"
-      referrerpolicy="no-referrer"
-      [name]="user.name"
-      [src]="user.avatar"
-    >
+    <section class="user-info">
+      <div class="user-picture">
+        <img avatar
+          referrerpolicy="no-referrer"
+          [name]="user.name"
+          [src]="user.avatar"
+        >
+      </div>
 
-    <button raised-button (click)="supabase.signOut()">
-      Log out
-    </button>
+      <div class="user-name">
+        {{ user.name }}
+      </div>
+
+      <div class="user-brief">
+        California, Western U.S
+      </div>
+    </section>
+
+    <section class="statistics">
+      <div class="statistic">
+        <div>1</div>
+        <div>Ringers</div>
+      </div>
+
+      <div class="seperator"></div>
+
+      <div class="statistic">
+        <div>1</div>
+        <div>Ringing</div>
+      </div>
+    </section>
+
+    <section class="edit-profile">
+      <button raised-button>
+        Edit Profile
+      </button>
+    </section>
+
+    <section>
+      <h2>About me</h2>
+      <article>
+        On our first date, I'll carve our names in a tree. It's the most romantic way to let you know I have knives
+        💓 Ring my alarm if you like me 💓
+      </article>
+    </section>
+
+    <section>
+      <h2>Interests</h2>
+      <div>
+        <div *ngFor="let if of [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]">Music</div>
+      </div>
+    </section>
   </div>
 </div>

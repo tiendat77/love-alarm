@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navigation',
@@ -15,19 +16,14 @@ export class NavigationComponent {
     private router: Router,
     private meta: Meta,
   ) {
-    const activeUrl = this.router.url.split('/')[2];
-    this.active = activeUrl ? activeUrl : 'home';
-    this.updateStatusBar();
+    router.events.pipe(
+      filter(val => val instanceof NavigationEnd)
+    ).subscribe((val: NavigationEnd) => {
+      this.active = val.urlAfterRedirects.split('/')[2];
+    });
   }
 
-  navigate(url) {
-    this.active = url;
-    this.updateStatusBar();
-    this.router.navigate(['/app/' + url]);
-  }
-
-  updateStatusBar() {
-    // for pwa
+  private updateStatusBar() {
     this.meta.updateTag({
       name: 'theme-color',
       content: this.active === 'home' ? '#f8b6f7' : '#ffffff',
