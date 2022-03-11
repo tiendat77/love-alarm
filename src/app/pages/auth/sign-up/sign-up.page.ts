@@ -40,7 +40,7 @@ export class SignUpPage {
 
     this.loader.start('Just a moment...');
 
-    const { user, error, session } = await this.supabase.signUp(email, password, name);
+    const { user, error, session } = await this.supabase.auth.signUp(email, password, name);
 
     this.loader.stop();
 
@@ -61,7 +61,7 @@ export class SignUpPage {
   }
 
   async navigateSignInWithGoogle() {
-    await this.supabase.signInWithProvider('google').catch(error => {
+    await this.supabase.auth.signInWithProvider('google').catch(error => {
       console.error('Error: ', error.message);
     });
   }

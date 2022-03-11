@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(): boolean {
-    const isSignedIn = !!this.supabase.getSession()?.user;
+    const isSignedIn = !!this.supabase.session?.user;
 
     if (!isSignedIn) {
       this.router.navigate(['/auth']);

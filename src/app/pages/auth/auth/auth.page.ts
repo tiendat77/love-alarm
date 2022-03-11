@@ -13,7 +13,7 @@ export class AuthPage {
   ) { }
 
   async navigateSignInWithGoogle() {
-    await this.supabase.signInWithProvider('google').catch(error => {
+    await this.supabase.auth.signInWithProvider('google').catch(error => {
       console.error('Error: ', error.message);
     });
   }
