@@ -32,12 +32,17 @@ export class AuthorizeService {
 
     this.client.auth.onAuthStateChange((event, session) => {
       console.log('Auth state changed', event, session);
+      console.log('User info', session?.user);
       if (session?.user && event === 'SIGNED_IN') {
         this.onSignedIn(session);
       }
 
       if (event === 'SIGNED_OUT') {
         this.onSignedOut();
+      }
+
+      if (event === 'PASSWORD_RECOVERY') {
+        this.onResetedPassword();
       }
     });
   }
@@ -49,6 +54,10 @@ export class AuthorizeService {
 
   private onSignedOut() {
     this.router.navigate(['/auth/sign-in']);
+  }
+
+  private onResetedPassword() {
+    this.router.navigate(['/auth/reset-password']);
   }
 
   signUp(email: string, password: string, name: string) {

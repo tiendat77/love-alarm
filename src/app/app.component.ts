@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 
 /** Capacitor */
 import { App } from '@capacitor/app';
+import { Device } from '@capacitor/device';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { AlertController, ModalController, Platform } from '@ionic/angular';
@@ -61,6 +62,10 @@ export class AppComponent {
       StatusBar.setOverlaysWebView({overlay: true});
       StatusBar.setBackgroundColor({color: '#33000000'});
     }
+
+    Device.getInfo().then((value) => {
+      console.log('Device Info: ', value);
+    });
 
     this.splash.hide(environment.production ? 3 : 1);
     this.storage.init();

@@ -1,4 +1,12 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormControl, Validators } from '@angular/forms';
+
+import { HelperText } from '../../../interfaces';
+import {
+  LoaderService,
+  SupabaseService,
+} from '../../../services';
 
 @Component({
   selector: 'app-auth-forgot-password',
@@ -7,9 +15,43 @@ import { Component } from '@angular/core';
 })
 export class ForgotPasswordPage {
 
-  constructor() { }
+  emailCtrl = new FormControl('', Validators.required);
 
-  submit() {
+  helperText: HelperText | undefined;
+
+  constructor(
+    private router: Router,
+    private loader: LoaderService,
+    private supabase: SupabaseService,
+  ) { }
+
+  async submit() {
+    const email = this.emailCtrl.value;
+
+    if (!email) {
+      return this.helperText = {
+        error: true,
+        text: 'Email ID is required',
+      };
+    }
+
+    this.loader.start('Just a moment...');
+
+    const { data, error } = await this.supabase.auth.resetPassword(email);
+
+    this.loader.stop();
+
+    if (error) {
+      this.helperText = { error: true, text: error.message };
+      return;
+    }
+
+    if (data) {
+      return this.helperText = {
+        error: false,
+        text: `Email has been sent to you. It's has a magic link that'll log you in.`,
+      };
+    }
   }
 
 }
