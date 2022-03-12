@@ -1,0 +1,54 @@
+.page-content {
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  section {
+    width: 100%;
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.love-alarm-text {
+  margin-bottom: 0;
+  text-align: center;
+  color: var(--color-fuschia);
+}
+
+.love-alarm-version {
+  margin-top: 0;
+  font-weight: 300;
+  text-align: center;
+  color: var(--color-cloud);
+}
+
+.love-alarm-description {
+  margin-top: 0;
+  margin-bottom: 8px;
+  text-align: center;
+  color: var(--color-cloud);
+}
+
+ul.list {
+
+  .list-item-content {
+    margin-left: 0;
+    margin-right: 0;
+    color: var(--color-cloud);
+  }
+
+  .list-item-text.sub-text {
+    overflow: visible;
+    text-align: right;
+    color: var(--color-fuschia);
+  }
+}

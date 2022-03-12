@@ -63,8 +63,6 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
     .page-content-title {
       width: 100%;
@@ -75,5 +73,12 @@
 
       margin-bottom: 16px;
     }
+  }
+}
+
+.page.modal {
+  .page-content {
+    overflow: auto;
+    height: 100%;
   }
 }

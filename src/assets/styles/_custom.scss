@@ -6,6 +6,24 @@ ion-menu::part(container) {
   background-color: var(--page-background-color);
 }
 
+ion-modal.auto-height {
+  --height: auto;
+
+  .modal-wrapper {
+    width: 90vw;
+
+    .ion-page {
+      position: relative;
+      contain: content;
+      max-height: 90vh;
+
+      .modal-content {
+        overflow: auto;
+      }
+    }
+  }
+}
+
 /* Swiper Js */
 .swiper-slide {
   display: block;

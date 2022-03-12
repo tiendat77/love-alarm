@@ -45,7 +45,10 @@ import { environment } from '../environments/environment';
       ]
     }),
 
-    IonicModule.forRoot({_forceStatusbarPadding: true}),
+    IonicModule.forRoot({
+      mode: 'ios',
+      _forceStatusbarPadding: true
+    }),
 
     TranslateModule.forRoot({loader: TranslateProvider}),
 

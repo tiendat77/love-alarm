@@ -1,6 +1,14 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
-import { SupabaseService, UserService } from '../../services';
+import {
+  UserService,
+  SupabaseService,
+} from '../../services';
+
+import {
+  AppInfoModal,
+} from '../../modals';
 
 @Component({
   selector: 'app-menu',
@@ -10,6 +18,8 @@ import { SupabaseService, UserService } from '../../services';
 export class MenuComponent {
 
   constructor(
+    private modalCtrl: ModalController,
+
     public user: UserService,
     private supabase: SupabaseService,
   ) {}
@@ -18,6 +28,17 @@ export class MenuComponent {
   }
 
   settings() {
+  }
+
+  share() {
+  }
+
+  async info() {
+    const modal = await this.modalCtrl.create({
+      component: AppInfoModal
+    });
+
+    modal.present();
   }
 
   signOut() {
