@@ -4,10 +4,13 @@ import { ModalController } from '@ionic/angular';
 import {
   UserService,
   SupabaseService,
+  SharingService,
 } from '../../services';
 
 import {
   AppInfoModal,
+  SettingsModal,
+  ThemesModal,
 } from '../../modals';
 
 @Component({
@@ -21,16 +24,28 @@ export class MenuComponent {
     private modalCtrl: ModalController,
 
     public user: UserService,
+    public sharing: SharingService,
     private supabase: SupabaseService,
   ) {}
 
-  themes() {
+  async themes() {
+    const modal = await this.modalCtrl.create({
+      component: ThemesModal
+    });
+
+    modal.present();
   }
 
-  settings() {
+  async settings() {
+    const modal = await this.modalCtrl.create({
+      component: SettingsModal
+    });
+
+    modal.present();
   }
 
   share() {
+    this.sharing.shareLink();
   }
 
   async info() {

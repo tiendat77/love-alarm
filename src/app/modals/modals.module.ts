@@ -12,10 +12,16 @@ import { IonicModule } from '@ionic/angular';
 /* Modals */
 import { AppInfoModal } from './app-info/app-info.component';
 import { PrivacyPolicyModal } from './privacy-policy/privacy-policy.component';
+import { RingersModal } from './ringers/ringers.component';
+import { SettingsModal } from './settings/settings.component';
+import { ThemesModal } from './themes/themes.component';
 
 const MODALS = [
   AppInfoModal,
-  PrivacyPolicyModal
+  PrivacyPolicyModal,
+  RingersModal,
+  SettingsModal,
+  ThemesModal,
 ];
 
 @NgModule({
