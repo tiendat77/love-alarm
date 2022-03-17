@@ -25,6 +25,7 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@import 'animate.css/animate.css';
 @import '~swiper/scss';
 
 /* Customize */
@@ -33,7 +34,7 @@
 @import "./assets/styles/ui";
 
 * {
-  font-family: 'Baloo2', sans-serif;
+  font-family: 'Baloo', sans-serif;
 }
 
 .truncate {
