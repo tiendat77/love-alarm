@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /* Ionic Modules */
 import { IonicModule } from '@ionic/angular';
+import { DirectivesModule } from '../directives/directives.module';
 
 /* Modals */
 import { AppInfoModal } from './app-info/app-info.component';
@@ -32,6 +33,7 @@ const MODALS = [
     ReactiveFormsModule,
     HttpClientModule,
     IonicModule,
+    DirectivesModule,
   ],
   declarations: [
     MODALS
