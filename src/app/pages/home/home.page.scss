@@ -19,13 +19,12 @@
 .banner {
   max-width: 80%;
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
 }
 
 .scanner {
-  height: 300px;
-  max-height: 350px;
-  width: auto;
+  width: 78%;
+  height: auto;
   aspect-ratio: 1 / 1;
   position: relative;
 
@@ -49,10 +48,10 @@
 }
 
 .loves {
-  margin-top: 4rem;
+  margin-top: 1rem;
   font-size: 3.5rem;
   font-weight: normal;
-  font-family: OpenSansCondensed;
+  font-family: 'Comfortaa';
 }
 
 h2 {

@@ -1,5 +1,6 @@
 .page-content {
-  padding: 0 24px;
+  padding-left: 24px;
+  padding-right: 24px;
   justify-content: space-between;
 }
 
@@ -10,14 +11,6 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-}
-
-.top-content {
-  margin-top: 1rem;
-}
-
-.bottom-content {
-  padding-bottom: 24px;
 }
 
 .love-alarm {
