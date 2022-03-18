@@ -76,7 +76,7 @@ export class AuthorizeService {
   }
 
   signInWithProvider(provider: Provider) {
-    return this.client.auth.signIn({ provider });
+    return this.client.auth.signIn({ provider }, {redirectTo: 'com.dathuynh.lovealarm://login-callback'});
   }
 
   signOut() {
@@ -92,6 +92,10 @@ export class AuthorizeService {
       this.token,
       { password: newPassword }
     );
+  }
+
+  getSessionFromUrl() {
+    return this.client.auth.getSessionFromUrl();
   }
 
 }

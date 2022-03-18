@@ -1,11 +1,11 @@
 /** Angular */
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 
 /** Capacitor */
-import { App } from '@capacitor/app';
 import { Device } from '@capacitor/device';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { StatusBar, Style } from '@capacitor/status-bar';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { AlertController, ModalController, Platform } from '@ionic/angular';
 
 /* Services */
@@ -32,6 +32,8 @@ import { environment } from '../environments/environment';
 export class AppComponent {
 
   constructor(
+    private zone: NgZone,
+    private router: Router,
     private platform: Platform,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
@@ -59,8 +61,6 @@ export class AppComponent {
 
     if (this.platform.is('hybrid')) {
       SplashScreen.hide();
-      StatusBar.setOverlaysWebView({overlay: true});
-      StatusBar.setBackgroundColor({color: '#33000000'});
     }
 
     Device.getInfo().then((value) => {
@@ -92,6 +92,21 @@ export class AppComponent {
     App.addListener('backButton', () => {
       this.modalCtrl.dismiss();
     });
+
+    // Deep link
+    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+      console.log(event);
+      // com.dathuynh.lovealarm://login-callback#access_token
+      this.zone.run(() => {
+        this.router.navigate(['/']);
+
+        const slug = event.url.split('/')[2];
+        if (slug.indexOf('login-callback') !== -1) {
+          this.supabase.auth.getSessionFromUrl();
+        }
+        // If no match, do nothing - let regular routing logic take over
+      });
+  });
   }
 
   private async exit() {
