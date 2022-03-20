@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
+import { MyQrCodeModal } from '../../modals';
+
 @Component({
   selector: 'app-discover',
   templateUrl: './discover.page.html',
@@ -30,6 +32,11 @@ export class DiscoverPage implements OnInit {
   }
 
   async qrcode() {
+    const modal = await this.modal.create({
+      component: MyQrCodeModal
+    });
+
+    modal.present();
   }
 
 }

@@ -16,6 +16,7 @@ import { PrivacyPolicyModal } from './privacy-policy/privacy-policy.component';
 import { RingersModal } from './ringers/ringers.component';
 import { SettingsModal } from './settings/settings.component';
 import { ThemesModal } from './themes/themes.component';
+import { MyQrCodeModal } from './my-qr-code/my-qr-code.component';
 
 const MODALS = [
   AppInfoModal,
@@ -23,6 +24,7 @@ const MODALS = [
   RingersModal,
   SettingsModal,
   ThemesModal,
+  MyQrCodeModal,
 ];
 
 @NgModule({
