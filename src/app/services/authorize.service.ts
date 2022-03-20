@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
 
 import { UserService } from './user.service';
 
@@ -25,6 +26,7 @@ export class AuthorizeService {
   constructor(
     private readonly router: Router,
     private readonly user: UserService,
+    private readonly platform: Platform,
   ) { }
 
   init(client: SupabaseClient) {
@@ -76,7 +78,10 @@ export class AuthorizeService {
   }
 
   signInWithProvider(provider: Provider) {
-    return this.client.auth.signIn({ provider }, {redirectTo: 'com.dathuynh.lovealarm://login-callback'});
+    const redirectTo: string = this.platform.is('hybrid')
+      ? 'com.dathuynh.lovealarm://login-callback/'
+      : window.location.origin + '/login-callback/';
+    return this.client.auth.signIn({ provider }, {redirectTo});
   }
 
   signOut() {
@@ -94,8 +99,18 @@ export class AuthorizeService {
     );
   }
 
-  getSessionFromUrl() {
-    return this.client.auth.getSessionFromUrl();
+  setAuth(access_token: string, refresh_token: string) {
+    return new Promise(async (resolve, reject) => {
+      this.client.auth.setAuth(access_token);
+
+      const {session, error} = await this.client.auth.setSession(refresh_token);
+
+      if (!error) {
+        resolve(session);
+      } else {
+        reject(error);
+      }
+    });
   }
 
 }

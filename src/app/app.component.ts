@@ -59,6 +59,8 @@ export class AppComponent {
   private initialize() {
     this.welcome();
 
+    console.log('[Platform] ', this.platform.platforms());
+
     if (this.platform.is('hybrid')) {
       SplashScreen.hide();
     }
@@ -95,14 +97,21 @@ export class AppComponent {
 
     // Deep link
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
-      console.log(event);
-      // com.dathuynh.lovealarm://login-callback#access_token
-      this.zone.run(() => {
-        this.router.navigate(['/']);
-
+      this.zone.run(async () => {
+        // com.dathuynh.lovealarm://login-callback/#access_token
+        console.log(event.url);
         const slug = event.url.split('/')[2];
+
         if (slug.indexOf('login-callback') !== -1) {
-          this.supabase.auth.getSessionFromUrl();
+          this.splash.show();
+
+          const params = new URL(event.url).hash;
+          const access_token = params.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
+          const refresh_token = params.match(/\&(?:refresh_token)\=([\S\s]*?)\&/)[1];
+          await this.supabase.auth.setAuth(access_token, refresh_token);
+
+          this.router.navigate(['/']);
+          this.splash.hide(1);
         }
         // If no match, do nothing - let regular routing logic take over
       });

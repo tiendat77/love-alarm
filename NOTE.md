@@ -21,9 +21,7 @@ Deep link
     <action android:name="android.intent.action.VIEW" />
     <category android:name="android.intent.category.DEFAULT" />
     <category android:name="android.intent.category.BROWSABLE" />
-    <data android:scheme="http" />
-    <data android:scheme="https" />
-    <data android:host="lovealarm.vercel.app" />
+    <data android:scheme="com.dathuynh.lovealarm" />
 </intent-filter>
 ```
 
