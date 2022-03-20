@@ -1,0 +1,14 @@
+ul.list {
+  .list-item-content {
+    margin-left: 0;
+    margin-right: 0;
+    color: inherit;
+  }
+
+  .list-item-text.sub-text {
+    overflow: visible;
+    text-align: right;
+    align-items: flex-end;
+    color: var(--color-cloud);
+  }
+}

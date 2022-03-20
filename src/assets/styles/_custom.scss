@@ -24,6 +24,10 @@ ion-modal.auto-height {
   }
 }
 
+ion-toggle {
+  --background-checked: var(--color-fuschia);
+}
+
 /* Swiper Js */
 .swiper-slide {
   display: block;
