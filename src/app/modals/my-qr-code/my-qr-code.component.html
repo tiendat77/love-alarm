@@ -12,10 +12,22 @@
   </div>
 
   <div class="page-content">
-    <section class="flex center">
+    <section class="center">
       <div class="card">
-        <div class="card-header"></div>
-        <div class="card-body"></div>
+        <div class="card-header">
+          <img avatar
+            referrerpolicy="no-referrer"
+            [name]="user.name"
+            [src]="user.avatar"
+          >
+        </div>
+        <div class="card-body">
+          <div class="name truncate">{{user.name}}</div>
+
+          <img [src]="qrcode" alt="">
+
+          <div class="text">Share your QR code so others can connect</div>
+        </div>
       </div>
     </section>
   </div>
