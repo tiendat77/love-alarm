@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { DirectivesModule } from '../directives/directives.module';
 
+import { SwiperModule } from 'swiper/angular';
+
 /* Modals */
 import { AppInfoModal } from './app-info/app-info.component';
 import { PrivacyPolicyModal } from './privacy-policy/privacy-policy.component';
@@ -35,6 +37,7 @@ const MODALS = [
     ReactiveFormsModule,
     HttpClientModule,
     IonicModule,
+    SwiperModule,
     DirectivesModule,
   ],
   declarations: [
