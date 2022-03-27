@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import QRCode from 'qrcode';
+import QRCodeStyling from 'qr-code-styling';
 
-import { UserService } from '../../services';
+import {
+  SharingService,
+  UserService
+} from '../../services';
 
 @Component({
   selector: 'app-my-qr-code',
@@ -11,28 +14,64 @@ import { UserService } from '../../services';
 })
 export class MyQrCodeModal {
 
-  qrcode: string;
+  qrcode: QRCodeStyling;
+  @ViewChild('canvas', { static: true }) canvas: ElementRef;
 
   constructor(
     private modalCtrl: ModalController,
 
     public readonly user: UserService,
-  ) {
+    public readonly sharing: SharingService,
+  ) { }
+
+  ngAfterViewInit() {
     this.init();
   }
 
   private init() {
     const code = 'lovealarm://' + this.user.id;
-    QRCode.toDataURL(code, {
-      type: 'image/webp',
-      width: 300,
-      margin: 0,
-    })
-    .then(url => {
-      this.qrcode = url;
-    })
-    .catch(err => {
-      console.error(err);
+    this.qrcode = this.generate(code);
+    this.qrcode.append(this.canvas?.nativeElement);
+  }
+
+  generate(data: string) {
+    try {
+      const qrcode = new QRCodeStyling({
+        width: 280,
+        height: 280,
+        type: 'svg',
+        data: data,
+        image: '/assets/images/love-alarm-logo.svg',
+        imageOptions: {
+          margin: 10,
+          crossOrigin: 'anonymous'
+        },
+        dotsOptions: {
+          type: 'dots',
+        },
+        backgroundOptions: {
+          color: '#ffffff',
+        },
+        cornersSquareOptions: {
+          type: 'extra-rounded',
+        },
+        cornersDotOptions: {
+          type: 'dot',
+        },
+      });
+
+      return qrcode;
+
+    } catch (e) {
+      console.error('Error generating QR code:', e);
+      return null;
+    }
+  }
+
+  share() {
+    const name = this.user.name + '-qrcode.png';
+    this.qrcode.getRawData().then((blob) => {
+      this.sharing.shareImage(name, blob);
     });
   }
 
