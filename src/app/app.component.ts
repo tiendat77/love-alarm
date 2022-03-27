@@ -59,8 +59,6 @@ export class AppComponent {
   private initialize() {
     this.welcome();
 
-    console.log('[Platform] ', this.platform.platforms());
-
     if (this.platform.is('hybrid')) {
       SplashScreen.hide();
     }
