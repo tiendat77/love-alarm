@@ -25,6 +25,13 @@ Deep link
 </intent-filter>
 ```
 
+Push Notification
+
+```
+<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_notification" />
+<meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/colorAccent" />
+```
+
 2. App Icon
 
 Logo:

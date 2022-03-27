@@ -21,7 +21,7 @@ import {
   UserService,
 } from './services';
 
-import { SOUND_WELCOME } from './services/audio.service';
+import { SOUNDS } from './services/audio.service';
 import { environment } from '../environments/environment';
 
 @Component({
@@ -76,7 +76,7 @@ export class AppComponent {
   }
 
   private welcome() {
-    this.audio.prepare().then(() => this.audio.play(SOUND_WELCOME));
+    this.audio.prepare().then(() => this.audio.play(SOUNDS.welcome));
   }
 
   private fuckIonic() {

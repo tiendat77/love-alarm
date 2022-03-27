@@ -5,11 +5,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
-/* Natives */
-import { NativeAudio } from '@ionic-native/native-audio/ngx';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
-
+/* Ionic */
 import { Drivers } from '@ionic/storage';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
@@ -60,9 +56,6 @@ import { environment } from '../environments/environment';
     }),
   ],
   providers: [
-    NativeAudio,
-    BarcodeScanner,
-    AndroidFullScreen,
     {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy
