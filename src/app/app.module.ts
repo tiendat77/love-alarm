@@ -9,6 +9,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { Drivers } from '@ionic/storage';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
+import { BLE } from '@awesome-cordova-plugins/ble/ngx';
 
 /* Modules */
 import { TranslateModule } from '@ngx-translate/core';
@@ -56,6 +57,7 @@ import { environment } from '../environments/environment';
     }),
   ],
   providers: [
+    BLE,
     {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy

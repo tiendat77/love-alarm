@@ -1,10 +1,3 @@
-### Note
-
-1. AndroidManifest.xml
-
-Manifest
-
-```xml
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -51,8 +44,8 @@ Manifest
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
 
-        <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_notification" />
-        <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/colorAccent" />
+        <!-- <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_notification" />-->
+        <!-- <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/colorAccent" />-->
     </application>
 
     <!-- Permissions -->
@@ -60,57 +53,3 @@ Manifest
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
-```
-
-Permission
-
-```xml
-  <application
-      android:requestLegacyExternalStorage="true"
-      ...
-  >
-
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-```
-
-Deep link
-
-```xml
-<intent-filter android:autoVerify="true">
-    <action android:name="android.intent.action.VIEW" />
-    <category android:name="android.intent.category.DEFAULT" />
-    <category android:name="android.intent.category.BROWSABLE" />
-    <data android:scheme="com.dathuynh.lovealarm" />
-</intent-filter>
-```
-
-Push Notification
-
-```xml
-<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_notification" />
-<meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/colorAccent" />
-```
-
-2. App Icon
-
-Logo:
-  - container: 512x512 (px)
-  - logo: 230x230 (px)
-
-3. To generate icons and splash screen for Android & iOs in Capacitor and copies generated resources into native projects:
-
-```
-cordova-res ios --skip-config --copy
-cordova-res android --skip-config --copy
-```
-
-4. Update environment file
-
-```
-ts-node set-env.ts
-```
-
-### Design
-
-[Figma](https://www.figma.com/file/MpLE0uUrm6rMZtFCVdK4jb/LoveAlarm?node-id=0%3A1)

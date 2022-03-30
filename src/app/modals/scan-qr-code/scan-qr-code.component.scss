@@ -1,0 +1,72 @@
+.page {
+  background: transparent;
+}
+
+.page-content {
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.top-content {
+  @extend .flex-center;
+  flex: 1 1 100%;
+}
+
+.bottom-content {
+  @extend .flex-center;
+}
+
+.torch {
+  @extend .flex-center;
+
+  .text {
+    margin-top: 4px;
+  }
+}
+
+$frame-size: 200px;
+
+.scanner {
+  position: relative;
+  width: $frame-size;
+  height: $frame-size;
+  margin-bottom: 1rem;
+
+  .frame {
+    width: $frame-size;
+    height: $frame-size;
+    position: absolute;
+  }
+
+  .lazer {
+    height: 3px;
+    width: calc(#{$frame-size} - 20px);
+
+    top: 50%;
+    left: 10px;
+    position: relative;
+
+    opacity: 0.7;
+    background-color: red;
+    animation: scan 4s linear 0.5s infinite;
+  }
+
+  @keyframes scan {
+    0% {
+      top: 50%;
+    }
+    25% {
+      top: 5%;
+    }
+    75% {
+      top: 95%;
+    }
+  }
+}

@@ -19,11 +19,13 @@ import { RingersModal } from './ringers/ringers.component';
 import { SettingsModal } from './settings/settings.component';
 import { ThemesModal } from './themes/themes.component';
 import { MyQrCodeModal } from './my-qr-code/my-qr-code.component';
+import { ScanQrCodeModal } from './scan-qr-code/scan-qr-code.component';
 
 const MODALS = [
   AppInfoModal,
   PrivacyPolicyModal,
   RingersModal,
+  ScanQrCodeModal,
   SettingsModal,
   ThemesModal,
   MyQrCodeModal,

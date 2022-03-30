@@ -11,6 +11,7 @@ import { AlertController, ModalController, Platform } from '@ionic/angular';
 /* Services */
 import {
   AudioService,
+  BLEService,
   FileService,
   LanguageService,
   LoaderService,
@@ -19,6 +20,7 @@ import {
   SupabaseService,
   ToastService,
   UserService,
+  WebViewService,
 } from './services';
 
 import { SOUNDS } from './services/audio.service';
@@ -47,8 +49,9 @@ export class AppComponent {
     private storage: StorageService,
     private supabase: SupabaseService,
     private toast: ToastService,
-
-    public user: UserService,
+    private ble: BLEService,
+    private webview: WebViewService,
+    private user: UserService,
   ) {
     this.supabase.init();
     this.platform.ready().then(() => {
@@ -68,6 +71,7 @@ export class AppComponent {
     });
 
     this.splash.hide(environment.production ? 3 : 1);
+    this.ble.init();
     this.storage.init();
 
     this.fuckIonic();
