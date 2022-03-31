@@ -22,11 +22,20 @@ export class ScanQrCodeModal {
     this.stop();
   }
 
+  async prepare() {
+    await BarcodeScanner.prepare();
+    const permission = await BarcodeScanner.checkPermission({ force: true });
+
+    if (permission.denied) {
+      this.modalCtrl.dismiss(null);
+    }
+  }
+
   async scan() {
-    await BarcodeScanner.checkPermission();
+    await this.prepare();
 
     // make background of WebView transparent
-    BarcodeScanner.hideBackground();
+    await BarcodeScanner.hideBackground();
 
     const result = await BarcodeScanner.startScan();
 
