@@ -6,4 +6,5 @@ export * from './privacy-policy/privacy-policy.component';
 export * from './ringers/ringers.component';
 export * from './settings/settings.component';
 export * from './scan-qr-code/scan-qr-code.component';
+export * from './scan-result/scan-result.component';
 export * from './themes/themes.component';

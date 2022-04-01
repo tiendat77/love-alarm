@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { MyQrCodeModal, ScanQrCodeModal } from '../../modals';
 import { BLEService, WebViewService } from '../../services';
+import {
+  MyQrCodeModal,
+  ScanQrCodeModal,
+  ScanResultModal
+} from '../../modals';
 
 @Component({
   selector: 'app-discover',
@@ -42,6 +46,14 @@ export class DiscoverPage implements OnInit {
   async qrcode() {
     const modal = await this.modal.create({
       component: MyQrCodeModal
+    });
+
+    modal.present();
+  }
+
+  async viewNearby() {
+    const modal = await this.modal.create({
+      component: ScanResultModal
     });
 
     modal.present();
