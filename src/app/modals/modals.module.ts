@@ -20,9 +20,11 @@ import { SettingsModal } from './settings/settings.component';
 import { ThemesModal } from './themes/themes.component';
 import { MyQrCodeModal } from './my-qr-code/my-qr-code.component';
 import { ScanQrCodeModal } from './scan-qr-code/scan-qr-code.component';
+import { EditProfileModal } from './edit-profile/edit-profile.component';
 
 const MODALS = [
   AppInfoModal,
+  EditProfileModal,
   PrivacyPolicyModal,
   RingersModal,
   ScanQrCodeModal,

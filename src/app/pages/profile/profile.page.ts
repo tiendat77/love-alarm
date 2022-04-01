@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { RingersModal } from '../../modals';
+import { EditProfileModal, RingersModal } from '../../modals';
 
 import {
   SupabaseService,
@@ -25,6 +25,14 @@ export class ProfilePage {
   async ringers() {
     const modal = await this.modal.create({
       component: RingersModal
+    });
+
+    modal.present();
+  }
+
+  async profile() {
+    const modal = await this.modal.create({
+      component: EditProfileModal
     });
 
     modal.present();

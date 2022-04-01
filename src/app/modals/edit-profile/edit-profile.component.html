@@ -1,0 +1,94 @@
+<div class="page">
+  <div class="page-header">
+    <button icon-button ripple="#dcdcdc" (click)="close()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.905 3.5a1.11 1.11 0 0 0-.784.323l-6.354 6.352h-.003A2.58 2.58 0 0 0 2 11.995c.007.679.28 1.327.764 1.805h.003l6.354 6.352c.285.282.561.363.83.346.27-.017.538-.148.741-.352a1.17 1.17 0 0 0 .35-.741c.015-.269-.07-.546-.356-.828l-5.509-5.475H20.89c.401 0 .654-.136.833-.337.18-.201.278-.483.278-.77 0-.288-.099-.57-.278-.77-.179-.201-.432-.338-.833-.338H5.18l5.506-5.489a1.102 1.102 0 0 0 0-1.575 1.104 1.104 0 0 0-.78-.323z"/>
+     </svg>
+    </button>
+
+    <div class="page-title truncate animate__animated animate__fadeInUp">
+      Edit Profile
+    </div>
+
+    <div style="width:40px;"></div>
+  </div>
+
+  <div class="page-content">
+    <section>
+      <div class="center">
+        <div class="avatar">
+          <img avatar
+            referrerpolicy="no-referrer"
+            [name]="user.name"
+            [src]="user.avatar"
+          >
+
+          <div class="edit">
+            <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path fill="currentColor" d="M21.255 2.723a2.616 2.62 0 0 0-3.61 0l-9.34 9.346a4.624 4.63 0 0 0-.882-.083 4.548 4.554 0 0 0-3.238 1.343c-1.127 1.129-1.922 4.158-2.158 5.803A2.5 2.504 0 0 0 4.5 22a2.584 2.587 0 0 0 .366-.026c1.643-.236 4.668-1.032 5.796-2.16a4.58 4.585 0 0 0 1.25-4.124l9.342-9.354a2.557 2.56 0 0 0 0-3.613zM9.483 18.633c-.604.606-2.917 1.41-4.854 1.689a.846.847 0 0 1-.716-.236.834.835 0 0 1-.235-.717c.277-1.939 1.083-4.256 1.685-4.86a2.917 2.92 0 0 1 4.12 4.125zM20.078 5.157l-8.853 8.864a4.483 4.488 0 0 0-1.25-1.258l8.85-8.86a.905.906 0 0 1 1.25 0 .885.886 0 0 1 .003 1.254z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section [formGroup]="userForm">
+      <div class="form">
+        <label>Email</label>
+        <div class="form-wrapper">
+          <input type="email" readonly placeholder="Email" formControlName="email">
+        </div>
+      </div>
+
+      <div class="form">
+        <label>Name</label>
+        <div class="form-wrapper">
+          <input type="text" required placeholder="Name" formControlName="name">
+        </div>
+      </div>
+
+      <div class="form">
+        <label>Bio</label>
+        <div class="form-wrapper">
+          <textarea type="text" style="min-height: 5rem;" placeholder="Bio" formControlName="bio"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="header">Interest</div>
+
+      <div class="tab-list">
+        <div class="tab-block" *ngFor="let topic of topics">
+          <div class="tab-column">
+            <div class="tab"
+                  *ngFor="let _ of topic"
+                  [class.selected]="interests[_.id]"
+                  (click)="selectTopic(_.id)">
+              <div class="tab-text">{{_.value}}</div>
+              <div class="tab-icon">
+                <svg *ngIf="interests[_.id]" width="18px" height="18px" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M9 20c-.264 0-.52-.104-.707-.293l-4.785-4.785c-.39-.39-.39-1.023 0-1.414s1.023-.39 1.414 0l3.946 3.945L18.075 4.41c.32-.45.94-.558 1.395-.24.45.318.56.942.24 1.394L9.817 19.577c-.17.24-.438.395-.732.42-.028.002-.057.003-.085.003z"></path>
+                </svg>
+
+                <svg *ngIf="!interests[_.id]" width="18px" height="18px" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19.75 11H13V4.25c0-.553-.447-1-1-1s-1 .447-1 1V11H4.25c-.553 0-1 .447-1 1s.447 1 1 1H11v6.75c0 .553.447 1 1 1s1-.447 1-1V13h6.75c.553 0 1-.447 1-1s-.447-1-1-1z"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div>Join 21 Jan 2022</div>
+    </section>
+
+    <section>
+      <button raised-button style="width: 100%;" (click)="update()">
+        Update
+      </button>
+    </section>
+  </div>
+</div>

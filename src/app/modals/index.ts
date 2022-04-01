@@ -1,4 +1,5 @@
 export * from './modals.module';
+export * from './edit-profile/edit-profile.component';
 export * from './app-info/app-info.component';
 export * from './my-qr-code/my-qr-code.component';
 export * from './privacy-policy/privacy-policy.component';
