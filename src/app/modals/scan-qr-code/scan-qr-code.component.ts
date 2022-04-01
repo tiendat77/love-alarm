@@ -49,6 +49,10 @@ export class ScanQrCodeModal {
     await BarcodeScanner.stopScan();
   }
 
+  torch() {
+    BarcodeScanner.toggleTorch();
+  }
+
   close() {
     this.modalCtrl.dismiss();
   }
