@@ -70,7 +70,8 @@
 
 .card {
   width: 100%;
-  min-height: 350px;
+  height: 100%;
+  min-height: 300px;
   position: relative;
 
   border-radius: 16px;
@@ -133,8 +134,8 @@ $ring-padding: 8px;
 
 .ring-button {
   @extend .flex-center;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   position: relative;
 
   .ring {
@@ -144,18 +145,18 @@ $ring-padding: 8px;
   }
 
   .ring:nth-child(1) {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
   }
 
   .ring:nth-child(2) {
-    width: 64px;
-    height: 64px;
+    width: 84px;
+    height: 84px;
   }
 
   button {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     line-height: 50px;
 
     color: #fff;
@@ -170,7 +171,7 @@ $ring-padding: 8px;
 
 section {
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 20px;
 
   &:last-child {
     margin-bottom: 0;
