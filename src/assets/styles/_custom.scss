@@ -6,18 +6,6 @@ ion-menu::part(container) {
   background-color: var(--page-background-color);
 }
 
-ion-modal.transparent-modal {
-  background: transparent;
-
-  ion-backdrop {
-    background: transparent;
-  }
-
-  .modal-wrapper {
-    background: transparent;
-  }
-}
-
 ion-toggle {
   --background-checked: var(--color-fuschia);
 }

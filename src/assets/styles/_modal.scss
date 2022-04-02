@@ -1,0 +1,120 @@
+// Default modal
+ion-modal {
+  .modal-shadow.sc-ion-modal-ios {
+    display: none;
+  }
+
+  ion-backdrop {
+    --backdrop-opacity: var(--ion-backdrop-opacity, 0.32);
+  }
+
+  @media only screen and (min-width: 768px) and (min-height: 768px) {
+    --height: 100% !important;
+    --width: 100% !important;
+
+    .modal-wrapper {
+      --max-height: unset;
+      --max-width: unset;
+    }
+  }
+}
+
+// Transparent background modal, use for camera plugin
+ion-modal.transparent-modal {
+  background: transparent;
+
+  ion-backdrop {
+    background: transparent;
+  }
+
+  .modal-wrapper {
+    background: transparent;
+  }
+}
+
+/*
+* For pop-up modals and bottom drawer modals we'll use the class adaptable-modal.
+* This class makes the modal-wrapper
+*/
+ion-modal.adaptable {
+  .modal-wrapper {
+    background-color: var(--ion-background-color);
+    border-radius: 10px;
+    height: unset;
+    max-width: fit-content;
+
+    .ion-page {
+      contain: content;
+      position: unset;
+    }
+  }
+}
+
+/*
+* For bottom-drawer modals we'll use the class bottom-drawer
+  which makes the modal align the items at the end of the page using flex.
+*/
+ion-modal.bottom-drawer {
+  align-items: flex-end;
+
+  .modal-wrapper {
+    border-radius: 30px 30px 0 0;
+    position: relative;
+    padding-top: 15px;
+    max-width: 100%;
+  }
+
+  .modal-wrapper::after {
+    background-color: var(--ion-color-medium);
+    border-color: var(--ion-color-medium);
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 1px;
+    content: "''";
+    height: 1px;
+    left: calc(50% - 20px);
+    position: absolute;
+    top: 10px;
+    width: 40px;
+  }
+}
+
+.modal-xm {
+  max-width: 220px;
+
+  @media only screen and (min-width: 768px) and (min-height: 768px) {
+    max-width: 320px;
+  }
+}
+
+.modal-sm {
+  max-width: 240px;
+
+  @media only screen and (min-width: 768px) and (min-height: 768px) {
+    max-width: 360px;
+  }
+}
+
+.modal-md {
+  max-width: 260px;
+
+  @media only screen and (min-width: 768px) and (min-height: 768px) {
+    max-width: 400px;
+  }
+}
+
+.modal-lg {
+  max-width: 280px;
+
+  @media only screen and (min-width: 768px) and (min-height: 768px) {
+    max-width: 440px;
+  }
+}
+
+.modal-xl {
+  max-width: 300px;
+
+  @media only screen and (min-width: 768px) and (min-height: 768px) {
+    max-width: 480px;
+  }
+}
