@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, MenuController } from '@ionic/angular';
 
 import {
   UserService,
-  SupabaseService,
   SharingService,
 } from '../../services';
 
@@ -21,14 +20,20 @@ import {
 export class MenuComponent {
 
   constructor(
+    private menuCtrl: MenuController,
     private modalCtrl: ModalController,
 
     public user: UserService,
     public sharing: SharingService,
-    private supabase: SupabaseService,
   ) {}
 
+  private closeMenuDrawer() {
+    this.menuCtrl.close();
+  }
+
   async themes() {
+    this.closeMenuDrawer();
+
     const modal = await this.modalCtrl.create({
       component: ThemesModal
     });
@@ -37,6 +42,8 @@ export class MenuComponent {
   }
 
   async settings() {
+    this.closeMenuDrawer();
+
     const modal = await this.modalCtrl.create({
       component: SettingsModal
     });
@@ -45,19 +52,18 @@ export class MenuComponent {
   }
 
   share() {
+    this.closeMenuDrawer();
     this.sharing.shareLink();
   }
 
   async info() {
+    this.closeMenuDrawer();
+
     const modal = await this.modalCtrl.create({
       component: AppInfoModal
     });
 
     modal.present();
-  }
-
-  signOut() {
-    this.supabase.auth.signOut();
   }
 
 }
