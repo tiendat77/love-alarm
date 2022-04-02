@@ -7,6 +7,16 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
+  ringers: number = 0;
+
   constructor() {}
+
+  test() {
+    if (this.ringers !== 0) {
+      this.ringers--;
+    } else {
+      this.ringers++;
+    }
+  }
 
 }

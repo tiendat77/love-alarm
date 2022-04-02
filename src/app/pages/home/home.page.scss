@@ -3,9 +3,8 @@
   background: transparent;
 }
 
-.page-header {
-  box-shadow: none !important;
-  background: transparent !important;
+.page-content {
+  justify-content: space-around;
 }
 
 .center {
@@ -22,8 +21,11 @@
   margin-bottom: 1rem;
 }
 
+$circle-diameter: 290px;
+$heart-size: 50px;
+
 .scanner {
-  width: 78%;
+  width: $circle-diameter;
   height: auto;
   aspect-ratio: 1 / 1;
   position: relative;
@@ -41,8 +43,53 @@
 
   .heart {
     fill: #fff;
-    width: 3.5rem;
-    height: 3.5rem;
+    width: $heart-size;
+    height: $heart-size;
+    animation: beating 1s linear infinite;
+  }
+}
+
+.ringer {
+  width: $circle-diameter;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  position: relative;
+
+  text-align: center;
+  overflow: hidden;
+
+  .ring {
+    position: absolute;
+    border-width: 20px;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: #fff;
+
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  .ring:nth-child(1) {
+    width: calc(#{$circle-diameter});
+    height: calc(#{$circle-diameter});
+    animation-delay: 1s;
+  }
+
+  .ring:nth-child(2) {
+    width: calc(#{$circle-diameter} - 50px);
+    height: calc(#{$circle-diameter} - 50px);
+    animation-delay: 0.6s;
+  }
+
+  .ring:nth-child(3) {
+    width: calc(#{$circle-diameter} - 100px);
+    height: calc(#{$circle-diameter} - 100px);
+    animation-delay: 0.2s;
+  }
+
+  .heart {
+    fill: red;
+    width: $heart-size;
+    height: $heart-size;
     animation: beating 1s linear infinite;
   }
 }
@@ -92,5 +139,19 @@ h2 {
 
   100% {
     transform: scale(0.8);
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0.2;
   }
 }
