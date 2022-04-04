@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './guards/auth.guard';
+import { TutorialGuard } from './guards/tutorial.guard';
 import { ContainerComponent } from './components/container/container.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/app/home',
+    redirectTo: '/tutorial',
   },
   {
     path: 'app',
@@ -39,8 +40,9 @@ const routes: Routes = [
     loadChildren: () => import('./pages/auth/auth.module').then( m => m.AuthPageModule)
   },
   {
-    path: 'turorial',
-    loadChildren: () => import('./pages/turorial/turorial.module').then( m => m.TurorialPageModule)
+    path: 'tutorial',
+    canLoad: [TutorialGuard],
+    loadChildren: () => import('./pages/tutorial/tutorial.module').then( m => m.TutorialPageModule)
   },
   {
     path: '**',

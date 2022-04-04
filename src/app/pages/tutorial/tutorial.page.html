@@ -1,0 +1,29 @@
+<div class="page">
+  <div class="page-content">
+    <div class="top-content">
+      <swiper
+        #swiper
+        [spaceBetween]="20"
+        (slideChange)="onSlideChange($event)"
+      >
+        <ng-template swiperSlide>
+          slide 1
+        </ng-template>
+
+        <ng-template swiperSlide>
+          slide 2
+        </ng-template>
+
+        <ng-template swiperSlide>
+          slide 3
+        </ng-template>
+      </swiper>
+    </div>
+
+    <div class="bottom-content">
+      <button icon-button>
+        <ion-icon name="logo-facebook"></ion-icon>
+      </button>
+    </div>
+  </div>
+</div>
