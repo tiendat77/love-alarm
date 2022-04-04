@@ -8,7 +8,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 /* Ionic */
 import { Drivers } from '@ionic/storage';
 import { IonicStorageModule } from '@ionic/storage-angular';
-import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import { BLE } from '@awesome-cordova-plugins/ble/ngx';
 
 /* Modules */
@@ -36,7 +35,6 @@ import { environment } from '../environments/environment';
 
     IonicStorageModule.forRoot({
       driverOrder: [
-        CordovaSQLiteDriver._driver,
         Drivers.IndexedDB,
         Drivers.LocalStorage
       ]

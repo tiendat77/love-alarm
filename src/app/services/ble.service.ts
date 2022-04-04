@@ -14,7 +14,7 @@ export class BLEService {
     private platform: PlatformService,
   ) { }
 
-  init() {
+  async init() {
     this.scanSubscription = this.ble.scan([], 20)
     .subscribe((device) => {
       console.log(device);

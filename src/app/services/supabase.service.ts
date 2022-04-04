@@ -20,7 +20,9 @@ export class SupabaseService {
     public readonly auth: AuthorizeService,
     public readonly storage: CloudStorageService,
     public readonly database: CloudDatabaseService,
-  ) {
+  ) { }
+
+  init() {
     try {
       this.client = createClient(
         environment.supabaseUrl,
@@ -30,14 +32,11 @@ export class SupabaseService {
       this.auth.init(this.client);
       this.storage.init(this.client);
       this.database.init(this.client);
+      console.log(`[Supabase] Initialized Supabase client`);
 
     } catch {
-      console.error('Failed to initialize Supabase client');
+      console.error('[Supabase] Failed to initialize Supabase client');
     }
-  }
-
-  init() {
-    console.log(`[Supabase] Initializing Supabase client`);
   }
 
 }

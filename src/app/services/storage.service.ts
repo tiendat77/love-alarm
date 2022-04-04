@@ -10,7 +10,6 @@ export class StorageService {
   ) { }
 
   async init() {
-    await this.storage.defineDriver(CordovaSQLiteDriver);
     await this.storage.create();
   }
 

@@ -59,17 +59,16 @@ export class AudioService {
     const location = this.sounds[key];
 
     if (!location) {
-      return;
+      return Promise.resolve();
     }
 
     if (!this.platform.isNative) {
       this.player.src = location;
       this.player.load();
-      this.player.play();
-      return;
+      return this.player.play();
     }
 
-    NativeAudio.play({
+    return NativeAudio.play({
       assetId: key,
       time: 0,
     });

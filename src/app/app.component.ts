@@ -59,26 +59,23 @@ export class AppComponent {
     });
   }
 
-  private initialize() {
-    this.welcome();
-
+  private async initialize() {
     if (this.platform.is('hybrid')) {
       SplashScreen.hide();
     }
 
-    Device.getInfo().then((value) => {
-      console.log('Device Info: ', value);
-    });
+    await this.storage.init()
+    await this.ble.init();
 
-    this.splash.hide(environment.production ? 3 : 1);
-    this.ble.init();
-    this.storage.init();
+    this.welcome();
+    this.splash.hide(environment.production ? 3 : 0);
 
     this.fuckIonic();
   }
 
-  private welcome() {
-    this.audio.prepare().then(() => this.audio.play(SOUNDS.welcome));
+  private async welcome() {
+    await this.audio.prepare();
+    await this.audio.play(SOUNDS.welcome);
   }
 
   private fuckIonic() {
