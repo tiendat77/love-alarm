@@ -55,20 +55,26 @@ export class AudioService {
     });
   }
 
-  play(key: string) {
+  async play(key: string) {
     const location = this.sounds[key];
 
     if (!location) {
-      return Promise.resolve();
+      return;
     }
 
     if (!this.platform.isNative) {
       this.player.src = location;
       this.player.load();
-      return this.player.play();
+
+      try {
+        await this.player.play();
+      } catch (e) {
+        console.log('[Audio] Play failed');
+        return;
+      }
     }
 
-    return NativeAudio.play({
+    await NativeAudio.play({
       assetId: key,
       time: 0,
     });

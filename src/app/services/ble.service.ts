@@ -15,10 +15,12 @@ export class BLEService {
   ) { }
 
   async init() {
-    this.scanSubscription = this.ble.scan([], 20)
-    .subscribe((device) => {
-      console.log(device);
-    });
+    if (this.platform.isNative) {
+      this.scanSubscription = this.ble.scan([], 20)
+      .subscribe((device) => {
+        console.log(device);
+      });
+    }
   }
 
   start() {

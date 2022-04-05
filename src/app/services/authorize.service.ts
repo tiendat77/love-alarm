@@ -33,8 +33,9 @@ export class AuthorizeService {
     this.client = client;
 
     this.client.auth.onAuthStateChange((event, session) => {
-      console.log('Auth state changed', event, session);
-      console.log('User info', session?.user);
+      console.log(`[Supabase] Auth state changed: ${event}`);
+      console.log(`[Supabase] Session: `, session);
+
       if (session?.user && event === 'SIGNED_IN') {
         this.onSignedIn(session);
       }
