@@ -1,0 +1,116 @@
+.page-header {
+  justify-content: flex-end;
+  box-shadow: none;
+}
+
+.page-content {
+  padding: 24px;
+}
+
+.top-content {
+  width: 100%;
+  flex: 1 1 100%;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+swiper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+section {
+  width: 100%;
+  height: 100%;
+
+  .illustration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+
+    img, svg {
+      width: auto;
+      height: 250px;
+    }
+  }
+
+  .header {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 32px;
+    margin-bottom: 16px;
+  }
+
+  .content {
+    color: var(--color-cloud);
+  }
+}
+
+button[text-button] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  outline: none;
+  overflow: hidden;
+  position: relative;
+
+  padding: 16px;
+  margin-right: -12px;
+  font-size: 16px;
+  color: var(--color-cloud);
+  background-color: transparent;
+
+  &:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+}
+
+.button-next {
+  width: 90px;
+  height: 90px;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .indicator {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    // border: 2px solid #f9c7df;
+
+    svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: hidden;
+
+      circle {
+        fill: none;
+        stroke-width: 1;
+        stroke-linecap: round;
+        transform-origin: center;
+        transform: rotate(270deg);
+      }
+    }
+  }
+
+  button {
+    width: 70px;
+    height: 70px;
+    color: #fff;
+    background-color: var(--color-fuschia);
+
+    .icon {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
