@@ -45,6 +45,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tutorial/tutorial.module').then( m => m.TutorialPageModule)
   },
   {
+    path: 'permissions',
+    loadChildren: () => import('./pages/permissions/permissions.module').then( m => m.PermissionsPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)
   }

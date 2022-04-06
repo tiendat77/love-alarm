@@ -1,11 +1,7 @@
 <div class="page flex">
-  <div class="page-header">
-    <div>
-      <button text-button [hidden]="!showSkip" (click)="startApp()">
-        Skip
-      </button>
-    </div>
-  </div>
+  <button text-button class="button-skip" [hidden]="!showSkip" (click)="startApp()">
+    Skip
+  </button>
 
   <div class="page-content">
     <div class="top-content">

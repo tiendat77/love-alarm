@@ -52,7 +52,7 @@ export class AuthorizeService {
 
   private onSignedIn(session: Session) {
     this.user.set(session.user?.id, session?.user?.user_metadata);
-    this.router.navigate(['/']);
+    // this.router.navigate(['/']);
   }
 
   private onSignedOut() {

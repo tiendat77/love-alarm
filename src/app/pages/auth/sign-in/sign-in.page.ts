@@ -49,7 +49,7 @@ export class SignInPage {
     }
 
     if (user) {
-      await this.router.navigate(['/']);
+      this.router.navigateByUrl('/app/home', { replaceUrl: true });
     }
   }
 

@@ -53,6 +53,7 @@ export class AppComponent {
     private webview: WebViewService,
     private user: UserService,
   ) {
+    this.storage.init();
     this.supabase.init();
     this.platform.ready().then(() => {
       this.initialize();
@@ -63,9 +64,6 @@ export class AppComponent {
     if (this.platform.is('hybrid')) {
       SplashScreen.hide();
     }
-
-    await this.storage.init()
-    await this.ble.init();
 
     this.welcome();
     this.splash.hide(environment.production ? 3 : 0);

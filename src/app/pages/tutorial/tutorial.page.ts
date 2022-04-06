@@ -66,10 +66,9 @@ export class TutorialPage {
 
   startApp() {
     this.router
-    .navigateByUrl('/app/home', { replaceUrl: true })
+    .navigateByUrl('/permissions', { replaceUrl: true })
     .then(() => {
-      // TODO
-      // this.storage.set(STORAGE_KEY.TUTORIAL, true);
+      this.storage.set(STORAGE_KEY.TUTORIAL, true);
     });
   }
 
