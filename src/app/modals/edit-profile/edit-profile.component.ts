@@ -15,7 +15,7 @@ function reshape(array: any[], size: number) {
 }
 
 @Component({
-  selector: 'app-modal',
+  selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.scss'],
 })
