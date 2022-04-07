@@ -1,6 +1,6 @@
-import { Component, NgZone, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { SwiperComponent } from 'swiper/angular';
+import { Swiper } from 'swiper';
 
 import { UserService } from '../../services';
 
@@ -41,7 +41,7 @@ const mock_2 = [
 })
 export class RingersModal {
 
-  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  swiper: Swiper;
   activeTab = 0;
 
   ringers = [];
@@ -51,6 +51,7 @@ export class RingersModal {
     public readonly user: UserService,
 
     private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
     private modalCtrl: ModalController,
   ) {
     this.init();
@@ -71,12 +72,17 @@ export class RingersModal {
 
   slideTo(index: number) {
     this.activeTab = index;
-    this.swiper?.swiperRef.slideTo(index);
+    this.swiper?.slideTo(index);
+  }
+
+  setSwiperInstance(swiper: Swiper) {
+    this.swiper = swiper;
   }
 
   onSlideChange([swiper]) {
     this.ngZone.run(() => {
       this.activeTab = swiper.realIndex;
+      this.cdr.detectChanges();
     });
   }
 

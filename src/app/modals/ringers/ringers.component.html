@@ -14,14 +14,14 @@
   <div class="page-content">
     <div class="segments">
       <ul>
-        <li>
-          <input type="radio" name="segment" id="segment-1" value="value-1" checked>
+        <li [class.active]="activeTab === 0">
+          <input type="radio" name="segment" id="segment-1" value="value-1">
           <label for="segment-1" class="segment" (click)="slideTo(0)">
             Ringers
           </label>
         </li>
 
-        <li>
+        <li [class.active]="activeTab === 1">
           <input type="radio" name="segment" id="segment-2" value="value-2">
           <label for="segment-2" class="segment" (click)="slideTo(1)">
             Ringing
@@ -35,8 +35,8 @@
     </div>
 
     <swiper
-      #swiper
       [spaceBetween]="20"
+      (swiper)="setSwiperInstance($event)"
       (slideChange)="onSlideChange($event)"
     >
       <ng-template swiperSlide>

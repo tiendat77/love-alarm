@@ -8,6 +8,10 @@
 
   flex: 1 1 100%;
   max-height: 58px;
+
+  li.active label {
+    color: var(--color-fuschia);
+  }
 }
 
 .list {
