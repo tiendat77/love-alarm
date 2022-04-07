@@ -54,7 +54,9 @@ export class AppComponent {
     private user: UserService,
   ) {
     this.storage.init();
+    this.webview.init();
     this.supabase.init();
+
     this.platform.ready().then(() => {
       this.initialize();
     });
@@ -66,9 +68,8 @@ export class AppComponent {
     }
 
     this.welcome();
-    this.splash.hide(environment.production ? 3 : 0);
-
     this.fuckIonic();
+    this.splash.hide();
   }
 
   private async welcome() {
@@ -96,7 +97,6 @@ export class AppComponent {
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       this.zone.run(async () => {
         // com.dathuynh.lovealarm://login-callback/#access_token
-        console.log(event.url);
         const slug = event.url.split('/')[2];
 
         if (slug.indexOf('login-callback') !== -1) {
@@ -112,7 +112,7 @@ export class AppComponent {
         }
         // If no match, do nothing - let regular routing logic take over
       });
-  });
+    });
   }
 
   private async exit() {

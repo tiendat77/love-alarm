@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+
+import {
+  AuthorizeService,
+  WebViewService,
+} from '../../services';
 
 @Component({
   selector: 'app-settings',
@@ -9,11 +15,28 @@ import { ModalController } from '@ionic/angular';
 export class SettingsModal {
 
   constructor(
-    private modalCtrl: ModalController
+    public webview: WebViewService,
+    private auth: AuthorizeService,
+
+    private router: Router,
+    private modalCtrl: ModalController,
   ) {}
 
   close() {
     this.modalCtrl.dismiss();
+  }
+
+  toggleTheme() {
+    this.webview.toggleDarkTheme();
+  }
+
+  resetPassword() {
+    this.modalCtrl.dismiss();
+    this.router.navigateByUrl('/auth/reset-password');
+  }
+
+  signOut() {
+    this.auth.signOut();
   }
 
 }

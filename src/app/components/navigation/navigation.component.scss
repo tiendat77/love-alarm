@@ -118,7 +118,9 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
+body.dark {
+  // @media (prefers-color-scheme: dark)
+  // Link: https://github.com/ionic-team/ionic-framework/issues/24771
   .tab-bar {
     background-color: #2d333b;
     box-shadow: 0 3px 10px rgba(68, 76, 86, 0.2);

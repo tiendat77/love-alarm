@@ -29,7 +29,7 @@ $segment-width: 50%;
   }
 
   input[type="radio"]:checked + label {
-    color: var(--page-text-color);
+    color: var(--color-fuschia);
     transition: color 0.4s ease-in-out;
   }
 
@@ -43,8 +43,6 @@ $segment-width: 50%;
     height: 3rem;
     padding: 0 1.5rem;
     border-radius: 0.8rem;
-
-    color: var(--color-fuschia);
     background-color: transparent;
   }
 
@@ -75,7 +73,9 @@ $segment-width: 50%;
   background-color: #f9f9f9;
 }
 
-@media (prefers-color-scheme: dark) {
+body.dark {
+  // @media (prefers-color-scheme: dark)
+  // Link: https://github.com/ionic-team/ionic-framework/issues/24771
   .segments ul {
     background-color: #212121;
   }

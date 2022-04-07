@@ -38,7 +38,7 @@
           </div>
         </li>
 
-        <li class="list-item">
+        <li class="list-item" (click)="toggleTheme()">
           <div class="list-item-content">
             <div class="list-item-icon">
               <svg width="24px" height="24px" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -51,12 +51,12 @@
             </div>
 
             <div class="list-item-text sub-text">
-              <ion-toggle></ion-toggle>
+              <ion-toggle [checked]="webview.isDarkTheme"></ion-toggle>
             </div>
           </div>
         </li>
 
-        <li class="list-item">
+        <li class="list-item" (click)="resetPassword()">
           <div class="list-item-content">
             <div class="list-item-icon">
               <svg width="24px" height="24px" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -70,7 +70,7 @@
           </div>
         </li>
 
-        <li class="list-item">
+        <li class="list-item" (click)="signOut()">
           <div class="list-item-content">
             <div class="list-item-icon">
               <svg width="24px" height="24px" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" version="1.1">
