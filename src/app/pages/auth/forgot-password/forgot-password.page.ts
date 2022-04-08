@@ -19,6 +19,8 @@ export class ForgotPasswordPage {
 
   helperText: HelperText | undefined;
 
+  isSentEmail = false;
+
   constructor(
     private router: Router,
     private loader: LoaderService,
@@ -42,11 +44,13 @@ export class ForgotPasswordPage {
     this.loader.stop();
 
     if (error) {
+      this.isSentEmail = false;
       this.helperText = { error: true, text: error.message };
       return;
     }
 
     if (data) {
+      this.isSentEmail = true;
       return this.helperText = {
         error: false,
         text: `Email has been sent to you. It's has a magic link that'll log you in.`,

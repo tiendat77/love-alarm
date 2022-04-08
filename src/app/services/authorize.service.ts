@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 
+import { md5 } from '../helpers';
 import { UserService } from './user.service';
 
 import {
@@ -69,13 +70,16 @@ export class AuthorizeService {
     };
 
     return this.client.auth.signUp(
-      { email, password },
+      { email, password: md5(password) },
       { data: meta }
     );
   }
 
   signIn(email: string, password: string) {
-    return this.client.auth.signIn({ email, password });
+    return this.client.auth.signIn({
+      email,
+      password: md5(password)
+    });
   }
 
   signInWithProvider(provider: Provider) {
@@ -90,13 +94,20 @@ export class AuthorizeService {
   }
 
   resetPassword(email: string) {
-    return this.client.auth.api.resetPasswordForEmail(email);
+    const redirectTo: string = this.platform.is('hybrid')
+      ? 'com.dathuynh.lovealarm://auth/reset-password/'
+      : window.location.origin + '/auth/reset-password/';
+
+    return this.client.auth.api.resetPasswordForEmail(
+      email,
+      {redirectTo}
+    );
   }
 
   changePassword(newPassword: string) {
     return this.client.auth.api.updateUser(
       this.token,
-      { password: newPassword }
+      { password: md5(newPassword) }
     );
   }
 
