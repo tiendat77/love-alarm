@@ -6,7 +6,7 @@
      </svg>
     </button>
 
-    <div class="page-title truncate animate__animated animate__fadeInUp">
+    <div class="page-title truncate">
       Edit Profile
     </div>
 
@@ -19,8 +19,8 @@
         <div class="avatar">
           <img avatar
             referrerpolicy="no-referrer"
-            [name]="user.name"
-            [src]="user.avatar"
+            [name]="user.profile.name"
+            [src]="user.profile.picture"
           >
 
           <div class="edit">
@@ -32,7 +32,7 @@
       </div>
     </section>
 
-    <section [formGroup]="userForm">
+    <section [formGroup]="profileForm">
       <div class="form">
         <label>Email</label>
         <div class="form-wrapper">
@@ -48,9 +48,22 @@
       </div>
 
       <div class="form">
+        <label>Birthday</label>
+        <div class="form-wrapper" (click)="openDatePicker()">
+          <input type="text" readonly placeholder="Birthday"
+            [value]="profileForm.get('birthday').value | date: 'dd MMMM yyyy'"
+            formControlName="birthday">
+        </div>
+      </div>
+
+      <div class="form">
         <label>Bio</label>
         <div class="form-wrapper">
-          <textarea type="text" style="min-height: 5rem;" placeholder="Bio" formControlName="bio"></textarea>
+          <textarea type="text"
+            style="min-height: 5rem;"
+            placeholder="Bio"
+            formControlName="bio">
+          </textarea>
         </div>
       </div>
     </section>
@@ -82,7 +95,7 @@
     </section>
 
     <section>
-      <div>Join 21 Jan 2022</div>
+      <div>Join {{joindate | date: 'dd MMMM yyyy'}}</div>
     </section>
 
     <section>

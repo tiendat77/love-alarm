@@ -1,5 +1,6 @@
 export * from './modals.module';
 export * from './app-info/app-info.component';
+export * from './date-picker/date-picker.component';
 export * from './edit-profile/edit-profile.component';
 export * from './languages/languages.component';
 export * from './my-qr-code/my-qr-code.component';

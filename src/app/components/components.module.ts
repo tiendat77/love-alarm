@@ -5,11 +5,15 @@ import { IonicModule } from '@ionic/angular';
 
 import { DirectivesModule } from '../directives/directives.module';
 
+import { DatePickerComponent } from './date-picker/date-picker.component';
+import { DatePickerWheelComponent } from './date-picker-wheel/date-picker-wheel.component';
 import { MenuComponent } from './menu/menu.component';
 import { ContainerComponent } from './container/container.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
 const COMPONENTS = [
+  DatePickerComponent,
+  DatePickerWheelComponent,
   MenuComponent,
   ContainerComponent,
   NavigationComponent,

@@ -8,12 +8,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /* Ionic Modules */
 import { IonicModule } from '@ionic/angular';
+import { ComponentsModule } from '../components/components.module';
 import { DirectivesModule } from '../directives/directives.module';
 
 import { SwiperModule } from 'swiper/angular';
 
 /* Modals */
 import { AppInfoModal } from './app-info/app-info.component';
+import { DatePickerModal } from './date-picker/date-picker.component';
 import { PrivacyPolicyModal } from './privacy-policy/privacy-policy.component';
 import { RingersModal } from './ringers/ringers.component';
 import { SettingsModal } from './settings/settings.component';
@@ -25,6 +27,7 @@ import { EditProfileModal } from './edit-profile/edit-profile.component';
 
 const MODALS = [
   AppInfoModal,
+  DatePickerModal,
   EditProfileModal,
   PrivacyPolicyModal,
   RingersModal,
@@ -44,6 +47,7 @@ const MODALS = [
     HttpClientModule,
     IonicModule,
     SwiperModule,
+    ComponentsModule,
     DirectivesModule,
   ],
   declarations: [

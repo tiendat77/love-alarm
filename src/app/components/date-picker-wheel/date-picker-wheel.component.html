@@ -1,0 +1,13 @@
+<div class="dragdealer wheel"
+  (mousedown)="onMouseDown($event)"
+  (touchstart)="onMouseDown($event)"
+>
+  <ul class="handle"
+      [style.transition]="getTransition()"
+      [style.transform]="getTransform()"
+  >
+    <li *ngFor="let option of options; trackBy: trackByFn">
+      {{option}}
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,22 @@
+<div class="date-picker">
+  <app-date-picker-wheel
+    type="month"
+    [value]="_month"
+    [options]="months"
+    (scrolled)="update('month' ,$event)">
+  </app-date-picker-wheel>
+
+  <app-date-picker-wheel
+    type="day"
+    [value]="_day"
+    [options]="days"
+    (scrolled)="update('day', $event)">
+  </app-date-picker-wheel>
+
+  <app-date-picker-wheel
+    type="year"
+    [value]="_year"
+    [options]="years"
+    (scrolled)="update('year', $event)">
+  </app-date-picker-wheel>
+</div>
