@@ -4,14 +4,10 @@
   "author": "Tien Dat Huynh",
   "homepage": "https://github.com/tiendat77",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
+    "start": "ionic serve",
     "config": "ts-node set-env.ts",
     "start:android": "ionic cap run android -l --external",
-    "build": "npm run config && ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "build": "npm run config && ng build"
   },
   "private": true,
   "dependencies": {
@@ -53,6 +49,7 @@
     "crypto-js": "4.1.1",
     "file-saver": "2.0.5",
     "firebase": "9.6.2",
+    "moment": "2.29.2",
     "qr-code-styling": "1.6.0-rc.1",
     "rxjs": "6.6.0",
     "swiper": "8.0.6",
