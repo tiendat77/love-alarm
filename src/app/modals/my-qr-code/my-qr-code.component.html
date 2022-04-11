@@ -17,12 +17,12 @@
         <div class="card-header">
           <img avatar
             referrerpolicy="no-referrer"
-            [name]="user.name"
-            [src]="user.avatar"
+            [name]="user.profile.name"
+            [src]="user.profile.picture"
           >
         </div>
         <div class="card-body">
-          <div class="name truncate">{{user.name}}</div>
+          <div class="name truncate">{{user.profile.name}}</div>
           <div #canvas class="qr-code"></div>
           <div class="text">Share your QR code so others can connect</div>
         </div>

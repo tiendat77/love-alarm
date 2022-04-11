@@ -20,10 +20,6 @@ export class AuthorizeService {
     return this.client.auth.session()?.access_token as string;
   }
 
-  private get uid() {
-    return this.client.auth.session()?.user?.id as string;
-  }
-
   constructor(
     private readonly router: Router,
     private readonly user: UserService,
@@ -52,8 +48,7 @@ export class AuthorizeService {
   }
 
   private onSignedIn(session: Session) {
-    this.user.set(session.user?.id, session?.user?.user_metadata);
-    // this.router.navigate(['/']);
+    this.user.init();
   }
 
   private onSignedOut() {
@@ -86,6 +81,7 @@ export class AuthorizeService {
     const redirectTo: string = this.platform.is('hybrid')
       ? 'com.dathuynh.lovealarm://login-callback/'
       : window.location.origin + '/login-callback/';
+
     return this.client.auth.signIn({ provider }, {redirectTo});
   }
 

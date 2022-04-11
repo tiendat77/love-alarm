@@ -111,6 +111,64 @@ cordova-res android --skip-config --copy
 ts-node set-env.ts
 ```
 
+### Key store android
+Key store path: keystore.jks
+Password: hyenat_hutdin
+
+Alias: key_0
+Password: hyenat_hutdin
+
+### Postgres Database
+
+1. User Profile
+
+```sql
+-- Create a table for Public Profiles
+create table profiles (
+  id uuid references auth.users not null,
+  updated_at timestamp with time zone,
+  email text unique,
+  name text,
+  picture text,
+  bio text,
+  interested text[],
+  birthday text,
+  joindate text,
+  ringers text[],
+  ringgings text[],
+
+  primary key (id),
+  unique(email),
+  constraint email_length check (char_length(email) >= 3)
+);
+
+alter table profiles enable row level security;
+
+create policy "Public profiles are viewable by everyone."
+  on profiles for select
+  using ( true );
+
+create policy "Users can insert their own profile."
+  on profiles for insert
+  with check ( auth.uid() = id );
+
+create policy "Users can update own profile."
+  on profiles for update
+  using ( auth.uid() = id );
+
+-- Set up Storage
+insert into storage.buckets (id, name)
+values ('avatars', 'avatars');
+
+create policy "Avatar images are publicly accessible."
+  on storage.objects for select
+  using ( bucket_id = 'avatars' );
+
+create policy "Anyone can upload an avatar."
+  on storage.objects for insert
+  with check ( bucket_id = 'avatars' );
+```
+
 ### Design
 
 [Figma](https://www.figma.com/file/MpLE0uUrm6rMZtFCVdK4jb/LoveAlarm?node-id=0%3A1)

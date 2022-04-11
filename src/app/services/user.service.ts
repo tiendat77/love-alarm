@@ -1,32 +1,87 @@
 import { Injectable } from '@angular/core';
 
+import { CloudDatabaseService } from './cloud-database.service';
+import { StorageService } from './storage.service';
+
+import { UserMeta } from '../interfaces/user-meta';
+import { UserProfile } from '../interfaces/user-profile';
+import { STORAGE_KEY } from '../configs/storage-key';
+
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
-  id: string | null;
-  name: string | null;
-  email: string | null;
-  avatar: string | null;
-  bio: string | null;
+  meta: UserMeta;
+  profile: UserProfile;
 
-  constructor() { }
+  constructor(
+    private data: CloudDatabaseService,
+    private storage: StorageService,
+  ) { }
 
-  set(id: string, meta: any) {
-    if (!id || !meta) {
-      return;
+  async init() {
+    try {
+      const metadata = this.data.user?.user_metadata;
+      const profile = await this.data.profile;
+
+      if (metadata) {
+        this.setMeta(metadata);
+      }
+
+      if (profile) {
+        this.setProfile(profile);
+      } else {
+        // user does not have profile yet
+        // so, create default one
+        const profile = await this.data.createProfile();
+        this.setProfile(profile);
+      }
+
+    } catch (error) {
+      // network error, load from storage
+      this.loadInfoFromStorage();
+      console.error('[User] Init failed', error);
     }
-
-    this.id = id;
-    this.email = meta.email;
-    this.name = meta.name || meta.full_name;
-    this.avatar = meta.avatar_url || meta.picture;
   }
 
-  clear() {
-    this.id = null;
-    this.name = null;
-    this.email = null;
-    this.avatar = null;
+  setMeta(data: any) {
+    this.meta = {
+      id: data.id,
+      name: data.name || data.full_name,
+      email: data.email,
+      avatar: data.avatar_url || data.picture || null,
+      bluetooth_id: data.bluetooth_id || null,
+      notification_token: data.notification_token || null,
+    };
+
+    this.storage.set(STORAGE_KEY.USER_META, this.meta);
+  }
+
+  setProfile(data: any) {
+    this.profile = {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      picture: data.picture || null,
+      bio: data.bio || null,
+      interested: data.interested || null,
+      birthday: data.birthday || null,
+      joindate: data.joindate || null,
+    };
+
+    this.storage.set(STORAGE_KEY.USER_PROFILE, this.profile);
+  }
+
+  private async loadInfoFromStorage() {
+    const meta = await this.storage.get(STORAGE_KEY.USER_META);
+    const profile = await this.storage.get(STORAGE_KEY.USER_PROFILE);
+
+    if (meta) {
+      this.meta = meta;
+    }
+
+    if (profile) {
+      this.profile = profile;
+    }
   }
 
 }

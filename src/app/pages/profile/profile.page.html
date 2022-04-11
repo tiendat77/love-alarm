@@ -18,18 +18,30 @@
     <div style="width:40px;"></div>
   </div>
 
-  <div class="page-content">
+
+  <ng-template #loading>
+    <div class="page-content loading-skeleton">
+      <div class="skeleton avatar"></div>
+
+      <div class="user-name">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+      </div>
+    </div>
+  </ng-template>
+
+  <div class="page-content" *ngIf="user.profile; else loading">
     <section class="user-info">
       <div class="user-picture">
         <img avatar
           referrerpolicy="no-referrer"
-          [name]="user.name"
-          [src]="user.avatar"
+          [name]="user.profile.name"
+          [src]="user.profile.picture"
         >
       </div>
 
       <div class="user-name">
-        {{ user.name }}
+        {{user.profile.name}}
       </div>
 
       <div class="user-brief">
@@ -57,22 +69,19 @@
       </button>
     </section>
 
-    <section>
+    <section *ngIf="user.profile?.bio">
       <h2>About me</h2>
       <article>
-        On our first date, I'll carve our names in a tree. It's the most romantic way to let you know I have knives
-        💓 Ring my alarm if you like me 💓
+        {{user.profile.bio}}
       </article>
     </section>
 
-    <section>
+    <section *ngIf="user.profile?.interested?.length">
       <h2>Interests</h2>
       <div class="chip-list">
-        <div class="chip">Music</div>
-        <div class="chip">Movie & TV</div>
-        <div class="chip">Food</div>
-        <div class="chip">Travel</div>
-        <div class="chip">Sports</div>
+        <div class="chip" *ngFor="let hop of user.profile.interested">
+          {{hop}}
+        </div>
       </div>
     </section>
   </div>

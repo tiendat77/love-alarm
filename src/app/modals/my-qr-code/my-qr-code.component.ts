@@ -29,7 +29,7 @@ export class MyQrCodeModal {
   }
 
   private init() {
-    const code = 'lovealarm://' + this.user.id;
+    const code = 'lovealarm://' + this.user.profile.id;
     this.qrcode = this.generate(code);
     this.qrcode.append(this.canvas?.nativeElement);
   }
@@ -69,7 +69,7 @@ export class MyQrCodeModal {
   }
 
   share() {
-    const name = this.user.name + '-qrcode.png';
+    const name = this.user.profile.name + '-qrcode.png';
     this.qrcode.getRawData().then((blob) => {
       this.sharing.shareImage(name, blob);
     });

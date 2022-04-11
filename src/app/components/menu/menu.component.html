@@ -15,14 +15,14 @@
     <div class="user-info">
       <div class="avatar">
         <img avatar referrerpolicy="no-referrer" alt=""
-          [src]="user.avatar"
-          [name]="user.name"
+          [src]="user.profile?.picture"
+          [name]="user.profile?.name"
         >
       </div>
 
       <div class="info">
         <div class="name">
-          {{ user.name }}
+          {{ user.profile?.name }}
         </div>
 
         <div class="profile">
