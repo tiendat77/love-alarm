@@ -45,10 +45,9 @@ export class UserService {
 
   setMeta(data: any) {
     this.meta = {
-      id: data.id,
+      ...data, // properties from provider
+
       name: data.name || data.full_name,
-      email: data.email,
-      avatar: data.avatar_url || data.picture || null,
       bluetooth_id: data.bluetooth_id || null,
       notification_token: data.notification_token || null,
     };

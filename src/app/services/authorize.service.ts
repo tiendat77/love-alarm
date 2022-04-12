@@ -20,6 +20,8 @@ export class AuthorizeService {
     return this.client.auth.session()?.access_token as string;
   }
 
+  private isLogged = false;
+
   constructor(
     private readonly router: Router,
     private readonly user: UserService,
@@ -48,7 +50,13 @@ export class AuthorizeService {
   }
 
   private onSignedIn(session: Session) {
+    if (this.isLogged) {
+      return;
+    }
+
+    this.isLogged = true;
     this.user.init();
+    this.router.navigateByUrl('/app/home', { replaceUrl: true });
   }
 
   private onSignedOut() {

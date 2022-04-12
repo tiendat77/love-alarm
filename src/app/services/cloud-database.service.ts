@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SupabaseClient } from '@supabase/supabase-js';
+import { UserMeta } from '../interfaces/user-meta';
 import { UserProfile } from '../interfaces/user-profile';
 
 @Injectable({ providedIn: 'root' })
@@ -107,35 +108,16 @@ export class CloudDatabaseService {
     });
   }
 
-  fetchLog() {
-    return this.client
-      .from('laso')
-      .select('*')
-      .order('id', { ascending: false });
-  }
+  updateMeta(meta: UserMeta) {
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.auth.update({data: meta});
 
-  addLog(log) {
-    return this.client
-      .from('laso')
-      .insert({
-        data: log,
-        user_id: this.user.id,
-      })
-      .single();
-  }
-
-  removeLog(id: string) {
-    return this.client
-      .from('laso')
-      .delete()
-      .eq('id', id);
-  }
-
-  removeAllLog() {
-    return this.client
-      .from('laso')
-      .delete()
-      .match({ user_id: this.user.id })
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
   }
 
 }

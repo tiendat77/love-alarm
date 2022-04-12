@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import moment from 'moment';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 import {
   CloudDatabaseService,
+  CloudStorageService,
   LoaderService,
   ToastService,
   UserService
@@ -12,6 +13,10 @@ import {
 import { DatePickerModal } from '../date-picker/date-picker.component';
 import { UserProfile } from '../../interfaces/user-profile';
 import { TOPICS } from '../../configs/topic';
+
+import { ImageProcess } from '../../helpers/image.helper';
+import { nanoid } from '../../helpers/nanoid.helper';
+import moment from 'moment';
 
 function reshape(array: any[], size: number) {
   const result = [];
@@ -46,6 +51,7 @@ export class EditProfileModal {
     private toast: ToastService,
     private loader: LoaderService,
     private data: CloudDatabaseService,
+    private storage: CloudStorageService,
     private modalCtrl: ModalController,
   ) {
     this.init();
@@ -114,7 +120,51 @@ export class EditProfileModal {
     });
   }
 
-  uploadPhoto() {
+  async uploadPhoto() {
+    try {
+      const photo = await Camera.getPhoto({
+        resultType: CameraResultType.DataUrl,
+      });
+
+      const resized = await new ImageProcess(photo.dataUrl).resize(300, 300);
+
+      const name = `${nanoid()}_${Date.now()}`;
+      const file = await fetch(resized)
+        .then((res) => res.blob())
+        .then( (blob) => new File([blob], name, { type: `image/${photo.format}`}));
+
+      this.loader.start();
+
+      // upload to storage
+      const path = `${this.user.profile.id}/${name}.${photo.format}`;
+      await this.storage.uploadAvatar(path, file);
+
+      const old_avatar = this.user.profile.picture;
+      const new_avatar = await this.storage.getAvatarUrl(path);
+
+      // update profile
+      await this.data.updateProfile({
+        ...this.user.profile,
+        picture: new_avatar,
+      });
+
+      this.user.setProfile({
+        ...this.user.profile,
+        picture: new_avatar,
+      });
+
+      // delete old avatar
+      if (old_avatar) {
+        const old_path = `${this.user.profile.id}/${old_avatar.split('/').pop()}`;
+        await this.storage.deleteAvatar(old_path);
+      }
+
+    } catch (error) {
+      console.error('[Upload photo] ', error);
+      this.toast.show('Upload failed, please try again later!');
+    } finally {
+      this.loader.stop();
+    }
   }
 
   async openDatePicker() {
