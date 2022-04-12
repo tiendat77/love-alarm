@@ -161,13 +161,17 @@ create policy "Users can update own profile."
 insert into storage.buckets (id, name)
 values ('avatars', 'avatars');
 
-create policy "Avatar images are publicly accessible."
+create policy "Give anon users access to JPG images in folder"
   on storage.objects for select
-  using ( bucket_id = 'avatars' );
+  using (bucket_id = 'avatars' and storage."extension"(name) = 'jpg' and LOWER((storage.foldername(name))[1]) = 'public' and auth.role() = 'anon');
 
-create policy "Anyone can upload an avatar."
+create policy "Give users access to own folder"
+  on storage.objects for select
+  using (bucket_id = 'avatars' and auth.uid()::text = (storage.foldername(name))[1]);
+
+create policy "Give users access to own folder"
   on storage.objects for insert
-  with check ( bucket_id = 'avatars' );
+  with check (bucket_id = 'avatars' and auth.uid()::text = (storage.foldername(name))[1]);
 ```
 
 ### Design
