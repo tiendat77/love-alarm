@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import moment from 'moment';
 
-import { CloudDatabaseService, UserService } from '../../services';
+import {
+  CloudDatabaseService,
+  LoaderService,
+  ToastService,
+  UserService
+} from '../../services';
+import { DatePickerModal } from '../date-picker/date-picker.component';
 import { UserProfile } from '../../interfaces/user-profile';
 import { TOPICS } from '../../configs/topic';
-
-import { DatePickerModal } from '../date-picker/date-picker.component';
-
-import moment from 'moment';
 
 function reshape(array: any[], size: number) {
   const result = [];
@@ -32,6 +35,7 @@ export class EditProfileModal {
     name: new FormControl(null, Validators.required),
     birthday: new FormControl(null),
     bio: new FormControl(null),
+    city: new FormControl(null),
   });
 
   interests = {};
@@ -39,6 +43,8 @@ export class EditProfileModal {
 
   constructor(
     public user: UserService,
+    private toast: ToastService,
+    private loader: LoaderService,
     private data: CloudDatabaseService,
     private modalCtrl: ModalController,
   ) {
@@ -49,8 +55,9 @@ export class EditProfileModal {
     this.profileForm.patchValue({
       email: this.user.profile.email,
       name: this.user.profile.name,
-      birthday: this.string2Date(this.user.profile.birthday),
       bio: this.user.profile.bio,
+      city: this.user.profile.city,
+      birthday: this.string2Date(this.user.profile.birthday),
     });
 
     this.user.profile.interested.forEach(topic => {
@@ -69,23 +76,42 @@ export class EditProfileModal {
   }
 
   private getProfileFormValue() {
-    const { email, name, birthday, bio } = this.profileForm.value;
+    const { email, name, birthday, bio, city } = this.profileForm.value;
     const interested = Object.keys(this.interests).filter(topic => this.interests[topic]);
 
     const profile: UserProfile = {
       ...this.user.profile,
       name,
       bio,
-      birthday: birthday ? birthday.toISOString() : null,
+      city,
       interested,
+      birthday: birthday ? birthday.toISOString() : null,
     };
 
     return profile;
   }
 
   update() {
-    // TODO: update user info
-    console.log(this.getProfileFormValue());
+    const profile = this.getProfileFormValue();
+
+    if (!profile.name) {
+      this.toast.show('Name is required');
+      return;
+    }
+
+    this.loader.start();
+    this.data.updateProfile(profile)
+    .then(() => {
+      this.loader.stop();
+      this.user.setProfile(profile);
+      this.toast.show('Profile updated');
+      this.modalCtrl.dismiss();
+    })
+    .catch(error => {
+      console.log(error);
+      this.loader.stop();
+      this.toast.show('Update failed, please try again later!');
+    });
   }
 
   uploadPhoto() {
@@ -94,6 +120,9 @@ export class EditProfileModal {
   async openDatePicker() {
     const modal = await this.modalCtrl.create({
       component: DatePickerModal,
+      componentProps: {
+        date: this.profileForm.value.birthday || new Date(),
+      }
     });
 
     modal.present();

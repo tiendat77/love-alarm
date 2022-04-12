@@ -131,6 +131,7 @@ create table profiles (
   name text,
   picture text,
   bio text,
+  city text,
   interested text[],
   birthday text,
   joindate text,

@@ -20,11 +20,7 @@ export class CloudDatabaseService {
   get profile() {
     return new Promise(async (resolve, reject) => {
       try {
-        let { data: profile, error, status } = await this.getProfile();
-        if (error && status !== 406) {
-          reject(error);
-        }
-
+        const profile = await this.getProfile();
         resolve(profile);
       } catch (error) {
         reject(error);
@@ -41,11 +37,18 @@ export class CloudDatabaseService {
   }
 
   getProfile() {
-    return this.client
-      .from('profiles')
-      .select('*')
-      .eq('id', this.user?.id)
-      .single();
+    return new Promise(async (resolve, reject) => {
+      const { data: profile, error, status } = await this.client.from('profiles')
+        .select('*')
+        .eq('id', this.user?.id)
+        .single();
+
+      if (error && status !== 406) {
+        reject(error);
+      } else {
+        resolve(profile);
+      }
+    });
   }
 
   createProfile() {
@@ -56,6 +59,7 @@ export class CloudDatabaseService {
       email: metadata.email,
       name: metadata.name || metadata.full_name,
       picture: metadata.avatar_url || metadata.picture || null,
+      city: null,
       bio: null,
       interested: [],
       birthday: null,
@@ -64,14 +68,22 @@ export class CloudDatabaseService {
       joindate: user.created_at,
     };
 
-    return this.client.from('profiles')
-      .insert({
-        ...profile,
-        id: this.user?.id,
-        updated_at: new Date(),
-      }, {
-        returning: 'minimal', // Don't return the value after inserting
-      }).then(() => profile);
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('profiles')
+        .insert({
+          ...profile,
+          id: this.user?.id,
+          updated_at: new Date(),
+        }, {
+          returning: 'minimal', // Don't return the value after inserting
+        });
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(profile);
+      }
+    });
   }
 
   updateProfile(profile: UserProfile) {
@@ -81,11 +93,18 @@ export class CloudDatabaseService {
       updated_at: new Date(),
     };
 
-    return this.client
-      .from('profiles')
-      .upsert(update, {
-        returning: 'minimal'
-      });
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('profiles')
+        .upsert(update, {
+          returning: 'minimal'
+        });
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
   }
 
   fetchLog() {

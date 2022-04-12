@@ -48,11 +48,17 @@
       </div>
 
       <div class="form">
+        <label>City</label>
+        <div class="form-wrapper">
+          <input type="text" required placeholder="City" formControlName="city">
+        </div>
+      </div>
+
+      <div class="form">
         <label>Birthday</label>
         <div class="form-wrapper" (click)="openDatePicker()">
           <input type="text" readonly placeholder="Birthday"
-            [value]="profileForm.get('birthday').value | date: 'dd MMMM yyyy'"
-            formControlName="birthday">
+            [value]="profileForm.get('birthday').value | date: 'dd MMMM yyyy'">
         </div>
       </div>
 

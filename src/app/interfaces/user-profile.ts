@@ -2,6 +2,7 @@ export interface UserProfile {
   id: string | null;
   email: string;
   name: string | null;
+  city?: string | null;
   picture?: string | null;
   bio?: string | null;
   interested?: string[];

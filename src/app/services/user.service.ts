@@ -61,6 +61,7 @@ export class UserService {
       id: data.id,
       name: data.name,
       email: data.email,
+      city: data.city || null,
       picture: data.picture || null,
       bio: data.bio || null,
       interested: data.interested || null,

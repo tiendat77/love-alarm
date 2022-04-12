@@ -8,12 +8,24 @@ import {
   UserService
 } from '../../services';
 
+import { TOPICS } from '../../configs/topic';
+
+function transformArray2Object(array: any[]) {
+  const result = {};
+  array.forEach(item => {
+    result[item.id] = item.value;
+  });
+  return result;
+}
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage {
+
+  topics = transformArray2Object(TOPICS);
 
   constructor(
     public user: UserService,

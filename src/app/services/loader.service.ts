@@ -10,7 +10,7 @@ export class LoaderService {
     private loading: LoadingController
   ) { }
 
-  async start(message = 'Chờ tí nhé ^^') {
+  async start(message = 'Just a moment...') {
     this.loader = await this.loading.create({
       message,
       mode: 'ios',

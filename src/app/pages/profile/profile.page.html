@@ -45,7 +45,7 @@
       </div>
 
       <div class="user-brief">
-        California, Western U.S
+        {{user.profile.city}}
       </div>
     </section>
 
@@ -80,7 +80,7 @@
       <h2>Interests</h2>
       <div class="chip-list">
         <div class="chip" *ngFor="let hop of user.profile.interested">
-          {{hop}}
+          {{topics[hop]}}
         </div>
       </div>
     </section>

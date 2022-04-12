@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -8,7 +8,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class DatePickerModal {
 
-  date = new Date();
+  @Input() date = new Date();
 
   constructor(
     private modalCtrl: ModalController
