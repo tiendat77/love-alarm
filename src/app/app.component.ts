@@ -3,7 +3,6 @@ import { Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** Capacitor */
-import { Device } from '@capacitor/device';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { AlertController, ModalController, Platform } from '@ionic/angular';
@@ -15,6 +14,7 @@ import {
   FileService,
   LanguageService,
   LoaderService,
+  NotificationService,
   SplashScreenService,
   StorageService,
   SupabaseService,
@@ -45,6 +45,7 @@ export class AppComponent {
     private file: FileService,
     private language: LanguageService,
     private loader: LoaderService,
+    private notification: NotificationService,
     private splash: SplashScreenService,
     private storage: StorageService,
     private supabase: SupabaseService,
@@ -56,6 +57,8 @@ export class AppComponent {
     this.storage.init();
     this.webview.init();
     this.supabase.init();
+    this.ble.init();
+    this.notification.init();
 
     this.platform.ready().then(() => {
       this.initialize();

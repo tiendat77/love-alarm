@@ -23,6 +23,13 @@ export class UserService {
       const metadata = this.data.user?.user_metadata;
       const profile = await this.data.profile;
 
+      const notificationToken = await this.storage.get(STORAGE_KEY.NOTIFICATION_TOKEN);
+
+      if (notificationToken && notificationToken !== metadata?.notification_token) {
+        metadata.notification_token = notificationToken;
+        this.data.updateMeta(metadata);
+      }
+
       if (metadata) {
         this.setMeta(metadata);
       }
