@@ -4,7 +4,6 @@
 
   button {
     width: 100%;
-    justify-content: space-between;
   }
 
   button:not(:last-child) {
@@ -55,7 +54,6 @@
 
   .heart {
     transform-origin: center;
-    animation: beating 1s linear infinite;
   }
 
   .ripple {
@@ -64,11 +62,33 @@
     position: absolute;
     border-radius: 50%;
 
-    animation: ripple 1.8s linear infinite;
     background-image: radial-gradient(
       rgba(255, 188, 217, 0.1),
       rgba(255, 188, 217, 0.15)
     );
+  }
+
+  .ripple:nth-child(1) {
+    transform: scale(0.8);
+  }
+
+  .ripple:nth-child(2) {
+    transform: scale(0.6);
+  }
+
+  .ripple:nth-child(3) {
+    transform: scale(0.4);
+  }
+}
+
+.scanner.scanning {
+  .heart {
+    animation: beating 1s linear infinite;
+  }
+
+  .ripple {
+    transform: scale(1);
+    animation: ripple 1.8s linear infinite;
   }
 
   .ripple:nth-child(2) {

@@ -10,6 +10,17 @@ ion-toggle {
   --background-checked: var(--color-fuschia);
 }
 
+.action-sheet {
+  ion-icon {
+    font-size: 26px !important;
+    margin-inline-end: 10px !important;
+  }
+
+  .action-sheet-button {
+    color: var(--color-fuschia) !important;
+  }
+}
+
 /* Swiper Js */
 .swiper-slide {
   display: block;

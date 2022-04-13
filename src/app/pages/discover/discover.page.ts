@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 
 import { BLEService, WebViewService } from '../../services';
 import {
@@ -16,18 +16,48 @@ import {
 export class DiscoverPage implements OnInit {
 
   constructor(
-    private modal: ModalController,
-    private ble: BLEService,
+    public ble: BLEService,
     private webview: WebViewService,
+    private modalCtrl: ModalController,
+    private actionSheetCtrl: ActionSheetController,
   ) { }
 
   ngOnInit() {
   }
 
-  async scan() {
+  async scanWithQrCode() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      cssClass: 'action-sheet',
+      buttons: [
+        {
+          text: 'Scan QR Code',
+          icon: 'la-scan-qrcode',
+          handler: () => {
+            this.scanQrCode();
+          }
+        },
+        {
+          text: 'My QR Code',
+          icon: 'la-my-qrcode',
+          handler: () => {
+            this.myQrcode();
+          }
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel'
+        }
+      ]
+    });
+
+    await actionSheet.present();
+  }
+
+  async scanQrCode() {
     this.webview.hideApp();
 
-    const modal = await this.modal.create({
+    const modal = await this.modalCtrl.create({
       component: ScanQrCodeModal,
       cssClass: 'transparent-modal'
     });
@@ -43,16 +73,20 @@ export class DiscoverPage implements OnInit {
     }
   }
 
-  async qrcode() {
-    const modal = await this.modal.create({
+  async myQrcode() {
+    const modal = await this.modalCtrl.create({
       component: MyQrCodeModal
     });
 
     modal.present();
   }
 
+  async startScan() {
+    this.ble.start();
+  }
+
   async viewNearby() {
-    const modal = await this.modal.create({
+    const modal = await this.modalCtrl.create({
       component: ScanResultModal
     });
 

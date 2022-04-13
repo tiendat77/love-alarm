@@ -17,11 +17,18 @@ export class PermissionsPage {
   constructor(private router: Router) {}
 
   async enableNotification() {
-    const result = await PushNotifications.requestPermissions();
+    let status = await PushNotifications.checkPermissions();
 
-    if (result.receive === 'granted') {
-      this.swiper.slideNext();
+    if (status.receive === 'prompt') {
+      status = await PushNotifications.requestPermissions();
     }
+
+    if (status.receive !== 'granted') {
+      throw new Error('User denied permissions!');
+    }
+
+    await PushNotifications.register();
+    this.swiper.slideNext();
   }
 
   async enableLocation() {

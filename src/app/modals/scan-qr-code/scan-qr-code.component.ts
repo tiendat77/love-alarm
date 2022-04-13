@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-
+import { Camera } from '@capacitor/camera';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 @Component({
@@ -23,16 +23,25 @@ export class ScanQrCodeModal {
   }
 
   async prepare() {
-    await BarcodeScanner.prepare();
-    const permission = await BarcodeScanner.checkPermission({ force: true });
+    const permission = await Camera.requestPermissions();
 
-    if (permission.denied) {
-      this.modalCtrl.dismiss(null);
+    console.log('permission', permission);
+
+    if (permission.camera !== 'granted') {
+      return false;
     }
+
+    await BarcodeScanner.prepare();
+    return true;
   }
 
   async scan() {
-    await this.prepare();
+    const success = await this.prepare();
+
+    if (!success) {
+      this.modalCtrl.dismiss(null);
+      return;
+    }
 
     // make background of WebView transparent
     await BarcodeScanner.hideBackground();

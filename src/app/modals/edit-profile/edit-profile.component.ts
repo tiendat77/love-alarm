@@ -137,7 +137,13 @@ export class EditProfileModal {
 
       // upload to storage
       const path = `${this.user.profile.id}/${name}.${photo.format}`;
-      await this.storage.uploadAvatar(path, file);
+
+      try {
+        await this.storage.uploadAvatar(path, file);
+      } catch (error) {
+        console.error(error);
+        this.toast.show('Upload failed, please try again later!');
+      }
 
       const old_avatar = this.user.profile.picture;
       const new_avatar = await this.storage.getAvatarUrl(path);
@@ -161,7 +167,6 @@ export class EditProfileModal {
 
     } catch (error) {
       console.error('[Upload photo] ', error);
-      this.toast.show('Upload failed, please try again later!');
     } finally {
       this.loader.stop();
     }
