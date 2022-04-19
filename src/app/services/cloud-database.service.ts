@@ -120,4 +120,18 @@ export class CloudDatabaseService {
     });
   }
 
+  getUsersInfo(users: string[]) {
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('profiles')
+        .select('id, name, picture')
+        .in('id', users);
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  }
+
 }

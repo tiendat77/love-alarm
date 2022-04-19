@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -11,11 +11,17 @@ export class DatePickerModal {
   @Input() date = new Date();
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private modalCtrl: ModalController
   ) {}
 
   apply() {
     this.modalCtrl.dismiss(this.date);
+  }
+
+  // fix change detection on mobile devices
+  onDateChanged() {
+    this.cdr.detectChanges();
   }
 
   close() {

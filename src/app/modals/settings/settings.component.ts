@@ -9,6 +9,7 @@ import {
 } from '../../services';
 
 import { LanguagesModal } from '../languages/languages.component';
+import { ChangePasswordModal } from '../change-password/change-password.component';
 
 import { STORAGE_KEY } from '../../configs/storage-key';
 import { LANGUAGES_MAP } from '../../configs/languages';
@@ -61,9 +62,12 @@ export class SettingsModal {
     this.webview.toggleDarkTheme();
   }
 
-  resetPassword() {
-    this.modalCtrl.dismiss();
-    this.router.navigateByUrl('/auth/reset-password');
+  async resetPassword() {
+    const modal = await this.modalCtrl.create({
+      component: ChangePasswordModal
+    });
+
+    modal.present();
   }
 
   signOut() {

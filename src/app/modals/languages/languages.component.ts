@@ -26,7 +26,6 @@ export class LanguagesModal {
   async init() {
     this.language = (await this.storage.get(STORAGE_KEY.LANGUAGE)) || 'en';
     this.cdr.detectChanges();
-    console.log(this.language);
   }
 
   select(language: string) {

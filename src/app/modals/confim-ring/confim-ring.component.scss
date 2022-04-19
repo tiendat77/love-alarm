@@ -1,0 +1,30 @@
+.page-content {
+  padding: 24px;
+}
+
+button {
+  width: 100%;
+}
+
+.illustration {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.text {
+  text-align: center;
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    margin-top: 8px;
+    font-size: 20px;
+    color: var(--color-cloud);
+  }
+}
+
+.actions {
+  margin-top: 1rem;
+}

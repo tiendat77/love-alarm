@@ -22,6 +22,7 @@ export class BLEService {
   async init() {
     const deviceId = await Device.getId();
     if (deviceId?.uuid) {
+      console.log('Device ID', deviceId.uuid);
       this.storage.set(STORAGE_KEY.BLE_TOKEN, deviceId.uuid);
     }
   }
@@ -37,7 +38,6 @@ export class BLEService {
         },
         (result) => {
           console.log('received new scan result', result);
-          console.log('rawAdvertisement', this.parse(result.rawAdvertisement));
         }
       );
 
@@ -50,18 +50,6 @@ export class BLEService {
       this.isScanning = false;
       console.error(error);
     }
-  }
-
-  parse(value: DataView): any {
-    const flags = value.getUint8(0);
-    const rate16Bits = flags & 0x1;
-    let hell;
-    if (rate16Bits > 0) {
-      hell = value.getUint16(1, true);
-    } else {
-      hell = value.getUint8(1);
-    }
-    return hell;
   }
 
 }

@@ -7,25 +7,12 @@
     </button>
 
     <div class="page-title truncate">
-      Birthday
+      Profile
     </div>
 
     <div style="width:40px;"></div>
   </div>
 
   <div class="page-content">
-    <h2 style="text-align: center;">
-      {{date | date: 'MMMM dd, yyyy'}}
-    </h2>
-
-    <app-date-picker
-      [(value)]="date"
-      (valueChange)="onDateChanged()">
-    </app-date-picker>
-
-    <button raised-button style="width: 100%; margin-top: 2rem;"
-            (click)="apply()">
-      Apply
-    </button>
   </div>
 </div>

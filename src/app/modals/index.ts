@@ -1,5 +1,7 @@
 export * from './modals.module';
 export * from './app-info/app-info.component';
+export * from './change-password/change-password.component';
+export * from './confim-ring/confim-ring.component';
 export * from './date-picker/date-picker.component';
 export * from './edit-profile/edit-profile.component';
 export * from './languages/languages.component';
@@ -10,3 +12,4 @@ export * from './scan-qr-code/scan-qr-code.component';
 export * from './scan-result/scan-result.component';
 export * from './settings/settings.component';
 export * from './themes/themes.component';
+export * from './user-profile/user-profile.component';

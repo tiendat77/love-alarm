@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 
 import {
   LoaderService,
   SupabaseService
-} from '../../../services';
+} from '../../services';
 
-import { HelperText } from '../../../interfaces';
+import { HelperText } from '../../interfaces';
 
 @Component({
-  selector: 'app-auth-reset-password',
-  templateUrl: './reset-password.page.html',
-  styleUrls: ['./reset-password.page.scss'],
+  selector: 'app-change-password-modal',
+  templateUrl: './change-password.component.html',
+  styleUrls: ['./change-password.component.scss'],
 })
-export class ResetPasswordPage {
+export class ChangePasswordModal {
 
   newPwdCtrl = new FormControl();
 
@@ -24,11 +25,8 @@ export class ResetPasswordPage {
     private readonly router: Router,
     private readonly loader: LoaderService,
     private readonly supabase: SupabaseService,
+    private readonly modalCtrl: ModalController,
   ) { }
-
-  back() {
-    this.router.navigate(['/']);
-  }
 
   async reset() {
     const newPassword = this.newPwdCtrl.value;
@@ -54,7 +52,12 @@ export class ResetPasswordPage {
 
     if (user) {
       await this.router.navigate(['/']);
+      await this.modalCtrl.dismiss();
     }
+  }
+
+  close() {
+    this.modalCtrl.dismiss();
   }
 
 }
