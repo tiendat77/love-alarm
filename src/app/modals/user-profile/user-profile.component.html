@@ -13,6 +13,64 @@
     <div style="width:40px;"></div>
   </div>
 
-  <div class="page-content">
+  <ng-template #loading>
+    <div class="page-content loading-skeleton">
+      <div class="skeleton avatar"></div>
+
+      <div class="user-name">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+      </div>
+    </div>
+  </ng-template>
+
+  <div class="page-content" *ngIf="user; else loading">
+    <section class="user-info">
+      <div class="user-picture">
+        <img avatar
+          referrerpolicy="no-referrer"
+          [name]="user.name"
+          [src]="user.picture"
+        >
+      </div>
+
+      <div class="user-name">
+        {{user.name}}
+      </div>
+
+      <div class="user-brief">
+        {{user.city}}
+      </div>
+    </section>
+
+    <section class="statistics">
+      <div class="statistic">
+        <div>1</div>
+        <div>Ringers</div>
+      </div>
+
+      <div class="seperator"></div>
+
+      <div class="statistic">
+        <div>1</div>
+        <div>Ringing</div>
+      </div>
+    </section>
+
+    <section *ngIf="user?.bio">
+      <h2>About me</h2>
+      <article>
+        {{user.bio}}
+      </article>
+    </section>
+
+    <section *ngIf="user.interested?.length">
+      <h2>Interests</h2>
+      <div class="chip-list">
+        <div class="chip" *ngFor="let hop of user.interested">
+          {{topics[hop]}}
+        </div>
+      </div>
+    </section>
   </div>
 </div>

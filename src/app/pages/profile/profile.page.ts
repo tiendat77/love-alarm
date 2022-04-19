@@ -9,14 +9,7 @@ import {
 } from '../../services';
 
 import { TOPICS } from '../../configs/topic';
-
-function transformArray2Object(array: any[]) {
-  const result = {};
-  array.forEach(item => {
-    result[item.id] = item.value;
-  });
-  return result;
-}
+import { transformArray2Object } from '../../helpers/object.helper';
 
 @Component({
   selector: 'app-profile',
