@@ -12,6 +12,7 @@ import { IonicModule } from '@ionic/angular';
 
 /* Modules */
 import { ModalsModule } from '../modals/modals.module';
+import { PipesModule } from '../pipes/pipes.module';
 import { ComponentsModule } from '../components/components.module';
 import { DirectivesModule } from '../directives/directives.module';
 
@@ -28,6 +29,7 @@ import { DirectivesModule } from '../directives/directives.module';
     IonicModule,
 
     ModalsModule,
+    PipesModule,
     ComponentsModule,
     DirectivesModule,
   ],

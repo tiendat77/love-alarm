@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /* Ionic Modules */
 import { IonicModule } from '@ionic/angular';
+import { PipesModule } from '../pipes/pipes.module';
 import { ComponentsModule } from '../components/components.module';
 import { DirectivesModule } from '../directives/directives.module';
 
@@ -57,6 +58,7 @@ const MODALS = [
     HttpClientModule,
     IonicModule,
     SwiperModule,
+    PipesModule,
     ComponentsModule,
     DirectivesModule,
   ],
