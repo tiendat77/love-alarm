@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Swiper } from 'swiper';
 
-import { BleClient } from '@capacitor-community/bluetooth-le';
+import { BleClient } from 'love-alarm-ble';
 import { PushNotifications } from '@capacitor/push-notifications';
 
 @Component({
@@ -32,7 +32,7 @@ export class PermissionsPage {
   }
 
   async enableLocation() {
-    await BleClient.initialize({ androidNeverForLocation: true });
+    await BleClient.initialize({ advertising: null });
     this.swiper.slideNext();
   }
 

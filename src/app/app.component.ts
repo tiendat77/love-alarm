@@ -57,7 +57,6 @@ export class AppComponent {
     this.storage.init();
     this.webview.init();
     this.supabase.init();
-    this.ble.init();
     this.notification.init();
 
     this.platform.ready().then(() => {

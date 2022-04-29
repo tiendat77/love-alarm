@@ -82,7 +82,7 @@ export class DiscoverPage implements OnInit {
   }
 
   async startScan() {
-    this.ble.start();
+    this.ble.scan();
   }
 
   async viewNearby() {

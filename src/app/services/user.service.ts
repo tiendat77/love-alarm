@@ -24,14 +24,9 @@ export class UserService {
       const profile = await this.data.profile;
 
       const notificationToken = await this.storage.get(STORAGE_KEY.NOTIFICATION_TOKEN);
-      const bleToken = await this.storage.get(STORAGE_KEY.BLE_TOKEN);
 
-      if (
-        (notificationToken && notificationToken !== metadata?.notification_token) ||
-        (bleToken && bleToken !== metadata?.bluetooth_id)
-      ) {
+      if (notificationToken && notificationToken !== metadata?.notification_token) {
         metadata.notification_token = notificationToken;
-        metadata.bluetooth_id = bleToken;
         this.data.updateMeta(metadata);
       }
 

@@ -10,6 +10,7 @@ import {
   Session,
   SupabaseClient,
 } from '@supabase/supabase-js';
+import { BLEService } from './ble.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthorizeService {
@@ -25,6 +26,7 @@ export class AuthorizeService {
   constructor(
     private readonly router: Router,
     private readonly user: UserService,
+    private readonly ble: BLEService,
     private readonly platform: Platform,
   ) { }
 
@@ -49,13 +51,14 @@ export class AuthorizeService {
     });
   }
 
-  private onSignedIn(session: Session) {
+  private async onSignedIn(session: Session) {
     if (this.isLogged) {
       return;
     }
 
     this.isLogged = true;
-    this.user.init();
+    await this.user.init();
+    await this.ble.init();
     this.router.navigateByUrl('/app/home', { replaceUrl: true });
   }
 

@@ -1,53 +1,50 @@
 import { Injectable } from '@angular/core';
-import { Device } from '@capacitor/device';
-import { BleClient } from '@capacitor-community/bluetooth-le';
-import { Subscription } from 'rxjs';
+import { BleClient } from 'love-alarm-ble';
 
-import { PlatformService } from './platform.service';
+import { UserService } from './user.service';
 import { StorageService } from './storage.service';
-import { STORAGE_KEY } from '../configs/storage-key';
+import { PlatformService } from './platform.service';
 
 @Injectable({ providedIn: 'root' })
 export class BLEService {
 
   isScanning = false;
 
-  private scanSubscription: Subscription;
-
   constructor(
+    private user: UserService,
     private storage: StorageService,
     private platform: PlatformService,
   ) { }
 
   async init() {
-    const deviceId = await Device.getId();
-    if (deviceId?.uuid) {
-      console.log('Device ID', deviceId.uuid);
-      this.storage.set(STORAGE_KEY.BLE_TOKEN, deviceId.uuid);
-    }
+    await BleClient.initialize({
+      advertising: this.user.profile?.id
+    });
   }
 
-  async start() {
+  async scan() {
     try {
-      await BleClient.initialize();
-
       this.isScanning = true;
-      await BleClient.requestLEScan(
-        {
-          services: [],
-        },
+      await BleClient.scan(
         (result) => {
           console.log('received new scan result', result);
         }
       );
 
-      setTimeout(async () => {
-        await BleClient.stopLEScan();
-        this.isScanning = false;
-        console.log('stopped scanning');
-      }, 50000);
+      this.isScanning = false;
+      console.log('scanning stopped');
     } catch (error) {
       this.isScanning = false;
+      console.error(error);
+    }
+  }
+
+  async read(address: string) {
+    try {
+      // read user profile from found device
+      const result = await BleClient.read({address});
+      console.log('read result', result);
+    } catch (error) {
       console.error(error);
     }
   }

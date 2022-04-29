@@ -4,10 +4,6 @@
 		"classpath": "com.getcapacitor.community.barcodescanner.BarcodeScanner"
 	},
 	{
-		"pkg": "@capacitor-community/bluetooth-le",
-		"classpath": "com.capacitorjs.community.plugins.bluetoothle.BluetoothLe"
-	},
-	{
 		"pkg": "@capacitor-community/native-audio",
 		"classpath": "com.getcapacitor.community.audio.NativeAudio"
 	},
@@ -58,5 +54,9 @@
 	{
 		"pkg": "@capacitor/status-bar",
 		"classpath": "com.capacitorjs.plugins.statusbar.StatusBarPlugin"
+	},
+	{
+		"pkg": "love-alarm-ble",
+		"classpath": "com.dathuynh.plugins.love_alarm_ble.LoveAlarmBlePlugin"
 	}
 ]
