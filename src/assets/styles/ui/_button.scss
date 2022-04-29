@@ -86,9 +86,22 @@ button[stroked-button] {
   border: 1px solid rgba(170, 184, 206, 0.5);
 }
 
+button[text-button] {
+  @extend .flat-button;
+
+  color: var(--color-fuschia);
+  background-color: transparent;
+}
+
 button[raised-button] {
   @extend .flat-button;
 
   color: #fff;
   background-color: var(--color-fuschia);
+
+  &:disabled {
+    cursor: none;
+    pointer-events: none;
+    background: #d9d7d7;
+  }
 }

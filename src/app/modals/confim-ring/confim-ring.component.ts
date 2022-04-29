@@ -9,7 +9,7 @@ import { UserProfile } from '../../interfaces/user-profile';
 })
 export class ConfirmRingModal {
 
-  @Input() user: UserProfile;
+  @Input() name: string;
 
   constructor(
     private modalCtrl: ModalController
@@ -17,6 +17,10 @@ export class ConfirmRingModal {
 
   close() {
     this.modalCtrl.dismiss();
+  }
+
+  confirm() {
+    this.modalCtrl.dismiss(true);
   }
 
 }

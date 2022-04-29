@@ -4,6 +4,7 @@ export * from './change-password/change-password.component';
 export * from './confim-ring/confim-ring.component';
 export * from './date-picker/date-picker.component';
 export * from './edit-profile/edit-profile.component';
+export * from './gender-picker/gender-picker.component';
 export * from './languages/languages.component';
 export * from './my-qr-code/my-qr-code.component';
 export * from './privacy-policy/privacy-policy.component';

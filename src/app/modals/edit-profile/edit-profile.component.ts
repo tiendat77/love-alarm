@@ -10,8 +10,10 @@ import {
   ToastService,
   UserService
 } from '../../services';
+import { GenderPickerModal } from '../gender-picker/gender-picker.component';
 import { DatePickerModal } from '../date-picker/date-picker.component';
 import { UserProfile } from '../../interfaces/user-profile';
+import { GENDERS } from '../../configs/genders';
 import { TOPICS } from '../../configs/topic';
 
 import { ImageProcess } from '../../helpers/image.helper';
@@ -34,10 +36,12 @@ function reshape(array: any[], size: number) {
 export class EditProfileModal {
 
   readonly topics = reshape(TOPICS, 4);
+  readonly genders = GENDERS;
 
   profileForm = new FormGroup({
     email: new FormControl(null, Validators.required),
     name: new FormControl(null, Validators.required),
+    gender: new FormControl(null),
     birthday: new FormControl(null),
     bio: new FormControl(null),
     city: new FormControl(null),
@@ -61,6 +65,7 @@ export class EditProfileModal {
     this.profileForm.patchValue({
       email: this.user.profile.email,
       name: this.user.profile.name,
+      gender: this.user.profile.gender,
       bio: this.user.profile.bio,
       city: this.user.profile.city,
       birthday: this.string2Date(this.user.profile.birthday),
@@ -82,12 +87,13 @@ export class EditProfileModal {
   }
 
   private getProfileFormValue() {
-    const { email, name, birthday, bio, city } = this.profileForm.value;
+    const { email, name, gender, birthday, bio, city } = this.profileForm.value;
     const interested = Object.keys(this.interests).filter(topic => this.interests[topic]);
 
     const profile: UserProfile = {
       ...this.user.profile,
       name,
+      gender,
       bio,
       city,
       interested,
@@ -172,7 +178,25 @@ export class EditProfileModal {
     }
   }
 
-  async openDatePicker() {
+  async openGenderPicker() {
+    const modal = await this.modalCtrl.create({
+      component: GenderPickerModal,
+      componentProps: {
+        gender: this.profileForm.value.gender,
+      }
+    });
+
+    modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.profileForm.patchValue({
+        gender: data,
+      });
+    }
+  }
+
+  async openBirthdayPicker() {
     const modal = await this.modalCtrl.create({
       component: DatePickerModal,
       componentProps: {

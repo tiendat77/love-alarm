@@ -66,6 +66,7 @@ export class UserService {
     this.profile = {
       id: data.id,
       name: data.name,
+      gender: data.gender,
       email: data.email,
       city: data.city || null,
       picture: data.picture || null,

@@ -1,16 +1,22 @@
 <div class="page">
   <div class="page-header">
-    <button icon-button ripple="#dcdcdc" (click)="close()">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9.905 3.5a1.11 1.11 0 0 0-.784.323l-6.354 6.352h-.003A2.58 2.58 0 0 0 2 11.995c.007.679.28 1.327.764 1.805h.003l6.354 6.352c.285.282.561.363.83.346.27-.017.538-.148.741-.352a1.17 1.17 0 0 0 .35-.741c.015-.269-.07-.546-.356-.828l-5.509-5.475H20.89c.401 0 .654-.136.833-.337.18-.201.278-.483.278-.77 0-.288-.099-.57-.278-.77-.179-.201-.432-.338-.833-.338H5.18l5.506-5.489a1.102 1.102 0 0 0 0-1.575 1.104 1.104 0 0 0-.78-.323z"/>
-     </svg>
-    </button>
+    <div style="flex: 1 1 100%">
+      <button icon-button ripple="#dcdcdc" (click)="close()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.905 3.5a1.11 1.11 0 0 0-.784.323l-6.354 6.352h-.003A2.58 2.58 0 0 0 2 11.995c.007.679.28 1.327.764 1.805h.003l6.354 6.352c.285.282.561.363.83.346.27-.017.538-.148.741-.352a1.17 1.17 0 0 0 .35-.741c.015-.269-.07-.546-.356-.828l-5.509-5.475H20.89c.401 0 .654-.136.833-.337.18-.201.278-.483.278-.77 0-.288-.099-.57-.278-.77-.179-.201-.432-.338-.833-.338H5.18l5.506-5.489a1.102 1.102 0 0 0 0-1.575 1.104 1.104 0 0 0-.78-.323z"/>
+       </svg>
+      </button>
+    </div>
 
     <div class="page-title truncate">
       Edit Profile
     </div>
 
-    <div style="width:40px;"></div>
+    <div style="flex: 1 1 100%; text-align: right;">
+      <button text-button (click)="update()">
+        Update
+      </button>
+    </div>
   </div>
 
   <div class="page-content">
@@ -48,17 +54,25 @@
       </div>
 
       <div class="form">
-        <label>City</label>
-        <div class="form-wrapper">
-          <input type="text" required placeholder="City" formControlName="city">
+        <label>Gender</label>
+        <div class="form-wrapper" (click)="openGenderPicker()">
+          <input type="text" readonly placeholder="Gender"
+            [value]="genders[profileForm.get('gender').value] || ''">
         </div>
       </div>
 
       <div class="form">
         <label>Birthday</label>
-        <div class="form-wrapper" (click)="openDatePicker()">
+        <div class="form-wrapper" (click)="openBirthdayPicker()">
           <input type="text" readonly placeholder="Birthday"
             [value]="profileForm.get('birthday').value | date: 'dd MMMM yyyy'">
+        </div>
+      </div>
+
+      <div class="form">
+        <label>City</label>
+        <div class="form-wrapper">
+          <input type="text" placeholder="City" formControlName="city">
         </div>
       </div>
 
@@ -102,12 +116,6 @@
 
     <section>
       <div>Join {{joindate | date: 'dd MMMM yyyy'}}</div>
-    </section>
-
-    <section>
-      <button raised-button style="width: 100%;" (click)="update()">
-        Update
-      </button>
     </section>
   </div>
 </div>
