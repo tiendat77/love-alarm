@@ -38,8 +38,9 @@
     <section style="flex: 1 1 100%;">
       <div class="card" *ngIf="activeProfile">
         <div class="user-image">
-          <!-- TODO: on Error -->
-          <img [src]="activeProfile.picture"/>
+          <img [src]="activeProfile.picture"
+            (error)="fetchProfileImageError($event)"
+          >
         </div>
 
         <div class="user-info">

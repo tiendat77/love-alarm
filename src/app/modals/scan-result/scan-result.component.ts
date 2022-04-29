@@ -69,6 +69,22 @@ export class ScanResultModal {
     await modal.present();
   }
 
+  fetchProfileImageError(event) {
+    const gender = this.activeProfile.gender;
+
+    let image = 'profile-others';
+
+    if (gender === 'male') {
+      image = 'profile-male';
+    }
+
+    if (gender === 'female') {
+      image = 'profile-female';
+    }
+
+    event.target.src = `assets/images/${image}.svg`;
+  }
+
   close() {
     this.modalCtrl.dismiss();
   }
