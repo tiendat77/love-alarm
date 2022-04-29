@@ -44,6 +44,14 @@
         {{user.profile.name}}
       </div>
 
+      <div class="user-old">
+        <la-gender [value]="user.profile.gender"></la-gender>
+        <span style="padding: 4px;"
+              *ngIf="user.profile.birthday && user.profile.gender">
+        </span>
+        <span>{{user.profile.birthday | age}}</span>
+      </div>
+
       <div class="user-brief">
         {{user.profile.city}}
       </div>
@@ -51,14 +59,14 @@
 
     <section class="statistics" (click)="ringers()">
       <div class="statistic">
-        <div>1</div>
+        <div>{{user.profile.ringers?.length}}</div>
         <div>Ringers</div>
       </div>
 
       <div class="seperator"></div>
 
       <div class="statistic">
-        <div>1</div>
+        <div>{{user.profile.ringgings?.length}}</div>
         <div>Ringing</div>
       </div>
     </section>

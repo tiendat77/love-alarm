@@ -48,6 +48,14 @@
     text-align: center;
   }
 
+  .user-old {
+    font-weight: 500;
+    font-size: 24px;
+
+    display: flex;
+    text-align: center;
+  }
+
   .user-brief {
     @extend .text;
   }
@@ -109,6 +117,50 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+  }
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.ring-button {
+  @extend .flex-center;
+  width: 100px;
+  height: 100px;
+  position: relative;
+
+  .ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid #ffdfee;
+  }
+
+  .ring:nth-child(1) {
+    width: 100px;
+    height: 100px;
+  }
+
+  .ring:nth-child(2) {
+    width: 84px;
+    height: 84px;
+  }
+
+  button {
+    width: 70px;
+    height: 70px;
+    line-height: 50px;
+
+    color: #fff;
+    background-color: var(--color-fuschia);
+
+    svg {
+      width: 36px;
+      height: 36px;
+    }
   }
 }
 

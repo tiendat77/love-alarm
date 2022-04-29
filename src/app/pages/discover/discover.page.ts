@@ -1,28 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 
-import { BLEService, WebViewService } from '../../services';
+import {
+  BLEService,
+  CloudDatabaseService,
+  LoaderService,
+  WebViewService
+} from '../../services';
+
 import {
   MyQrCodeModal,
   ScanQrCodeModal,
   ScanResultModal
 } from '../../modals';
 
+import { UserProfile } from '../../interfaces';
+
 @Component({
   selector: 'app-discover',
   templateUrl: './discover.page.html',
   styleUrls: ['./discover.page.scss'],
 })
-export class DiscoverPage implements OnInit {
+export class DiscoverPage {
+
+  private scanSubscription$;
 
   constructor(
     public ble: BLEService,
+    private data: CloudDatabaseService,
+    private loader: LoaderService,
     private webview: WebViewService,
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
   ) { }
 
-  ngOnInit() {
+  ngOnDestroy() {
+    this.ble.stop();
+    this.scanSubscription$?.unsubscribe();
   }
 
   async scanWithQrCode() {
@@ -31,21 +45,18 @@ export class DiscoverPage implements OnInit {
       buttons: [
         {
           text: 'Scan QR Code',
-          icon: 'la-scan-qrcode',
           handler: () => {
             this.scanQrCode();
           }
         },
         {
           text: 'My QR Code',
-          icon: 'la-my-qrcode',
           handler: () => {
             this.myQrcode();
           }
         },
         {
           text: 'Cancel',
-          icon: 'close',
           role: 'cancel'
         }
       ]
@@ -70,6 +81,13 @@ export class DiscoverPage implements OnInit {
     if (data) {
       // TODO: do stuff here
       alert('QR Code: ' + data);
+      this.data.getUsersInfo([data])
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.error(err);
+      });
     }
   }
 
@@ -81,16 +99,40 @@ export class DiscoverPage implements OnInit {
     modal.present();
   }
 
-  async startScan() {
-    this.ble.scan();
+  startScan() {
+    this.scanSubscription$ = this.ble.listen().subscribe(profiles => {
+      console.log('scan complete', profiles);
+      if (!profiles || !profiles.length) {
+        return;
+      }
+
+      this.showNearbyUsers(profiles);
+    });
   }
 
-  async viewNearby() {
-    const modal = await this.modalCtrl.create({
-      component: ScanResultModal
-    });
+  private async showNearbyUsers(users: string[]) {
+    if (!users || !users.length) {
+      return;
+    }
 
-    modal.present();
+    try {
+      this.loader.start();
+      const profiles: UserProfile[] = await this.data.getUsersInfo(users);
+      this.loader.stop();
+
+      const modal = await this.modalCtrl.create({
+        component: ScanResultModal,
+        componentProps: {
+          profiles
+        }
+      });
+
+      modal.present();
+
+    } catch (error) {
+      console.error(error);
+      this.loader.stop();
+    }
   }
 
 }

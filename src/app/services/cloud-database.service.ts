@@ -120,10 +120,10 @@ export class CloudDatabaseService {
     });
   }
 
-  getUsersInfo(users: string[]) {
+  getUsersInfo(users: string[]): Promise<UserProfile[]> {
     return new Promise(async (resolve, reject) => {
       const { data, error } = await this.client.from('profiles')
-        .select('id, name, picture')
+        .select('id, name, gender, picture, bio, city, interested, birthday, ringers')
         .in('id', users);
 
       if (error) {

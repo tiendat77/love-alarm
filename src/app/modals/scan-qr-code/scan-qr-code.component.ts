@@ -25,8 +25,6 @@ export class ScanQrCodeModal {
   async prepare() {
     const permission = await Camera.requestPermissions();
 
-    console.log('permission', permission);
-
     if (permission.camera !== 'granted') {
       return false;
     }
@@ -49,8 +47,21 @@ export class ScanQrCodeModal {
     const result = await BarcodeScanner.startScan();
 
     if (result.hasContent) {
-      this.modalCtrl.dismiss(result.content);
+      const code = this.validate(result.content);
+      this.modalCtrl.dismiss(code);
     }
+  }
+
+  private validate(code: string) {
+    if (!code) {
+      return null;
+    }
+
+    if (code.indexOf('lovealarm://') !== 0) {
+      return null;
+    }
+
+    return code.replace('lovealarm://', '');
   }
 
   async stop() {
