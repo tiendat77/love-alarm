@@ -7,6 +7,7 @@ import { DirectivesModule } from '../directives/directives.module';
 
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { DatePickerWheelComponent } from './date-picker-wheel/date-picker-wheel.component';
+import { GenderComponent } from './gender/gender.component';
 import { MenuComponent } from './menu/menu.component';
 import { ContainerComponent } from './container/container.component';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -14,6 +15,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 const COMPONENTS = [
   DatePickerComponent,
   DatePickerWheelComponent,
+  GenderComponent,
   MenuComponent,
   ContainerComponent,
   NavigationComponent,
