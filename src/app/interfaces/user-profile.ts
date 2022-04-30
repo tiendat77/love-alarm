@@ -10,5 +10,5 @@ export interface UserProfile {
   birthday?: string | null;
   joindate?: string | null;
   ringers?: string[];
-  ringgings?: string[];
+  ringings?: string[];
 }

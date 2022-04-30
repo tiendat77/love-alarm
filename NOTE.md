@@ -131,7 +131,7 @@ create table profiles (
   birthday text,
   joindate text,
   ringers text[],
-  ringgings text[],
+  ringings text[],
 
   primary key (id),
   unique(email),

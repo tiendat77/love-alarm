@@ -65,7 +65,7 @@ export class CloudDatabaseService {
       interested: [],
       birthday: null,
       ringers: [],
-      ringgings: [],
+      ringings: [],
       joindate: user.created_at,
     };
 
