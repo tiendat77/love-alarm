@@ -15,6 +15,7 @@ import { transformArray2Object } from '../../helpers/object.helper';
 export class UserProfileModal {
 
   @Input() profile: UserProfile;
+  @Input() allowRing = false;
 
   topics = transformArray2Object(TOPICS);
 

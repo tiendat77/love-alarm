@@ -81,7 +81,7 @@ export class DiscoverPage {
     if (data) {
       // TODO: do stuff here
       alert('QR Code: ' + data);
-      this.data.getUsersInfo([data])
+      this.data.getMultiUserProfile([data])
       .then(res => {
         console.log(res);
       })
@@ -117,7 +117,7 @@ export class DiscoverPage {
 
     try {
       this.loader.start();
-      const profiles: UserProfile[] = await this.data.getUsersInfo(users);
+      const profiles: UserProfile[] = await this.data.getMultiUserProfile(users);
       this.loader.stop();
 
       const modal = await this.modalCtrl.create({

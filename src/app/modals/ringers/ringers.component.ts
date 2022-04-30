@@ -1,38 +1,17 @@
-import { ChangeDetectorRef, Component, NgZone, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, NgZone } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Swiper } from 'swiper';
+import { BehaviorSubject, forkJoin, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
-import { UserService } from '../../services';
+import { UserProfileModal } from '../user-profile/user-profile.component';
+import { UserProfile } from '../../interfaces';
 
-const mock_1 = [
-  {name: 'Scarlett Johansson', picture: 'https://i.pinimg.com/564x/ca/e8/e6/cae8e6a4a0e62bef7c744aa73e83fbb4.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-  {name: 'Han So Hee', picture: 'https://i.pinimg.com/564x/ab/21/22/ab21221f7e352ef121987657bda236fa.jpg'},
-];
-
-const mock_2 = [
-  {name: 'Ji Soo', picture: 'https://i.pinimg.com/564x/30/78/ab/3078abf521ef05e6613e0f9880fea39b.jpg'}
-];
+import {
+  CloudDatabaseService,
+  ToastService,
+  UserService
+} from '../../services';
 
 @Component({
   selector: 'app-ringers',
@@ -40,6 +19,10 @@ const mock_2 = [
   styleUrls: ['./ringers.component.scss'],
 })
 export class RingersModal {
+
+  @Input() profile: UserProfile;
+
+  isLoading$ = new BehaviorSubject<boolean>(true);
 
   swiper: Swiper;
   activeTab = 0;
@@ -49,21 +32,47 @@ export class RingersModal {
 
   constructor(
     public readonly user: UserService,
+    private readonly toast: ToastService,
+    private readonly data: CloudDatabaseService,
 
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
     private modalCtrl: ModalController,
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.init();
   }
 
   private init() {
-    this.ringers = mock_1;
-    this.ringings = mock_2;
+    this.isLoading$.next(true);
+
+    forkJoin([
+      this.data.getMultiUserProfile(this.profile.ringers || []),
+      this.data.getMultiUserProfile(this.profile.ringings || [])
+    ]).pipe(
+      tap(([ringers, ringings]) => {
+        this.ringers = ringers;
+        this.ringings = ringings;
+        this.isLoading$.next(false);
+      }),
+      catchError((error) => {
+        console.error(error);
+        this.isLoading$.next(false);
+        this.toast.show('Load failed');
+
+        return of();
+      })
+    ).subscribe();
   }
 
-  ring(user: any) {
-    console.log('ring', user);
+  async view(profile: UserProfile) {
+    const modal = await this.modalCtrl.create({
+      component: UserProfileModal,
+      componentProps: { profile }
+    });
+
+    await modal.present();
   }
 
   close() {

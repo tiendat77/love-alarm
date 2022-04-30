@@ -21,6 +21,8 @@ export class BLEService {
     await BleClient.initialize({
       advertising: this.user.profile?.id
     });
+
+    await BleClient.advertise();
   }
 
   listen() {
@@ -40,13 +42,6 @@ export class BLEService {
           observer.complete();
         }
       );
-
-      // BleClient.scan((result) => {
-      //   console.log('received new scan result', result);
-      //   observer.next(result.address);
-      // })
-      // .then(() => observer.complete())
-      // .catch(error => observer.complete());
     }).pipe(
       mergeMap((address: string) => {
         return this.fakeRead(address).pipe(
@@ -59,14 +54,6 @@ export class BLEService {
             return result?.profile;
           })
         );
-        // return BleClient.read({address}).then(result => {
-        //   console.log('read result', result);
-        //   if (result.profile) {
-        //     this.devices.set(address, result.profile);
-        //   }
-
-        //   return result?.profile;
-        // });
       }),
       last(),
       map((value) => {
@@ -80,11 +67,6 @@ export class BLEService {
         return of(Array.from(this.devices.values()));
       })
     );
-  }
-
-  async stop() {
-    this.isScanning = false;
-    await BleClient.stopScan();
   }
 
   private fakeScan() {
@@ -111,8 +93,45 @@ export class BLEService {
     );
   }
 
-  async scan() {
+  scan() {
+    return new Observable(observer => {
+      this.isScanning = true;
+      this.devices.clear();
 
+      BleClient.scan((result) => {
+        observer.next(result.address);
+      })
+      .then(() => observer.complete())
+      .catch(() => observer.complete());
+
+    }).pipe(
+      mergeMap((address: string) => {
+        return BleClient.read({address}).then(result => {
+          console.log('read result', result);
+          if (result.profile) {
+            this.devices.set(address, result.profile);
+          }
+
+          return result?.profile;
+        });
+      }),
+      last(),
+      map((value) => {
+        this.isScanning = false;
+        return Array.from(this.devices.values());
+      }),
+      catchError((error) => {
+        console.error(error);
+        this.isScanning = false;
+        this.devices.clear();
+        return of(Array.from(this.devices.values()));
+      })
+    );
+  }
+
+  async stop() {
+    this.isScanning = false;
+    await BleClient.stopScan();
   }
 
 }

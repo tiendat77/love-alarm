@@ -29,7 +29,8 @@ export class ProfilePage {
 
   async ringers() {
     const modal = await this.modal.create({
-      component: RingersModal
+      component: RingersModal,
+      componentProps: { profile: this.user.profile }
     });
 
     modal.present();

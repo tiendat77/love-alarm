@@ -120,11 +120,31 @@ export class CloudDatabaseService {
     });
   }
 
-  getUsersInfo(users: string[]): Promise<UserProfile[]> {
+  getSingleUserProfile(id: string): Promise<UserProfile> {
     return new Promise(async (resolve, reject) => {
       const { data, error } = await this.client.from('profiles')
         .select('id, name, gender, picture, bio, city, interested, birthday, ringers')
-        .in('id', users);
+        .eq('id', id);
+
+      if (error) {
+        reject(error);
+      }
+
+      if (data && data[0]) {
+        resolve(data[0]);
+      }
+    });
+  }
+
+  getMultiUserProfile(ids: string[]): Promise<UserProfile[]> {
+    if (!ids.length) {
+      return Promise.resolve([]);
+    }
+
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('profiles')
+        .select('id, name, gender, picture, bio, city, interested, birthday, ringers')
+        .in('id', ids);
 
       if (error) {
         reject(error);

@@ -59,14 +59,14 @@
 
     <section class="statistics" (click)="ringers()">
       <div class="statistic">
-        <div>{{user.profile.ringers?.length}}</div>
+        <div>{{user.profile.ringers?.length || 0}}</div>
         <div>Ringers</div>
       </div>
 
       <div class="seperator"></div>
 
       <div class="statistic">
-        <div>{{user.profile.ringgings?.length}}</div>
+        <div>{{user.profile.ringings?.length || 0}}</div>
         <div>Ringing</div>
       </div>
     </section>

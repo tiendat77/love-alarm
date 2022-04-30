@@ -63,7 +63,10 @@ export class ScanResultModal {
   async viewProfile(profile?: UserProfile) {
     const modal = await this.modalCtrl.create({
       component: UserProfileModal,
-      componentProps: { profile }
+      componentProps: {
+        profile,
+        allowRing: true
+      }
     });
 
     await modal.present();

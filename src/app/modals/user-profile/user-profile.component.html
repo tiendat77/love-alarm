@@ -53,14 +53,14 @@
 
     <section class="statistics">
       <div class="statistic">
-        <div>{{profile.ringers?.length}}</div>
+        <div>{{profile.ringers?.length || 0}}</div>
         <div>Ringers</div>
       </div>
 
       <div class="seperator"></div>
 
       <div class="statistic">
-        <div>{{profile.ringgings?.length}}</div>
+        <div>{{profile.ringings?.length || 0}}</div>
         <div>Ringing</div>
       </div>
     </section>
@@ -81,7 +81,7 @@
       </div>
     </section>
 
-    <section class="flex-center">
+    <section class="flex-center" *ngIf="allowRing">
       <div class="ring-button">
         <div class="ring"></div>
         <div class="ring"></div>

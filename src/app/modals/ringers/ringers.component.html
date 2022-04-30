@@ -11,7 +11,18 @@
     <div style="width:40px;"></div>
   </div>
 
-  <div class="page-content">
+  <ng-template #loading>
+    <div class="page-content loading-skeleton">
+      <div class="skeleton avatar"></div>
+
+      <div class="user-name">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+      </div>
+    </div>
+  </ng-template>
+
+  <div class="page-content" *ngIf="!(isLoading$ | async); else loading">
     <div class="segments">
       <ul>
         <li [class.active]="activeTab === 0">
@@ -41,7 +52,7 @@
     >
       <ng-template swiperSlide>
         <ul class="list">
-          <li class="list-item" *ngFor="let ringer of ringers">
+          <li class="list-item" *ngFor="let ringer of ringers" (click)="view(ringer)">
             <div class="list-item-content">
               <div class="list-item-image">
                 <img avatar
@@ -60,7 +71,7 @@
 
       <ng-template swiperSlide>
         <ul class="list">
-          <li class="list-item" *ngFor="let ringing of ringings">
+          <li class="list-item" *ngFor="let ringing of ringings" (click)="view(ringing)">
             <div class="list-item-content">
               <div class="list-item-image">
                 <img avatar
