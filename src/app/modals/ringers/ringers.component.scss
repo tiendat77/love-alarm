@@ -46,6 +46,15 @@ swiper {
   overflow: hidden;
 }
 
+.empty {
+  max-width: 100%;
+
+  img {
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
 .loading-skeleton {
   display: flex;
   flex-direction: column;

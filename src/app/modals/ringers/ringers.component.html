@@ -51,7 +51,7 @@
       (slideChange)="onSlideChange($event)"
     >
       <ng-template swiperSlide>
-        <ul class="list">
+        <ul class="list" *ngIf="ringers.length; else empty">
           <li class="list-item" *ngFor="let ringer of ringers" (click)="view(ringer)">
             <div class="list-item-content">
               <div class="list-item-image">
@@ -70,7 +70,7 @@
       </ng-template>
 
       <ng-template swiperSlide>
-        <ul class="list">
+        <ul class="list" *ngIf="ringings.length; else empty">
           <li class="list-item" *ngFor="let ringing of ringings" (click)="view(ringing)">
             <div class="list-item-content">
               <div class="list-item-image">
@@ -89,4 +89,10 @@
       </ng-template>
     </swiper>
   </div>
+
+  <ng-template #empty>
+    <div class="empty">
+      <img src="/assets/images/list_empty_01.svg" alt="">
+    </div>
+  </ng-template>
 </div>
