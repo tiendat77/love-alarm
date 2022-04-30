@@ -63,6 +63,7 @@ export class AuthorizeService {
   }
 
   private onSignedOut() {
+    this.isLogged = false;
     this.router.navigate(['/auth/sign-in']);
   }
 
@@ -97,6 +98,8 @@ export class AuthorizeService {
   }
 
   signOut() {
+    this.user.clear();
+    this.ble.destroy();
     return this.client.auth.signOut();
   }
 

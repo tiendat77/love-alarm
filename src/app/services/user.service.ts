@@ -50,6 +50,13 @@ export class UserService {
     }
   }
 
+  clear() {
+    this.meta = null;
+    this.profile = null;
+    this.storage.remove(STORAGE_KEY.USER_META);
+    this.storage.remove(STORAGE_KEY.USER_PROFILE);
+  }
+
   setMeta(data: any) {
     this.meta = {
       ...data, // properties from provider
@@ -73,10 +80,26 @@ export class UserService {
       bio: data.bio || null,
       interested: data.interested || null,
       birthday: data.birthday || null,
+      ringers: data.ringers || null,
+      ringings: data.ringings || null,
       joindate: data.joindate || null,
     };
 
     this.storage.set(STORAGE_KEY.USER_PROFILE, this.profile);
+  }
+
+  ring(id: string) {
+    const ringings: string[] = [
+      id,
+      ...(this.profile?.ringings || [])
+    ];
+
+    this.profile.ringings = ringings;
+
+    return this.data.updateProfile({
+      id: this.profile.id,
+      ringings,
+    });
   }
 
   private async loadInfoFromStorage() {

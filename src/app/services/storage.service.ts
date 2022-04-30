@@ -20,7 +20,7 @@ export class StorageService {
     return this.storage.set(key, value);
   }
 
-  remove(key: string, value: any) {
+  remove(key: string) {
     return this.storage.remove(key);
   }
 

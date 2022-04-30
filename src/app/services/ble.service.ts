@@ -25,6 +25,15 @@ export class BLEService {
     await BleClient.advertise();
   }
 
+  async destroy() {
+    try {
+      await BleClient.stopScan();
+      await BleClient.stopAdvertise();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   listen() {
     const timer$ = timer(12000);
     return new Observable(observer => {
