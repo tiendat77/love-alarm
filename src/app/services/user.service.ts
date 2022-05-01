@@ -3,15 +3,15 @@ import { Injectable } from '@angular/core';
 import { CloudDatabaseService } from './cloud-database.service';
 import { StorageService } from './storage.service';
 
-import { UserMeta } from '../interfaces/user-meta';
-import { UserProfile } from '../interfaces/user-profile';
 import { STORAGE_KEY } from '../configs/storage-key';
+import { UserToken, UserMeta, UserProfile } from '../interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
   meta: UserMeta;
   profile: UserProfile;
+  token: UserToken;
 
   constructor(
     private data: CloudDatabaseService,
@@ -21,26 +21,22 @@ export class UserService {
   async init() {
     try {
       const metadata = this.data.user?.user_metadata;
-      const profile = await this.data.profile;
+      this.setMeta(metadata);
 
+      const profile = await this.data.profile;
+      this.setProfile(profile);
+
+      const token = await this.data.token;
       const notificationToken = await this.storage.get(STORAGE_KEY.NOTIFICATION_TOKEN);
 
-      if (notificationToken && notificationToken !== metadata?.notification_token) {
-        metadata.notification_token = notificationToken;
-        this.data.updateMeta(metadata);
-      }
+      if (notificationToken && notificationToken !== token?.notification) {
+        token.notification = notificationToken;
+        await this.data.updateToken(token);
+        this.setToken(token);
 
-      if (metadata) {
-        this.setMeta(metadata);
-      }
-
-      if (profile) {
-        this.setProfile(profile);
       } else {
-        // user does not have profile yet
-        // so, create default one
-        const profile = await this.data.createProfile();
-        this.setProfile(profile);
+        // token is already exist and haven't changed
+        this.setToken(token);
       }
 
     } catch (error) {
@@ -52,24 +48,31 @@ export class UserService {
 
   clear() {
     this.meta = null;
+    this.token = null;
     this.profile = null;
     this.storage.remove(STORAGE_KEY.USER_META);
+    this.storage.remove(STORAGE_KEY.USER_TOKEN);
     this.storage.remove(STORAGE_KEY.USER_PROFILE);
   }
 
   setMeta(data: any) {
+    if (!data) {
+      return;
+    }
+
     this.meta = {
       ...data, // properties from provider
-
-      name: data.name || data.full_name,
-      bluetooth_id: data.bluetooth_id || null,
-      notification_token: data.notification_token || null,
+      name: data.name || data.full_name
     };
 
     this.storage.set(STORAGE_KEY.USER_META, this.meta);
   }
 
   setProfile(data: any) {
+    if (!data) {
+      return;
+    }
+
     this.profile = {
       id: data.id,
       name: data.name,
@@ -86,6 +89,20 @@ export class UserService {
     };
 
     this.storage.set(STORAGE_KEY.USER_PROFILE, this.profile);
+  }
+
+  setToken(data: any) {
+    if (!data) {
+      return;
+    }
+
+    this.token = {
+      id: data.id,
+      notification: data.notification,
+      bluetooth: data.bluetooth,
+    };
+
+    this.storage.set(STORAGE_KEY.USER_TOKEN, this.token);
   }
 
   ring(id: string) {
@@ -105,6 +122,7 @@ export class UserService {
   private async loadInfoFromStorage() {
     const meta = await this.storage.get(STORAGE_KEY.USER_META);
     const profile = await this.storage.get(STORAGE_KEY.USER_PROFILE);
+    const token = await this.storage.get(STORAGE_KEY.USER_TOKEN);
 
     if (meta) {
       this.meta = meta;
@@ -112,6 +130,10 @@ export class UserService {
 
     if (profile) {
       this.profile = profile;
+    }
+
+    if (token) {
+      this.token = token;
     }
   }
 

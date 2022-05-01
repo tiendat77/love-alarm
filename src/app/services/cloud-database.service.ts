@@ -2,31 +2,45 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SupabaseClient } from '@supabase/supabase-js';
-import { UserMeta } from '../interfaces/user-meta';
-import { UserProfile } from '../interfaces/user-profile';
+import { UserToken, UserMeta, UserProfile } from '../interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class CloudDatabaseService {
 
   private client: SupabaseClient;
 
-  private get token() {
-    return this.client.auth.session()?.access_token as string;
-  }
-
   get user() {
     return this.client.auth.user();
   }
 
-  get profile() {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const profile = await this.getProfile();
-        resolve(profile);
-      } catch (error) {
-        reject(error);
-      }
-    });
+  get profile(): Promise<UserProfile> {
+    return this.readProfile()
+      .then((profile) => {
+        if (!profile) {
+          return this.createProfile();
+        } else {
+          return Promise.resolve(profile);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        return null;
+      });
+  }
+
+  get token(): Promise<UserToken> {
+    return this.readToken()
+      .then((token) => {
+        if (!token) {
+          return this.createToken();
+        } else {
+          return Promise.resolve(token);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        return null;
+      });
   }
 
   constructor(
@@ -37,7 +51,7 @@ export class CloudDatabaseService {
     this.client = client;
   }
 
-  getProfile() {
+  readProfile(): Promise<UserProfile> {
     return new Promise(async (resolve, reject) => {
       const { data: profile, error, status } = await this.client.from('profiles')
         .select('*')
@@ -52,7 +66,7 @@ export class CloudDatabaseService {
     });
   }
 
-  createProfile() {
+  createProfile(): Promise<UserProfile> {
     const user = this.user;
     const metadata = user.user_metadata;
     const profile: UserProfile = {
@@ -120,18 +134,80 @@ export class CloudDatabaseService {
     });
   }
 
+  createToken(notification?: string, bluetooth?: string): Promise<UserToken> {
+    const user = this.user;
+    const metadata = user.user_metadata;
+    const token: UserToken = {
+      id: metadata.id,
+      notification: notification || null,
+      bluetooth: bluetooth || null,
+    };
+
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('tokens')
+        .insert({
+          ...token,
+          id: this.user?.id,
+          updated_at: new Date(),
+        }, {
+          returning: 'minimal', // Don't return the value after inserting
+        });
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(token);
+      }
+    });
+  }
+
+  readToken(): Promise<UserToken> {
+    return new Promise(async (resolve, reject) => {
+      const { data, error, status } = await this.client.from('tokens')
+        .select('id,notification,bluetooth')
+        .eq('id', this.user?.id)
+        .single();
+
+      if (error && status !== 406) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  }
+
+  updateToken(token: UserToken) {
+    const update = {
+      ...token,
+      id: this.user?.id,
+      updated_at: new Date(),
+    };
+
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('tokens')
+        .upsert(update, {
+          returning: 'minimal'
+        });
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  }
+
   getSingleUserProfile(id: string): Promise<UserProfile> {
     return new Promise(async (resolve, reject) => {
       const { data, error } = await this.client.from('profiles')
         .select('id, name, gender, picture, bio, city, interested, birthday, ringers')
-        .eq('id', id);
+        .eq('id', id)
+        .single();
 
       if (error) {
         reject(error);
-      }
-
-      if (data && data[0]) {
-        resolve(data[0]);
+      } else {
+        resolve(data);
       }
     });
   }

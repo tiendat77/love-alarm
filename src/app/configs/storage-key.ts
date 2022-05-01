@@ -9,4 +9,5 @@ export const STORAGE_KEY = {
   TUTORIAL: 'did_tutorial',
   USER_META: 'user_meta',
   USER_PROFILE: 'user_profile',
+  USER_TOKEN: 'user_token',
 };

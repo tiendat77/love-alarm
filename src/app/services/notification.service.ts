@@ -17,25 +17,30 @@ export class NotificationService {
   ) {}
 
   async init() {
-    await PushNotifications.addListener('registration', token => {
-      console.info('Registration token: ', token.value);
-      this.token = token.value;
-      this.storage.set(STORAGE_KEY.NOTIFICATION_TOKEN, token.value);
-    });
+    try {
+      await PushNotifications.addListener('registration', token => {
+        console.info('Registration token: ', token.value);
+        this.token = token.value;
+        this.storage.set(STORAGE_KEY.NOTIFICATION_TOKEN, token.value);
+      });
 
-    await PushNotifications.addListener('registrationError', err => {
-      console.error('Registration error: ', err.error);
-    });
+      await PushNotifications.addListener('registrationError', err => {
+        console.error('Registration error: ', err.error);
+      });
 
-    await PushNotifications.addListener('pushNotificationReceived', notification => {
-      console.log('Push notification received: ', notification);
-    });
+      await PushNotifications.addListener('pushNotificationReceived', notification => {
+        console.log('Push notification received: ', notification);
+      });
 
-    await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
-      console.log('Push notification action performed', notification.actionId, notification.inputValue);
-    });
+      await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
+        console.log('Push notification action performed', notification.actionId, notification.inputValue);
+      });
 
-    await PushNotifications.register();
+      await PushNotifications.register();
+
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   notify(message: string) {

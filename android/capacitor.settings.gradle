@@ -45,4 +45,4 @@ include ':capacitor-status-bar'
 project(':capacitor-status-bar').projectDir = new File('../node_modules/@capacitor/status-bar/android')
 
 include ':love-alarm-ble'
-project(':love-alarm-ble').projectDir = new File('../../love-alarm-ble/android')
+project(':love-alarm-ble').projectDir = new File('../node_modules/love-alarm-ble/android')
