@@ -16,7 +16,8 @@ export const environment = {
   production: true,
   VERSION: pkg.version,
   supabaseUrl: '${process.env.SUPABASE_URL}',
-  supabaseKey: '${process.env.SUPABASE_KEY}'
+  supabaseKey: '${process.env.SUPABASE_KEY}',
+  serverlessUrl: '${process.env.SERVERLESS_URL}',
 };`
 
 writeFile(targetPath, envConfigFile, function (err: ErrnoException | null) {

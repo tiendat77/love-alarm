@@ -1,18 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
+import { UserService } from '../../services';
 import { UserProfile } from '../../interfaces/user-profile';
 import { ConfirmRingModal } from '../confim-ring/confim-ring.component';
 import { UserProfileModal } from '../user-profile/user-profile.component';
-
-const MOCK_PROFILE: UserProfile = {
-  id: '',
-  name: 'Lee Ji-eun',
-  email: 'jieunlee@gmail.com',
-  bio: 'Beauty Queen',
-  city: 'Seoul',
-  picture: 'https://i.pinimg.com/564x/08/b9/7c/08b97c85e5794cda9da13fdc70577e5e.jpg',
-};
 
 @Component({
   selector: 'app-scan-result',
@@ -26,7 +18,8 @@ export class ScanResultModal {
   activeProfile: UserProfile;
 
   constructor(
-    private modalCtrl: ModalController
+    private readonly user: UserService,
+    private readonly modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
@@ -56,7 +49,7 @@ export class ScanResultModal {
     const { data } = await modal.onWillDismiss();
 
     if (data) {
-      // TODO: ring her/him alarm
+      this.user.ring(profile.id);
     }
   }
 

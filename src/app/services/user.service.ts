@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { CloudDatabaseService } from './cloud-database.service';
 import { StorageService } from './storage.service';
+import { ServerlessService } from './serverless-functions.service';
 
 import { STORAGE_KEY } from '../configs/storage-key';
 import { UserToken, UserMeta, UserProfile } from '../interfaces';
+import { forkJoin } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -15,6 +17,7 @@ export class UserService {
 
   constructor(
     private data: CloudDatabaseService,
+    private serverless: ServerlessService,
     private storage: StorageService,
   ) { }
 
@@ -106,17 +109,32 @@ export class UserService {
   }
 
   ring(id: string) {
-    const ringings: string[] = [
-      id,
-      ...(this.profile?.ringings || [])
-    ];
+    const ringings: string[] = this.profile?.ringings || [];
+
+    if (ringings.includes(id)) {
+      return;
+    }
+
+    ringings.push(id);
+    this.profile.ringings = ringings;
+
+    return forkJoin([
+      this.data.updateProfile({ringings}),
+      this.serverless.ring({id})
+    ]).subscribe();
+  }
+
+  unring(id: string) {
+    const ringings: string[] = (this.profile?.ringings || []).filter(ringing => {
+      return ringing !== id;
+    });
 
     this.profile.ringings = ringings;
 
-    return this.data.updateProfile({
-      id: this.profile.id,
-      ringings,
-    });
+    return forkJoin([
+      this.data.updateProfile({ ringings }),
+      this.serverless.unring({id})
+    ]).subscribe();
   }
 
   private async loadInfoFromStorage() {

@@ -1,5 +1,5 @@
 export interface UserProfile {
-  id: string | null;
+  id?: string | null;
   email?: string;
   name?: string | null;
   gender?: 'male' | 'female' | 'others' | null;

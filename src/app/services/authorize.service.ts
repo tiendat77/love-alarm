@@ -17,11 +17,11 @@ export class AuthorizeService {
 
   private client: SupabaseClient;
 
+  private isLogged = false;
+
   private get token() {
     return this.client.auth.session()?.access_token as string;
   }
-
-  private isLogged = false;
 
   constructor(
     private readonly router: Router,

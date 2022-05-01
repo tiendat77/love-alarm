@@ -17,8 +17,18 @@ cordova-res ios --skip-config --copy
 cordova-res android --skip-config --copy
 ```
 
-## Update environment file
+## Config environment variables
+
+Run:
 
 ```
 ts-node set-env.ts
+```
+
+or add these lines to `src/environments/environments.ts`
+
+```
+  supabaseUrl: <Your Supabase Url>,
+  supabaseKey: <YOUR Supabase Public Key>,
+  serverlessUrl: <Love Alarm Serverless Url>
 ```

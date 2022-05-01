@@ -16,6 +16,7 @@ import {
   LoaderService,
   ModalsService,
   NotificationService,
+  ServerlessService,
   SplashScreenService,
   StorageService,
   SupabaseService,
@@ -25,7 +26,6 @@ import {
 } from './services';
 
 import { SOUNDS } from './services/audio.service';
-import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -48,6 +48,7 @@ export class AppComponent {
     private loader: LoaderService,
     private modals: ModalsService,
     private notification: NotificationService,
+    private serverless: ServerlessService,
     private splash: SplashScreenService,
     private storage: StorageService,
     private supabase: SupabaseService,
@@ -59,6 +60,7 @@ export class AppComponent {
     this.storage.init();
     this.webview.init();
     this.supabase.init();
+    this.serverless.init();
     this.notification.init();
 
     this.platform.ready().then(() => {

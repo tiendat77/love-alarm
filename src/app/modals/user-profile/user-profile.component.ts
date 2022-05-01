@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { ConfirmRingModal } from '../confim-ring/confim-ring.component';
 
 import { TOPICS } from '../../configs/topic';
+import { UserService } from '../../services';
 import { UserProfile } from '../../interfaces/user-profile';
 import { transformArray2Object } from '../../helpers/object.helper';
 
@@ -20,7 +21,8 @@ export class UserProfileModal {
   topics = transformArray2Object(TOPICS);
 
   constructor(
-    private modalCtrl: ModalController
+    private readonly user: UserService,
+    private readonly modalCtrl: ModalController
   ) {}
 
   async ring() {
@@ -35,7 +37,7 @@ export class UserProfileModal {
     const { data } = await modal.onWillDismiss();
 
     if (data) {
-      // TODO: ring her/him alarm
+      this.user.ring(this.profile.id);
     }
   }
 

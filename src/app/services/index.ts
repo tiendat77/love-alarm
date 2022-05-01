@@ -9,6 +9,7 @@ export * from './loader.service';
 export * from './modals.service';
 export * from './notification.service';
 export * from './platform.service';
+export * from './serverless-functions.service';
 export * from './setting.service';
 export * from './sharing.service';
 export * from './splash-screen.service';

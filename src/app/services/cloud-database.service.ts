@@ -101,7 +101,7 @@ export class CloudDatabaseService {
     });
   }
 
-  updateProfile(profile: UserProfile) {
+  updateProfile(profile: UserProfile): Promise<any> {
     const update = {
       ...profile,
       id: this.user?.id,

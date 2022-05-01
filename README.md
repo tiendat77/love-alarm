@@ -20,3 +20,8 @@ Was there a time you discovered a cute girl/boy in a coffee shop but too awkward
 <img src="./demo/love-alarm-demo.png" alt="">
 
 [Download](#)
+
+## Related
+
+- [love-alarm-ble](https://github.com/tiendat77/love-alarm-ble)
+- [love-alarm-serverless](https://github.com/tiendat77/love-alarm-serverless)
