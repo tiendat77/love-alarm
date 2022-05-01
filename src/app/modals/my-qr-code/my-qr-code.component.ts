@@ -29,7 +29,8 @@ export class MyQrCodeModal {
   }
 
   private init() {
-    const code = 'lovealarm://' + this.user.profile.id;
+    // create deep link
+    const code = 'com.dathuynh.lovealarm://profile/' + this.user.profile.id;
     this.qrcode = this.generate(code);
     this.qrcode.append(this.canvas?.nativeElement);
   }

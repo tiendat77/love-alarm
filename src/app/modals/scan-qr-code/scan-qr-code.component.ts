@@ -53,15 +53,17 @@ export class ScanQrCodeModal {
   }
 
   private validate(code: string) {
+    // com.dathuynh.lovealarm://profile/<user_id>
     if (!code) {
       return null;
     }
 
-    if (code.indexOf('lovealarm://') !== 0) {
+    if (code.indexOf('com.dathuynh.lovealarm://profile/') !== 0) {
       return null;
     }
 
-    return code.replace('lovealarm://', '');
+    // return user_id
+    return code.replace('com.dathuynh.lovealarm://profile/', '');
   }
 
   async stop() {

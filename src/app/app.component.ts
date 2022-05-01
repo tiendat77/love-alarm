@@ -14,6 +14,7 @@ import {
   FileService,
   LanguageService,
   LoaderService,
+  ModalsService,
   NotificationService,
   SplashScreenService,
   StorageService,
@@ -45,6 +46,7 @@ export class AppComponent {
     private file: FileService,
     private language: LanguageService,
     private loader: LoaderService,
+    private modals: ModalsService,
     private notification: NotificationService,
     private splash: SplashScreenService,
     private storage: StorageService,
@@ -111,6 +113,12 @@ export class AppComponent {
 
           this.router.navigate(['/']);
           this.splash.hide(1);
+        }
+
+        // com.dathuynh.lovealarm://profile/<user_id>
+        if (slug.indexOf('profile') !== -1) {
+          const id = slug.split('/')[1];
+          this.modals.showUserProfile(id);
         }
         // If no match, do nothing - let regular routing logic take over
       });

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { PushNotifications } from '@capacitor/push-notifications';
+import { PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
 import { LocalNotifications } from '@capacitor/local-notifications';
 
+import { ModalsService } from './modals.service';
 import { StorageService } from './storage.service';
 import { STORAGE_KEY } from '../configs/storage-key';
 
@@ -13,7 +14,8 @@ export class NotificationService {
   token: string;
 
   constructor(
-    private readonly storage: StorageService
+    private readonly storage: StorageService,
+    private readonly modals: ModalsService,
   ) {}
 
   async init() {
@@ -32,14 +34,32 @@ export class NotificationService {
         console.log('Push notification received: ', notification);
       });
 
-      await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
-        console.log('Push notification action performed', notification.actionId, notification.inputValue);
+      await PushNotifications.addListener('pushNotificationActionPerformed', action => {
+        console.log('Push notification action performed', action.actionId);
+
+        if (action.actionId === 'tap') {
+          this.onNotificationTap(action.notification);
+        }
       });
 
       await PushNotifications.register();
 
     } catch (e) {
       console.error(e);
+    }
+  }
+
+  private onNotificationTap(notification: PushNotificationSchema) {
+    const type = notification?.data?.type;
+
+    switch (type) {
+      case 'ring':
+        const profileId = notification?.data?.profileId;
+        this.modals.showUserProfile(profileId);
+        break;
+
+      default:
+        break;
     }
   }
 

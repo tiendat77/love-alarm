@@ -6,6 +6,7 @@ export * from './cloud-storage.service';
 export * from './file.service';
 export * from './language.service';
 export * from './loader.service';
+export * from './modals.service';
 export * from './notification.service';
 export * from './platform.service';
 export * from './setting.service';

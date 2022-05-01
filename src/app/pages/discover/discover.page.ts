@@ -5,6 +5,7 @@ import {
   BLEService,
   CloudDatabaseService,
   LoaderService,
+  ModalsService,
   WebViewService
 } from '../../services';
 
@@ -26,10 +27,11 @@ export class DiscoverPage {
   private scanSubscription$;
 
   constructor(
-    public ble: BLEService,
-    private data: CloudDatabaseService,
-    private loader: LoaderService,
-    private webview: WebViewService,
+    public readonly ble: BLEService,
+    private readonly data: CloudDatabaseService,
+    private readonly loader: LoaderService,
+    private readonly modals: ModalsService,
+    private readonly webview: WebViewService,
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
   ) { }
@@ -79,15 +81,7 @@ export class DiscoverPage {
     this.webview.showApp();
 
     if (data) {
-      // TODO: do stuff here
-      alert('QR Code: ' + data);
-      this.data.getMultiUserProfile([data])
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.error(err);
-      });
+      this.modals.showUserProfile(data);
     }
   }
 
