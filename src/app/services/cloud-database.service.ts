@@ -51,6 +51,7 @@ export class CloudDatabaseService {
     this.client = client;
   }
 
+  // profile
   readProfile(): Promise<UserProfile> {
     return new Promise(async (resolve, reject) => {
       const { data: profile, error, status } = await this.client.from('profiles')
@@ -122,6 +123,54 @@ export class CloudDatabaseService {
     });
   }
 
+  listProfiles(columns = '*'): Promise<UserProfile[]> {
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('profiles')
+        .select(columns)
+        .limit(200);
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  }
+
+  getSingleUserProfile(id: string): Promise<UserProfile> {
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('profiles')
+        .select('id, name, gender, picture, bio, city, interested, birthday, ringers')
+        .eq('id', id)
+        .single();
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  }
+
+  getMultiUserProfile(ids: string[]): Promise<UserProfile[]> {
+    if (!ids.length) {
+      return Promise.resolve([]);
+    }
+
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('profiles')
+        .select('id, name, gender, picture, bio, city, interested, birthday, ringers')
+        .in('id', ids);
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  }
+
+  // meta data
   updateMeta(meta: UserMeta) {
     return new Promise(async (resolve, reject) => {
       const { data, error } = await this.client.auth.update({data: meta});
@@ -134,6 +183,7 @@ export class CloudDatabaseService {
     });
   }
 
+  // token
   createToken(notification?: string, bluetooth?: string): Promise<UserToken> {
     const user = this.user;
     const metadata = user.user_metadata;
@@ -188,39 +238,6 @@ export class CloudDatabaseService {
         .upsert(update, {
           returning: 'minimal'
         });
-
-      if (error) {
-        reject(error);
-      } else {
-        resolve(data);
-      }
-    });
-  }
-
-  getSingleUserProfile(id: string): Promise<UserProfile> {
-    return new Promise(async (resolve, reject) => {
-      const { data, error } = await this.client.from('profiles')
-        .select('id, name, gender, picture, bio, city, interested, birthday, ringers')
-        .eq('id', id)
-        .single();
-
-      if (error) {
-        reject(error);
-      } else {
-        resolve(data);
-      }
-    });
-  }
-
-  getMultiUserProfile(ids: string[]): Promise<UserProfile[]> {
-    if (!ids.length) {
-      return Promise.resolve([]);
-    }
-
-    return new Promise(async (resolve, reject) => {
-      const { data, error } = await this.client.from('profiles')
-        .select('id, name, gender, picture, bio, city, interested, birthday, ringers')
-        .in('id', ids);
 
       if (error) {
         reject(error);

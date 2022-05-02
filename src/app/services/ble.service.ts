@@ -34,7 +34,7 @@ export class BLEService {
     }
   }
 
-  listen() {
+  fake() {
     const timer$ = timer(12000);
     return new Observable(observer => {
       this.isScanning = true;
@@ -55,7 +55,6 @@ export class BLEService {
       mergeMap((address: string) => {
         return this.fakeRead(address).pipe(
           map(result => {
-            console.log('read result', result);
             if (result.profile) {
               this.devices.set(address, result.profile);
             }

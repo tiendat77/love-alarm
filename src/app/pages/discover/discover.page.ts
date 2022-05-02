@@ -6,6 +6,7 @@ import {
   CloudDatabaseService,
   LoaderService,
   ModalsService,
+  PlatformService,
   WebViewService
 } from '../../services';
 
@@ -32,6 +33,7 @@ export class DiscoverPage {
     private readonly loader: LoaderService,
     private readonly modals: ModalsService,
     private readonly webview: WebViewService,
+    private readonly platform: PlatformService,
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
   ) { }
@@ -94,14 +96,33 @@ export class DiscoverPage {
   }
 
   startScan() {
-    this.scanSubscription$ = this.ble.listen().subscribe(profiles => {
-      console.log('scan complete', profiles);
-      if (!profiles || !profiles.length) {
-        return;
-      }
+    if (this.platform.isNative) {
+      this.scanSubscription$ = this.ble.scan().subscribe(profiles => {
+        console.log('scan complete', profiles);
+        if (!profiles || !profiles.length) {
+          return;
+        }
 
-      this.showNearbyUsers(profiles);
-    });
+        this.showNearbyUsers(profiles);
+      });
+
+    // list user profiles from database if not on mobile
+    } else {
+      this.ble.isScanning = true;
+      this.data.listProfiles('id')
+        .then(profiles => {
+          if (!profiles || !profiles.length) {
+            return;
+          }
+
+          this.ble.isScanning = false;
+          this.showNearbyUsers(profiles.map(profile => profile.id));
+        })
+        .catch(error => {
+          console.error(error);
+          this.ble.isScanning = false;
+        });
+    }
   }
 
   private async showNearbyUsers(users: string[]) {
