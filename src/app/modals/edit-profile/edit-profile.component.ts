@@ -132,7 +132,7 @@ export class EditProfileModal {
         resultType: CameraResultType.DataUrl,
       });
 
-      const resized = await new ImageProcess(photo.dataUrl).resize(300, 300);
+      const resized = await new ImageProcess(photo.dataUrl).resize(600, 600);
 
       const name = `${nanoid()}_${Date.now()}`;
       const file = await fetch(resized)
