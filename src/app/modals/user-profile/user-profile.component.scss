@@ -1,5 +1,6 @@
 .page-content {
   padding: 16px 24px;
+  justify-content: space-between;
 
   button {
     width: 100%;
@@ -14,11 +15,35 @@
   }
 }
 
+.top-content {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.bottom-content {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .text {
   margin: 0;
   text-align: center;
   font-weight: normal;
   color: var(--color-cloud);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .user-info {
@@ -48,7 +73,7 @@
     text-align: center;
   }
 
-  .user-old {
+  .user-brief {
     font-weight: 500;
     font-size: 24px;
 
@@ -56,46 +81,8 @@
     text-align: center;
   }
 
-  .user-brief {
+  .user-location {
     @extend .text;
-  }
-}
-
-.statistics {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-
-  width: 80%;
-
-  .statistic {
-    flex: 1 1 100%;
-    max-width: 50%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-
-    div:first-child {
-      font-size: 28px;
-      font-weight: 500;
-      color: var(--color-fuschia);
-    }
-
-    div:last-child {
-      color: var(--color-cloud);
-    }
-  }
-
-  .seperator {
-    width: 1px;
-    height: 32px;
-    margin: 0 8px;
-    background-color: #e7e7e7;
   }
 }
 

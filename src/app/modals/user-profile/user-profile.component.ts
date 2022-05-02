@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { ConfirmRingModal } from '../confim-ring/confim-ring.component';
 
 import { TOPICS } from '../../configs/topic';
-import { UserService } from '../../services';
+import { CloudDatabaseService, UserService } from '../../services';
 import { UserProfile } from '../../interfaces/user-profile';
 import { transformArray2Object } from '../../helpers/object.helper';
 
@@ -22,6 +22,7 @@ export class UserProfileModal {
 
   constructor(
     private readonly user: UserService,
+    private readonly data: CloudDatabaseService,
     private readonly modalCtrl: ModalController
   ) {}
 

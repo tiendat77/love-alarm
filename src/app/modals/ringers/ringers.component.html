@@ -11,7 +11,7 @@
     <div style="width:40px;"></div>
   </div>
 
-  <ng-template #loading>
+  <ng-template #loading [ngIf]="(isLoading$ | async)">
     <div class="page-content loading-skeleton">
       <div class="skeleton avatar"></div>
 
@@ -22,7 +22,7 @@
     </div>
   </ng-template>
 
-  <div class="page-content" *ngIf="!(isLoading$ | async); else loading">
+  <div class="page-content">
     <div class="segments">
       <ul>
         <li [class.active]="activeTab === 0">

@@ -57,15 +57,15 @@
       </div>
     </section>
 
-    <section class="statistics" (click)="ringers()">
-      <div class="statistic">
+    <section class="statistics">
+      <div class="statistic" (click)="ringers('ringers')">
         <div>{{user.profile.ringers?.length || 0}}</div>
         <div>Ringers</div>
       </div>
 
       <div class="seperator"></div>
 
-      <div class="statistic">
+      <div class="statistic" (click)="ringers('ringings')">
         <div>{{user.profile.ringings?.length || 0}}</div>
         <div>Ringing</div>
       </div>

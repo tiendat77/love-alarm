@@ -27,10 +27,13 @@ export class ProfilePage {
     private modal: ModalController,
   ) { }
 
-  async ringers() {
+  async ringers(tab = 'ringers') {
     const modal = await this.modal.create({
       component: RingersModal,
-      componentProps: { profile: this.user.profile }
+      componentProps: {
+        tab,
+        profile: this.user.profile,
+      }
     });
 
     modal.present();

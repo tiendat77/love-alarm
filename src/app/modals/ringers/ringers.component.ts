@@ -21,6 +21,7 @@ import {
 export class RingersModal {
 
   @Input() profile: UserProfile;
+  @Input() tab: 'ringers' | 'ringings' = 'ringers';
 
   isLoading$ = new BehaviorSubject<boolean>(true);
 
@@ -55,6 +56,14 @@ export class RingersModal {
         this.ringers = ringers;
         this.ringings = ringings;
         this.isLoading$.next(false);
+
+        if (this.tab === 'ringings') {
+          this.ngZone.run(() => {
+            this.activeTab = 1;
+            this.swiper?.slideTo(1);
+            this.cdr.detectChanges();
+          });
+        }
       }),
       catchError((error) => {
         console.error(error);
@@ -73,6 +82,10 @@ export class RingersModal {
     });
 
     await modal.present();
+  }
+
+  async unring(profile: UserProfile) {
+
   }
 
   close() {

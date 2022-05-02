@@ -72,7 +72,7 @@ export class CloudDatabaseService {
     const metadata = user.user_metadata;
     const profile: UserProfile = {
       id: metadata.id,
-      email: metadata.email,
+      email: user.email || metadata.email,
       name: metadata.name || metadata.full_name,
       picture: metadata.avatar_url || metadata.picture || null,
       city: null,
@@ -127,6 +127,7 @@ export class CloudDatabaseService {
     return new Promise(async (resolve, reject) => {
       const { data, error } = await this.client.from('profiles')
         .select(columns)
+        .not('id', 'eq', this.user?.id)
         .limit(200);
 
       if (error) {
