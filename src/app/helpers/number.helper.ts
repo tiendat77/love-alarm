@@ -1,16 +1,40 @@
-export function formatKGM(value: number) {
-  if (value >= 1000000000) {
-    return (value / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
+const tier = [
+  {
+    value: 1000000000,
+    symbol: 'G'
+  },
+  {
+    value: 1000000,
+    symbol: 'M'
+  },
+  {
+    value: 1000,
+    symbol: 'K'
   }
-  if (value >= 1000000) {
-    return (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+];
+
+function fix(value: number) {
+  return value.toFixed(1).replace(/\.0$/, '');
+}
+
+export function abbreviate(value: number): string {
+  const sign = value < 0 ? '-' : '';
+  value = Math.abs(value);
+
+  for (let i = 0; i < tier.length; i++) {
+    if (value >= tier[i].value) {
+      return `${sign}${fix((value / tier[i].value))}${tier[i].symbol}`;
+    }
   }
-  if (value >= 1000) {
-    return (value / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-  }
-  return value;
+
+  return value + '';
+}
+
+export function random(max: number) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 export default {
-  formatKGM,
+  random,
+  abbreviate,
 }
