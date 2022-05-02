@@ -18,6 +18,7 @@ import { SwiperModule } from 'swiper/angular';
 import { AppInfoModal } from './app-info/app-info.component';
 import { ChangePasswordModal } from './change-password/change-password.component';
 import { ConfirmRingModal } from './confim-ring/confim-ring.component';
+import { ConfirmUnringModal } from './confim-unring/confim-unring.component';
 import { DatePickerModal } from './date-picker/date-picker.component';
 import { EditProfileModal } from './edit-profile/edit-profile.component';
 import { GenderPickerModal } from './gender-picker/gender-picker.component';
@@ -35,6 +36,7 @@ const MODALS = [
   AppInfoModal,
   ChangePasswordModal,
   ConfirmRingModal,
+  ConfirmUnringModal,
   DatePickerModal,
   EditProfileModal,
   GenderPickerModal,

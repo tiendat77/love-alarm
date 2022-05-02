@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, NgZone } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { Swiper } from 'swiper';
 import { BehaviorSubject, forkJoin, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { UserProfile } from '../../interfaces';
 
 import {
   CloudDatabaseService,
+  ModalsService,
   ToastService,
   UserService
 } from '../../services';
@@ -35,10 +36,12 @@ export class RingersModal {
     public readonly user: UserService,
     private readonly toast: ToastService,
     private readonly data: CloudDatabaseService,
+    private readonly modals: ModalsService,
 
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
     private modalCtrl: ModalController,
+    private actionSheetCtrl: ActionSheetController,
   ) {}
 
   ngOnInit() {
@@ -78,14 +81,47 @@ export class RingersModal {
   async view(profile: UserProfile) {
     const modal = await this.modalCtrl.create({
       component: UserProfileModal,
-      componentProps: { profile }
+      componentProps: {
+        profile,
+        isRung: true
+      }
     });
 
     await modal.present();
   }
 
-  async unring(profile: UserProfile) {
+  async menu(profile: UserProfile) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      cssClass: 'action-sheet',
+      header: `${profile.name}`,
+      buttons: [
+        {
+          text: 'View profile',
+          handler: () => {
+            this.view(profile);
+          }
+        },
+        {
+          text: 'Unring',
+          handler: () => {
+            this.unring(profile);
+          }
+        }
+      ]
+    });
 
+    await actionSheet.present();
+  }
+
+  async unring(profile: UserProfile) {
+    const confirmed = await this.modals.showConfirmUnring(profile);
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.user.unring(profile.id);
+    this.ringings = this.ringings.filter(ringing => ringing.id !== profile.id);
   }
 
   close() {

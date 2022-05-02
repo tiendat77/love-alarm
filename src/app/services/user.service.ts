@@ -121,7 +121,7 @@ export class UserService {
     return forkJoin([
       this.data.updateProfile({ringings}),
       this.serverless.ring({id})
-    ]).subscribe();
+    ]).toPromise();
   }
 
   unring(id: string) {

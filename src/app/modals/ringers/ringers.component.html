@@ -62,7 +62,7 @@
               </div>
 
               <div class="list-item-text">
-                {{ringer.name}}
+                <span class="truncate">{{ringer.name}}</span>
               </div>
             </div>
           </li>
@@ -81,7 +81,17 @@
               </div>
 
               <div class="list-item-text">
-                {{ringing.name}}
+                <span class="truncate">{{ringing.name}}</span>
+              </div>
+
+              <div class="list-item-action" (click)="$event.stopPropagation()">
+                <button icon-button ripple="#dcdcdc" (click)="menu(ringing)">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="6" r="2"/>
+                    <circle cx="12" cy="12" r="2"/>
+                    <circle cx="12" cy="18" r="2"/>
+                  </svg>
+                </button>
               </div>
             </div>
           </li>

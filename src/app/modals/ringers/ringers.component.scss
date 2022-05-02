@@ -38,6 +38,17 @@
   .list-item-text {
     margin-left: 1rem;
   }
+
+  .list-item-action {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    box-sizing: border-box;
+
+    overflow: visible;
+    text-align: right;
+    color: var(--color-cloud);
+  }
 }
 
 swiper {

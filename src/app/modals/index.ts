@@ -2,6 +2,7 @@ export * from './modals.module';
 export * from './app-info/app-info.component';
 export * from './change-password/change-password.component';
 export * from './confim-ring/confim-ring.component';
+export * from './confim-unring/confim-unring.component';
 export * from './date-picker/date-picker.component';
 export * from './edit-profile/edit-profile.component';
 export * from './gender-picker/gender-picker.component';
