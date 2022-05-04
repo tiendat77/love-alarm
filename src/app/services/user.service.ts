@@ -111,11 +111,10 @@ export class UserService {
   ring(id: string) {
     const ringings: string[] = this.profile?.ringings || [];
 
-    if (ringings.includes(id)) {
-      return;
+    if (!ringings.includes(id)) {
+      ringings.push(id);
     }
 
-    ringings.push(id);
     this.profile.ringings = ringings;
 
     return forkJoin([

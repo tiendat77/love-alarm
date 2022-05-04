@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { CloudDatabaseService } from './cloud-database.service';
 import { WebViewService } from './webview.service';
 
-import { ConfirmRingModal, ConfirmUnringModal, UserProfileModal } from '../modals';
+import { ConfirmRingModal, ConfirmUnringModal, SettingsModal, UserProfileModal } from '../modals';
 import { UserProfile } from '../interfaces';
 
 @Injectable({ providedIn: 'root' })
@@ -63,6 +63,14 @@ export class ModalsService {
     const { data } = await modal.onWillDismiss();
 
     return Promise.resolve(data);
+  }
+
+  async showSettings() {
+    const modal = await this.modalCtrl.create({
+      component: SettingsModal
+    });
+
+    modal.present();
   }
 
 }
