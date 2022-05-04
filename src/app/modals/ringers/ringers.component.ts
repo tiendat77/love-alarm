@@ -4,7 +4,6 @@ import { Swiper } from 'swiper';
 import { BehaviorSubject, forkJoin, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { UserProfileModal } from '../user-profile/user-profile.component';
 import { UserProfile } from '../../interfaces';
 
 import {
@@ -52,21 +51,13 @@ export class RingersModal {
     this.isLoading$.next(true);
 
     forkJoin([
-      this.data.getMultiUserProfile(this.profile.ringers || []),
-      this.data.getMultiUserProfile(this.profile.ringings || [])
+      this.data.getMultiProfile(this.profile.ringers || []),
+      this.data.getMultiProfile(this.profile.ringings || [])
     ]).pipe(
       tap(([ringers, ringings]) => {
         this.ringers = ringers;
         this.ringings = ringings;
         this.isLoading$.next(false);
-
-        if (this.tab === 'ringings') {
-          this.ngZone.run(() => {
-            this.activeTab = 1;
-            this.swiper?.slideTo(1);
-            this.cdr.detectChanges();
-          });
-        }
       }),
       catchError((error) => {
         console.error(error);
@@ -79,15 +70,7 @@ export class RingersModal {
   }
 
   async view(profile: UserProfile) {
-    const modal = await this.modalCtrl.create({
-      component: UserProfileModal,
-      componentProps: {
-        profile,
-        isRung: true
-      }
-    });
-
-    await modal.present();
+    await this.modals.showUserProfile(profile.id);
   }
 
   async menu(profile: UserProfile) {
@@ -135,6 +118,14 @@ export class RingersModal {
 
   setSwiperInstance(swiper: Swiper) {
     this.swiper = swiper;
+
+    if (this.tab === 'ringings') {
+      this.ngZone.run(() => {
+        this.activeTab = 1;
+        this.swiper?.slideTo(1);
+        this.cdr.detectChanges();
+      });
+    }
   }
 
   onSlideChange([swiper]) {

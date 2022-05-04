@@ -19,8 +19,6 @@ create table profiles (
   interested text[],
   birthday text,
   joindate text,
-  ringers text[],
-  ringings text[],
 
   primary key (id),
   unique(email),
@@ -91,4 +89,34 @@ create policy "Users can delete own token."
   on tokens for delete
   using ( auth.uid() = id );
 
+```
+
+# Rings & Matchs
+
+```sql
+-- Create a table for public rings & matchs
+create table rings (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at timestamp with time zone,
+
+  from_id UUID,
+  to_id UUID
+);
+
+-- Setup security
+create policy "Users can read their own ring."
+  on rings for select
+  using ( auth.uid() = from_id OR auth.uid() = to_id);
+
+create policy "Users can insert their own ring."
+  on rings for insert
+  with check ( auth.uid() = from_id OR auth.uid() = to_id);
+
+create policy "Users can update own ring."
+  on rings for update
+  using ( auth.uid() = from_id OR auth.uid() = to_id);
+
+create policy "Users can delete own ring."
+  on rings for delete
+  using ( auth.uid() = from_id OR auth.uid() = to_id);
 ```

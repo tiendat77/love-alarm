@@ -6,7 +6,8 @@ import { ServerlessService } from './serverless-functions.service';
 
 import { STORAGE_KEY } from '../configs/storage-key';
 import { UserToken, UserMeta, UserProfile } from '../interfaces';
-import { forkJoin } from 'rxjs';
+import { forkJoin, from, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -114,29 +115,40 @@ export class UserService {
       return Promise.resolve();
     }
 
-    const ringings: string[] = this.profile?.ringings || [];
-
-    if (!ringings.includes(id)) {
-      ringings.push(id);
-    }
-
-    this.profile.ringings = ringings;
-
     return forkJoin([
-      this.data.updateProfile({ringings}),
+      this.data.createRing(this.profile.id, id),
       this.serverless.ring({id})
-    ]).toPromise();
+    ]).pipe(
+      tap(() => {
+        const ringings: string[] = this.profile?.ringings || [];
+
+        if (!ringings.includes(id)) {
+          ringings.push(id);
+        }
+
+        this.profile.ringings = ringings;
+      }),
+      catchError(error => {
+        console.error('[User] Ring failed', error);
+        return of(null);
+      })
+    ).toPromise();
   }
 
   unring(id: string) {
-    const ringings: string[] = (this.profile?.ringings || []).filter(ringing => ringing !== id);
+    return from(
+      this.data.removeRing(this.profile.id, id)
+    ).pipe(
+      tap(() => {
+        const ringings: string[] = (this.profile?.ringings || []).filter(ringing => ringing !== id);
 
-    this.profile.ringings = ringings;
-
-    return forkJoin([
-      this.data.updateProfile({ ringings }),
-      this.serverless.unring({id})
-    ]).toPromise();
+        this.profile.ringings = ringings;
+      }),
+      catchError(error => {
+        console.error('[User] Un-ring failed', error);
+        return of(null);
+      })
+    ).toPromise();
   }
 
   private async loadInfoFromStorage() {

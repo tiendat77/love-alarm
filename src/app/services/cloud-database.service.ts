@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SupabaseClient } from '@supabase/supabase-js';
+import { of, zip } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { UserToken, UserMeta, UserProfile } from '../interfaces';
 
 @Injectable({ providedIn: 'root' })
@@ -14,7 +16,7 @@ export class CloudDatabaseService {
   }
 
   get profile(): Promise<UserProfile> {
-    return this.readProfile()
+    return this.readProfile(this.user?.id)
       .then((profile) => {
         if (!profile) {
           return this.createProfile();
@@ -52,21 +54,6 @@ export class CloudDatabaseService {
   }
 
   // profile
-  readProfile(): Promise<UserProfile> {
-    return new Promise(async (resolve, reject) => {
-      const { data: profile, error, status } = await this.client.from('profiles')
-        .select('*')
-        .eq('id', this.user?.id)
-        .single();
-
-      if (error && status !== 406) {
-        reject(error);
-      } else {
-        resolve(profile);
-      }
-    });
-  }
-
   createProfile(): Promise<UserProfile> {
     const user = this.user;
     const metadata = user.user_metadata;
@@ -138,10 +125,30 @@ export class CloudDatabaseService {
     });
   }
 
-  getSingleUserProfile(id: string): Promise<UserProfile> {
+  readProfile(id: string): Promise<UserProfile> {
+    return zip(
+      this.getFullProfile(id),
+      this.getRingers(id),
+      this.getRingings(id),
+    ).pipe(
+      map(([profile, ringers, ringings]) => {
+        return {
+          ...profile,
+          ringers,
+          ringings,
+        } as UserProfile;
+      }),
+      catchError((error) => {
+        console.error(error);
+        return of(null);
+      })
+    ).toPromise();
+  }
+
+  private getFullProfile(id: string): Promise<UserProfile> {
     return new Promise(async (resolve, reject) => {
       const { data, error } = await this.client.from('profiles')
-        .select('id, name, gender, picture, bio, city, interested, birthday, ringers')
+        .select('*')
         .eq('id', id)
         .single();
 
@@ -153,14 +160,29 @@ export class CloudDatabaseService {
     });
   }
 
-  getMultiUserProfile(ids: string[]): Promise<UserProfile[]> {
+  getSingleProfile(id: string): Promise<UserProfile> {
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('profiles')
+        .select('id, name, gender, picture')
+        .eq('id', id)
+        .single();
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  }
+
+  getMultiProfile(ids: string[]): Promise<UserProfile[]> {
     if (!ids.length) {
       return Promise.resolve([]);
     }
 
     return new Promise(async (resolve, reject) => {
       const { data, error } = await this.client.from('profiles')
-        .select('id, name, gender, picture, bio, city, interested, birthday, ringers')
+        .select('id, name, gender, picture')
         .in('id', ids);
 
       if (error) {
@@ -239,6 +261,72 @@ export class CloudDatabaseService {
         .upsert(update, {
           returning: 'minimal'
         });
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  }
+
+  // ring
+  getRingers(id: string): Promise<string[]> {
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('rings')
+        .select('from_id')
+        .eq('to_id', id);
+
+      if (error) {
+        reject(error);
+      } else {
+        const ids: string[] = (data || []).map(ring => ring.from_id);
+        resolve(ids);
+      }
+    });
+  }
+
+  getRingings(id: string): Promise<string[]> {
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('rings')
+        .select('to_id')
+        .eq('from_id', id);
+
+      if (error) {
+        reject(error);
+      } else {
+        const ids: string[] = (data || []).map(ring => ring.to_id);
+        resolve(ids);
+      }
+    });
+  }
+
+  createRing(from: string, to: string): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('rings')
+        .insert({
+          from_id: from,
+          to_id: to,
+          id: this.user?.id,
+          created_at: new Date(),
+        }, {
+          returning: 'minimal', // Don't return the value after inserting
+        });
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  }
+
+  removeRing(from: string, to: string): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      const { data, error } = await this.client.from('rings')
+        .delete()
+        .eq('from_id', from)
+        .eq('to_id', to);
 
       if (error) {
         reject(error);

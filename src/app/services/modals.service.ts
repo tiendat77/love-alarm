@@ -1,40 +1,36 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { CloudDatabaseService } from './cloud-database.service';
-import { WebViewService } from './webview.service';
-
-import { ConfirmRingModal, ConfirmUnringModal, SettingsModal, UserProfileModal } from '../modals';
+import { UserService } from './user.service';
 import { UserProfile } from '../interfaces';
+
+import {
+  ConfirmRingModal,
+  ConfirmUnringModal,
+  SettingsModal,
+  UserProfileModal
+} from '../modals';
 
 @Injectable({ providedIn: 'root' })
 export class ModalsService {
 
   constructor(
-    private readonly data: CloudDatabaseService,
-    private readonly webview: WebViewService,
+    private readonly user: UserService,
     private readonly modalCtrl: ModalController,
   ) { }
 
   async showUserProfile(id: string) {
-    try {
-      this.webview.hideStatusBarOverlay();
+    const isRung = !!this.user.profile?.ringings?.includes(id);
 
-      const profile: UserProfile = await this.data.getSingleUserProfile(id);
+    const modal = await this.modalCtrl.create({
+      component: UserProfileModal,
+      componentProps: {
+        id,
+        isRung
+      }
+    });
 
-      const modal = await this.modalCtrl.create({
-        component: UserProfileModal,
-        componentProps: {
-          profile,
-          allowRing: true
-        }
-      });
-
-      await modal.present();
-
-    } catch (error) {
-      console.error(error);
-    }
+    await modal.present();
   }
 
   async showConfirmRing(profile: UserProfile) {

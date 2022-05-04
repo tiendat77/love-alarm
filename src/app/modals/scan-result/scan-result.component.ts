@@ -1,10 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { UserService } from '../../services';
+import { ModalsService, UserService } from '../../services';
 import { UserProfile } from '../../interfaces/user-profile';
-import { ConfirmRingModal } from '../confim-ring/confim-ring.component';
-import { UserProfileModal } from '../user-profile/user-profile.component';
 
 @Component({
   selector: 'app-scan-result',
@@ -19,6 +17,7 @@ export class ScanResultModal {
 
   constructor(
     private readonly user: UserService,
+    private readonly modals: ModalsService,
     private readonly modalCtrl: ModalController
   ) {}
 
@@ -38,31 +37,17 @@ export class ScanResultModal {
   }
 
   async ring(profile: UserProfile) {
-    const modal = await this.modalCtrl.create({
-      component: ConfirmRingModal,
-      componentProps: { name: profile.name },
-      cssClass: 'adaptable'
-    });
+    const confirmed = await this.modals.showConfirmRing(profile);
 
-    await modal.present();
-
-    const { data } = await modal.onWillDismiss();
-
-    if (data) {
-      this.user.ring(profile.id);
+    if (!confirmed) {
+      return;
     }
+
+    this.user.ring(profile.id);
   }
 
   async viewProfile(profile?: UserProfile) {
-    const modal = await this.modalCtrl.create({
-      component: UserProfileModal,
-      componentProps: {
-        profile,
-        allowRing: true
-      }
-    });
-
-    await modal.present();
+    await this.modals.showUserProfile(profile.id);
   }
 
   fetchProfileImageError(event) {

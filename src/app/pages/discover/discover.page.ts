@@ -136,7 +136,7 @@ export class DiscoverPage {
 
     try {
       this.loader.start();
-      const profiles: UserProfile[] = await this.data.getMultiUserProfile(users);
+      const profiles: UserProfile[] = await this.data.getMultiProfile(users);
       this.loader.stop();
 
       const modal = await this.modalCtrl.create({

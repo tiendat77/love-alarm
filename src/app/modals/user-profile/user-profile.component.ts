@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import {
   CloudDatabaseService,
   ModalsService,
+  ToastService,
   UserService
 } from '../../services';
 
@@ -19,7 +20,7 @@ import { transformArray2Object } from '../../helpers/object.helper';
 export class UserProfileModal {
 
   @Input() profile: UserProfile;
-  @Input() allowRing = false;
+  @Input() id: string;
   @Input() isRung = false;
 
   topics = transformArray2Object(TOPICS);
@@ -28,36 +29,64 @@ export class UserProfileModal {
     private readonly user: UserService,
     private readonly data: CloudDatabaseService,
     private readonly modals: ModalsService,
+    private readonly toast: ToastService,
     private readonly modalCtrl: ModalController
   ) {}
+
+  ngOnInit() {
+    this.init();
+  }
+
+  private async init() {
+    if (!this.id && !this.profile) {
+      console.error('No profile or id provided');
+      return;
+    }
+
+    const profile = await this.data.readProfile(this.id);
+
+    if (!profile) {
+      this.toast.show('Error happened');
+      this.close();
+    }
+
+    this.profile = profile;
+  }
 
   async ring() {
     const confirmed = await this.modals.showConfirmRing(this.profile);
 
-    if (confirmed) {
-      await this.user.ring(this.profile.id);
-      await this.reload();
+    if (!confirmed) {
+      return;
     }
+
+    this.user.ring(this.profile.id).then(() => {
+      this.isRung = false;
+      setTimeout(() => this.reload(), 1000);
+    });
   }
 
   async unring() {
     const confirmed = await this.modals.showConfirmUnring(this.profile);
 
-    if (confirmed) {
-      await this.user.unring(this.profile.id);
-      this.isRung = false;
-      this.reload();
+    if (!confirmed) {
+      return;
     }
+
+    this.user.unring(this.profile.id).then(() => {
+      this.isRung = false;
+      setTimeout(() => this.reload(), 1000);
+    });
   }
 
   private reload() {
-    return this.data.getSingleUserProfile(this.profile.id)
-      .then(profile => {
-        this.profile = profile;
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    return this.data.readProfile(this.profile.id).then(profile => {
+      if (!profile) {
+        return;
+      }
+
+      this.profile = profile;
+    });
   }
 
   close() {

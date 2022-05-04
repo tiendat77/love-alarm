@@ -46,7 +46,7 @@
         </div>
 
         <div class="row" style="gap: 20px;">
-          <div class="user-brief">
+          <div class="user-brief" *ngIf="profile.gender || profile.birthday">
             <la-gender [value]="profile.gender"></la-gender>
             <span style="padding: 4px;"
                   *ngIf="profile.birthday && profile.gender">
@@ -88,7 +88,7 @@
     </div>
 
     <div class="bottom-content">
-      <section class="flex-center" *ngIf="allowRing">
+      <section class="flex-center" *ngIf="!isRung">
         <div class="ring-button">
           <div class="ring"></div>
           <div class="ring"></div>
