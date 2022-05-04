@@ -11,17 +11,6 @@
     <div style="width:40px;"></div>
   </div>
 
-  <ng-template #loading [ngIf]="(isLoading$ | async)">
-    <div class="page-content loading-skeleton">
-      <div class="skeleton avatar"></div>
-
-      <div class="user-name">
-        <div class="skeleton"></div>
-        <div class="skeleton"></div>
-      </div>
-    </div>
-  </ng-template>
-
   <div class="page-content">
     <div class="segments">
       <ul>
@@ -51,51 +40,55 @@
       (slideChange)="onSlideChange($event)"
     >
       <ng-template swiperSlide>
-        <ul class="list" *ngIf="ringers.length; else empty">
-          <li class="list-item" *ngFor="let ringer of ringers" (click)="view(ringer)">
-            <div class="list-item-content">
-              <div class="list-item-image">
-                <img avatar
-                     referrerpolicy="no-referrer"
-                     [name]="ringer.name"
-                     [src]="ringer.picture" alt="">
-              </div>
+        <ng-container *ngIf="!(isLoading$ | async); else loading">
+          <ul class="list" *ngIf="ringers.length; else empty">
+            <li class="list-item" *ngFor="let ringer of ringers" (click)="view(ringer)">
+              <div class="list-item-content">
+                <div class="list-item-image">
+                  <img avatar
+                       referrerpolicy="no-referrer"
+                       [name]="ringer.name"
+                       [src]="ringer.picture" alt="">
+                </div>
 
-              <div class="list-item-text">
-                <span class="truncate">{{ringer.name}}</span>
+                <div class="list-item-text">
+                  <span class="truncate">{{ringer.name}}</span>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </ng-container>
       </ng-template>
 
       <ng-template swiperSlide>
-        <ul class="list" *ngIf="ringings.length; else empty">
-          <li class="list-item" *ngFor="let ringing of ringings" (click)="view(ringing)">
-            <div class="list-item-content">
-              <div class="list-item-image">
-                <img avatar
-                     referrerpolicy="no-referrer"
-                     [name]="ringing.name"
-                     [src]="ringing.picture" alt="">
-              </div>
+        <ng-container *ngIf="!(isLoading$ | async); else loading">
+          <ul class="list" *ngIf="ringings.length; else empty">
+            <li class="list-item" *ngFor="let ringing of ringings" (click)="view(ringing)">
+              <div class="list-item-content">
+                <div class="list-item-image">
+                  <img avatar
+                       referrerpolicy="no-referrer"
+                       [name]="ringing.name"
+                       [src]="ringing.picture" alt="">
+                </div>
 
-              <div class="list-item-text">
-                <span class="truncate">{{ringing.name}}</span>
-              </div>
+                <div class="list-item-text">
+                  <span class="truncate">{{ringing.name}}</span>
+                </div>
 
-              <div class="list-item-action" (click)="$event.stopPropagation()">
-                <button icon-button ripple="#dcdcdc" (click)="menu(ringing)">
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="6" r="2"/>
-                    <circle cx="12" cy="12" r="2"/>
-                    <circle cx="12" cy="18" r="2"/>
-                  </svg>
-                </button>
+                <div class="list-item-action" (click)="$event.stopPropagation()">
+                  <button icon-button ripple="#dcdcdc" (click)="menu(ringing)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="6" r="2"/>
+                      <circle cx="12" cy="12" r="2"/>
+                      <circle cx="12" cy="18" r="2"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </ng-container>
       </ng-template>
     </swiper>
   </div>
@@ -103,6 +96,18 @@
   <ng-template #empty>
     <div class="empty">
       <img src="/assets/images/list_empty_01.svg" alt="">
+    </div>
+  </ng-template>
+
+  <ng-template #loading>
+    <div class="loading-skeleton">
+      <div class="user" *ngFor="let if of [1,2,3]">
+        <div class="skeleton avatar"></div>
+        <div class="texts">
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+        </div>
+      </div>
     </div>
   </ng-template>
 </div>

@@ -109,6 +109,11 @@ export class UserService {
   }
 
   ring(id: string) {
+    // can't ring yourself
+    if (id === this.profile.id) {
+      return Promise.resolve();
+    }
+
     const ringings: string[] = this.profile?.ringings || [];
 
     if (!ringings.includes(id)) {
@@ -124,16 +129,14 @@ export class UserService {
   }
 
   unring(id: string) {
-    const ringings: string[] = (this.profile?.ringings || []).filter(ringing => {
-      return ringing !== id;
-    });
+    const ringings: string[] = (this.profile?.ringings || []).filter(ringing => ringing !== id);
 
     this.profile.ringings = ringings;
 
     return forkJoin([
       this.data.updateProfile({ ringings }),
       this.serverless.unring({id})
-    ]).subscribe();
+    ]).toPromise();
   }
 
   private async loadInfoFromStorage() {

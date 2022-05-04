@@ -51,15 +51,18 @@ export class AuthorizeService {
     });
   }
 
-  private async onSignedIn(session: Session) {
+  private onSignedIn(session: Session) {
     if (this.isLogged) {
       return;
     }
 
     this.isLogged = true;
-    await this.user.init();
-    await this.ble.init();
     this.router.navigateByUrl('/app/home', { replaceUrl: true });
+
+    setTimeout(async () => {
+      await this.user.init();
+      await this.ble.init();
+    });
   }
 
   private onSignedOut() {
