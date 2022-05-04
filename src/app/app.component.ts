@@ -120,7 +120,9 @@ export class AppComponent {
         // com.dathuynh.lovealarm://profile/<user_id>
         if (slug.indexOf('profile') !== -1) {
           const id = slug.split('/')[1];
-          this.modals.showUserProfile(id);
+          setTimeout(() => {
+            this.modals.showUserProfile(id);
+          }, 2000);
         }
         // If no match, do nothing - let regular routing logic take over
       });

@@ -1,18 +1,21 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+
+import { STORAGE_KEY } from '../../configs/storage-key';
+import { LANGUAGES_MAP } from '../../configs/languages';
 
 import {
   AuthorizeService,
+  SharingService,
   StorageService,
   WebViewService,
 } from '../../services';
 
-import { LanguagesModal } from '../languages/languages.component';
+import { AppInfoModal } from '../app-info/app-info.component';
 import { ChangePasswordModal } from '../change-password/change-password.component';
-
-import { STORAGE_KEY } from '../../configs/storage-key';
-import { LANGUAGES_MAP } from '../../configs/languages';
+import { LanguagesModal } from '../languages/languages.component';
+import { PrivacyPolicyModal } from '../privacy-policy/privacy-policy.component';
+import { ThemesModal } from '../themes/themes.component';
 
 @Component({
   selector: 'app-settings',
@@ -28,8 +31,8 @@ export class SettingsModal {
     public webview: WebViewService,
     private auth: AuthorizeService,
     private storage: StorageService,
+    private sharing: SharingService,
 
-    private router: Router,
     private modalCtrl: ModalController,
   ) {
     this.init();
@@ -58,8 +61,36 @@ export class SettingsModal {
     }
   }
 
-  toggleTheme() {
+  toggleDarkTheme() {
     this.webview.toggleDarkTheme();
+  }
+
+  async themes() {
+    const modal = await this.modalCtrl.create({
+      component: ThemesModal
+    });
+
+    modal.present();
+  }
+
+  async share() {
+    await this.sharing.shareLink();
+  }
+
+  async policy() {
+    const modal = await this.modalCtrl.create({
+      component: PrivacyPolicyModal
+    });
+
+    modal.present();
+  }
+
+  async info() {
+    const modal = await this.modalCtrl.create({
+      component: AppInfoModal
+    });
+
+    modal.present();
   }
 
   async resetPassword() {

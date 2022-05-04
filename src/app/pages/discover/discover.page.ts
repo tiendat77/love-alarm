@@ -43,6 +43,10 @@ export class DiscoverPage {
     this.scanSubscription$?.unsubscribe();
   }
 
+  settings() {
+    this.modals.showSettings();
+  }
+
   async scanWithQrCode() {
     const actionSheet = await this.actionSheetCtrl.create({
       cssClass: 'action-sheet',

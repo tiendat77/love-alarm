@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { EditProfileModal, RingersModal } from '../../modals';
 
 import {
+  ModalsService,
   SupabaseService,
   UserService
 } from '../../services';
@@ -24,8 +25,13 @@ export class ProfilePage {
     public user: UserService,
     public supabase: SupabaseService,
 
+    private modals: ModalsService,
     private modal: ModalController,
   ) { }
+
+  settings() {
+    this.modals.showSettings();
+  }
 
   async ringers(tab = 'ringers') {
     const modal = await this.modal.create({

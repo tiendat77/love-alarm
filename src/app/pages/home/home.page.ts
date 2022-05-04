@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ModalsService } from '../../services';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,13 @@ export class HomePage {
 
   ringers: number = 0;
 
-  constructor() {}
+  constructor(
+    private modals: ModalsService
+  ) {}
+
+  settings() {
+    this.modals.showSettings();
+  }
 
   test() {
     if (this.ringers !== 0) {
