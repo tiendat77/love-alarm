@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, Input, NgZone } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { Swiper } from 'swiper';
-import { BehaviorSubject, forkJoin, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, of, Subject } from 'rxjs';
+import { catchError, skip, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { UserProfile } from '../../interfaces';
 
@@ -24,6 +24,7 @@ export class RingersModal {
   @Input() tab: 'ringers' | 'ringings' = 'ringers';
 
   isLoading$ = new BehaviorSubject<boolean>(true);
+  destroy$ = new Subject();
 
   swiper: Swiper;
   activeTab = 0;
@@ -45,6 +46,23 @@ export class RingersModal {
 
   ngOnInit() {
     this.init();
+
+    this.user.ringings$.pipe(
+      skip(1), // skip first time, it's already get in init()
+      takeUntil(this.destroy$),
+      switchMap((ringings) => this.data.getMultiProfile(ringings || [])),
+      catchError((error) => {
+        console.error(error);
+        return of([] as UserProfile[]);
+      })
+    ).subscribe(ringings => {
+      this.ringings = ringings;
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private init() {

@@ -6,8 +6,9 @@ import { ServerlessService } from './serverless-functions.service';
 
 import { STORAGE_KEY } from '../configs/storage-key';
 import { UserToken, UserMeta, UserProfile } from '../interfaces';
-import { forkJoin, from, of } from 'rxjs';
+import { BehaviorSubject, forkJoin, from, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import lodash from 'lodash';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -15,6 +16,9 @@ export class UserService {
   meta: UserMeta;
   profile: UserProfile;
   token: UserToken;
+
+  ringings$ = new BehaviorSubject<string[]>([]);
+  matching$ = new BehaviorSubject<string[]>([]);
 
   constructor(
     private data: CloudDatabaseService,
@@ -92,6 +96,14 @@ export class UserService {
       joindate: data.joindate || null,
     };
 
+    const matching = lodash.intersection(
+      this.profile.ringers,
+      this.profile.ringings
+    );
+
+    this.matching$.next(matching);
+    this.ringings$.next(this.profile.ringings || []);
+
     this.storage.set(STORAGE_KEY.USER_PROFILE, this.profile);
   }
 
@@ -127,6 +139,7 @@ export class UserService {
         }
 
         this.profile.ringings = ringings;
+        this.ringings$.next(ringings);
       }),
       catchError(error => {
         console.error('[User] Ring failed', error);
@@ -143,6 +156,7 @@ export class UserService {
         const ringings: string[] = (this.profile?.ringings || []).filter(ringing => ringing !== id);
 
         this.profile.ringings = ringings;
+        this.ringings$.next(ringings);
       }),
       catchError(error => {
         console.error('[User] Un-ring failed', error);

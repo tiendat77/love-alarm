@@ -307,7 +307,6 @@ export class CloudDatabaseService {
         .insert({
           from_id: from,
           to_id: to,
-          id: this.user?.id,
           created_at: new Date(),
         }, {
           returning: 'minimal', // Don't return the value after inserting
