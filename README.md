@@ -25,3 +25,4 @@ Was there a time you discovered a cute girl/boy in a coffee shop but too awkward
 
 - [love-alarm-ble](https://github.com/tiendat77/love-alarm-ble)
 - [love-alarm-serverless](https://github.com/tiendat77/love-alarm-serverless)
+- [love-alarm-landing-page](https://github.com/tiendat77/love-alarm-landing-page)

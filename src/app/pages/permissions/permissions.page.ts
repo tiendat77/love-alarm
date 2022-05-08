@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Swiper } from 'swiper';
 
+import { PlatformService } from '../../services';
 import { BleClient } from 'love-alarm-ble';
 import { PushNotifications } from '@capacitor/push-notifications';
 
@@ -14,25 +15,34 @@ export class PermissionsPage {
 
   swiper: Swiper;
 
-  constructor(private router: Router) {}
+  constructor(
+    private readonly router: Router,
+    private readonly platform: PlatformService,
+  ) {}
 
   async enableNotification() {
-    let status = await PushNotifications.checkPermissions();
+    if (this.platform.isNative) {
+      let status = await PushNotifications.checkPermissions();
 
-    if (status.receive === 'prompt') {
-      status = await PushNotifications.requestPermissions();
+      if (status.receive === 'prompt') {
+        status = await PushNotifications.requestPermissions();
+      }
+  
+      if (status.receive !== 'granted') {
+        throw new Error('User denied permissions!');
+      }
+
+      await PushNotifications.register();
     }
 
-    if (status.receive !== 'granted') {
-      throw new Error('User denied permissions!');
-    }
-
-    await PushNotifications.register();
     this.swiper.slideNext();
   }
 
   async enableLocation() {
-    await BleClient.initialize({ advertising: null });
+    if (this.platform.isNative) {
+      await BleClient.initialize({ advertising: null });
+    }
+
     this.swiper.slideNext();
   }
 

@@ -39,13 +39,13 @@
       </h2>
 
       <h2 class="text" *ngIf="!ble.isScanning">
-        Start scan to search for peoples nearby
+        Search for peoples nearby
       </h2>
     </div>
 
     <div class="bottom-content">
       <button raised-button [disabled]="ble.isScanning" (click)="startScan()">
-        <span>Start scan</span>
+        <span>Start Now</span>
       </button>
     </div>
   </div>
