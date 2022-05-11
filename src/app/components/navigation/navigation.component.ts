@@ -27,10 +27,10 @@ export class NavigationComponent {
 
   private updateStatusBar() {
     if (this.active === 'home') {
-      this.webview.showStatusBarOverlay();
+      this.webview.setStatusBarStyle('dark');
 
     } else {
-      this.webview.hideStatusBarOverlay();
+      this.webview.setStatusBarStyle('light');
     }
   }
 

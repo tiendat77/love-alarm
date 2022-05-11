@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalsService } from '../../services';
+import { ModalsService, WebViewService } from '../../services';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +11,14 @@ export class HomePage {
   ringers: number = 0;
 
   constructor(
-    private modals: ModalsService
+    private readonly modals: ModalsService,
+    private readonly webview: WebViewService,
   ) {}
 
-  settings() {
-    this.modals.showSettings();
+  async settings() {
+    this.webview.setStatusBarStyle('light');
+    await this.modals.showSettings();
+    this.webview.setStatusBarStyle('dark');
   }
 
   test() {

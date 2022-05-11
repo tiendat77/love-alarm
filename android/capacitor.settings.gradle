@@ -44,5 +44,8 @@ project(':capacitor-splash-screen').projectDir = new File('../node_modules/@capa
 include ':capacitor-status-bar'
 project(':capacitor-status-bar').projectDir = new File('../node_modules/@capacitor/status-bar/android')
 
+include ':capacitor-status-bar-area'
+project(':capacitor-status-bar-area').projectDir = new File('../node_modules/capacitor-status-bar-area/android')
+
 include ':love-alarm-ble'
 project(':love-alarm-ble').projectDir = new File('../node_modules/love-alarm-ble/android')

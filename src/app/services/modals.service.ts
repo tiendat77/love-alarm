@@ -66,7 +66,8 @@ export class ModalsService {
       component: SettingsModal
     });
 
-    modal.present();
+    await modal.present();
+    await modal.onWillDismiss();
   }
 
 }

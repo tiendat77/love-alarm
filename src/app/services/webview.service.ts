@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { StatusBar, Style } from '@capacitor/status-bar';
+import { StatusBarArea, Style } from 'capacitor-status-bar-area';
 
 import { StorageService } from './storage.service';
 import { PlatformService } from './platform.service';
@@ -20,9 +20,9 @@ export class WebViewService {
   ) { }
 
   async init() {
-    this.configStatusBar();
-    this.isDarkTheme = !!(await this.storage.get(STORAGE_KEY.DARK_THEME));
-    this.setTheme(this.isDarkTheme);
+    this.initStatusBar();
+    this.getTheme();
+    this.setTheme();
   }
 
   hideApp() {
@@ -39,12 +39,17 @@ export class WebViewService {
     }
   }
 
+  private async getTheme() {
+    const isDark = !!(await this.storage.get(STORAGE_KEY.DARK_THEME));
+    this.isDarkTheme = isDark;
+  }
+
   private setTheme(dark: boolean = this.isDarkTheme) {
-    if (dark) {
-      this.document.body.classList.add('dark-theme');
-    } else {
+    this.storage.set(STORAGE_KEY.DARK_THEME, dark);
+
+    dark ?
+      this.document.body.classList.add('dark-theme') :
       this.document.body.classList.remove('dark-theme');
-    }
   }
 
   toggleDarkTheme() {
@@ -52,21 +57,45 @@ export class WebViewService {
     this.setTheme(this.isDarkTheme);
   }
 
-  private configStatusBar() {
+  initStatusBar() {
+    if (!this.platform.isNative) {
+      return;
+    }
+
+    StatusBarArea.setStyle({style: Style.Light});
+    StatusBarArea.setBackgroundColor({color: '#ffffff'});
+    StatusBarArea.setOverlaysWebView({overlay: true});
+
+    StatusBarArea.getHeight().then((info) => {
+      document.documentElement.style.setProperty(
+        '--status-bar-safe-area',
+        `${info?.height || 24}px`
+      );
+    });
+  }
+
+  async setStatusBarStyle(style: 'dark' | 'light') {
     if (this.platform.isNative) {
-      StatusBar.setStyle({style: Style.Dark});
+      style === 'dark' ?
+      await StatusBarArea.setStyle({style: Style.Dark}) :
+      await StatusBarArea.setStyle({style: Style.Light});
+
+    } else {
+      style === 'dark' ?
+        this.meta.updateTag({name: 'theme-color',content: '#000000'}) :
+        this.meta.updateTag({name: 'theme-color',content: '#ffffff'});
     }
   }
 
   hideStatusBarOverlay() {
     this.platform.isNative
-      ? StatusBar.setOverlaysWebView({overlay: false})
+      ? StatusBarArea.setOverlaysWebView({overlay: false})
       : this.meta.updateTag({name: 'theme-color',content: '#ffffff'});
   }
 
   showStatusBarOverlay() {
     this.platform.isNative
-        ? StatusBar.setOverlaysWebView({overlay: true})
+        ? StatusBarArea.setOverlaysWebView({overlay: true})
         : this.meta.updateTag({name: 'theme-color',content: '#f8b6f7'});
   }
 
