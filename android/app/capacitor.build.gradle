@@ -23,6 +23,7 @@ dependencies {
     implementation project(':capacitor-share')
     implementation project(':capacitor-splash-screen')
     implementation project(':capacitor-status-bar')
+    implementation project(':capacitor-status-bar-area')
     implementation project(':love-alarm-ble')
 
 }

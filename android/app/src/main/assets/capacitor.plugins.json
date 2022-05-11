@@ -56,6 +56,10 @@
 		"classpath": "com.capacitorjs.plugins.statusbar.StatusBarPlugin"
 	},
 	{
+		"pkg": "capacitor-status-bar-area",
+		"classpath": "com.dathuynh.plugins.status_bar_area.StatusBarAreaPlugin"
+	},
+	{
 		"pkg": "love-alarm-ble",
 		"classpath": "com.dathuynh.plugins.love_alarm_ble.LoveAlarmBlePlugin"
 	}
