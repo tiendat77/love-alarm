@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { abbreviate } from '../helpers/number.helper';
+import { NumberHelper } from '../helpers/number.helper';
 
 @Pipe({
   name: 'abbreviate'
@@ -11,7 +11,9 @@ export class AbbreviatePipe implements PipeTransform {
       return '0';
     }
 
-    return abbreviate(Number.parseInt(value as string, 10));
+    return NumberHelper.abbreviate(
+      Number.parseInt(value as string, 10)
+    );
   }
 
 }

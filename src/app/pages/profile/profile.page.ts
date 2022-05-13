@@ -10,7 +10,7 @@ import {
 } from '../../services';
 
 import { TOPICS } from '../../configs/topic';
-import { transformArray2Object } from '../../helpers/object.helper';
+import { ObjectHelper } from '../../helpers/object.helper';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +19,7 @@ import { transformArray2Object } from '../../helpers/object.helper';
 })
 export class ProfilePage {
 
-  topics = transformArray2Object(TOPICS);
+  topics = ObjectHelper.transformArray2Object(TOPICS);
 
   constructor(
     public user: UserService,
@@ -51,5 +51,9 @@ export class ProfilePage {
     });
 
     modal.present();
+  }
+
+  async react(user, action) {
+
   }
 }

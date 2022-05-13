@@ -7,7 +7,7 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 import { ToastService } from './toast.service';
 import { PlatformService } from './platform.service';
 
-import { blobToBase64, saveFile } from '../helpers';
+import { FileHelper } from '../helpers/file.helper';
 
 @Injectable({ providedIn: 'root' })
 export class SharingService {
@@ -19,10 +19,10 @@ export class SharingService {
 
   async shareImage(name: string, imageBlob: Blob) {
     if (!this.platform.isNative) {
-      return saveFile(name, imageBlob, 'image/png');
+      return FileHelper.saveFile(name, imageBlob, 'image/png');
     }
 
-    const imageBase64 = await blobToBase64(imageBlob);
+    const imageBase64 = await FileHelper.blobToBase64(imageBlob);
 
     return Filesystem.writeFile({
       path: name,

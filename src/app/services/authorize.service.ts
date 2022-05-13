@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 
-import { md5 } from '../helpers';
+import { HashHelper } from '../helpers';
 import { UserService } from './user.service';
 
 import {
@@ -80,7 +80,7 @@ export class AuthorizeService {
     };
 
     return this.client.auth.signUp(
-      { email, password: md5(password) },
+      { email, password: HashHelper.md5(password) },
       { data: meta }
     );
   }
@@ -88,7 +88,7 @@ export class AuthorizeService {
   signIn(email: string, password: string) {
     return this.client.auth.signIn({
       email,
-      password: md5(password)
+      password: HashHelper.md5(password)
     });
   }
 
@@ -120,7 +120,7 @@ export class AuthorizeService {
   changePassword(newPassword: string) {
     return this.client.auth.api.updateUser(
       this.token,
-      { password: md5(newPassword) }
+      { password: HashHelper.md5(newPassword) }
     );
   }
 

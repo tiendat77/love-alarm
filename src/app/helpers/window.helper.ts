@@ -1,8 +1,7 @@
-export function isDarkMode() {
-  return window.matchMedia &&
-         window.matchMedia('(prefers-color-scheme: dark)').matches;
-}
 
-export default {
-  isDarkMode
+export class WindowHelper {
+  static isDarkMode() {
+    return window.matchMedia &&
+           window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
 }

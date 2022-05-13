@@ -10,7 +10,7 @@ import {
 
 import { TOPICS } from '../../configs/topic';
 import { UserProfile } from '../../interfaces/user-profile';
-import { transformArray2Object } from '../../helpers/object.helper';
+import { ObjectHelper } from '../../helpers/object.helper';
 
 @Component({
   selector: 'app-user-profile-modal',
@@ -23,7 +23,7 @@ export class UserProfileModal {
   @Input() id: string;
   @Input() isRung = false;
 
-  topics = transformArray2Object(TOPICS);
+  topics = ObjectHelper.transformArray2Object(TOPICS);
 
   constructor(
     private readonly user: UserService,

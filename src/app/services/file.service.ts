@@ -5,7 +5,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { ToastService } from './toast.service';
 
 import { saveAs } from 'file-saver';
-import { base64toBytes } from '../helpers';
+import { StringHelper } from '../helpers/string.helper';
 
 @Injectable({ providedIn: 'root' })
 export class FileService {
@@ -46,7 +46,7 @@ export class FileService {
 
   private savePngBrowser(dataUrl: string, name: string) {
     try {
-      const bytes = base64toBytes(dataUrl.replace(/^data:image\/(png|jpg);base64,/, ''));
+      const bytes = StringHelper.base64toBytes(dataUrl.replace(/^data:image\/(png|jpg);base64,/, ''));
       const blob = new Blob(bytes, {type: 'image/png'});
       saveAs(blob, name + '.png');
 

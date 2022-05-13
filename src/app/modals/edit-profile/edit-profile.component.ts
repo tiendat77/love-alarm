@@ -17,7 +17,7 @@ import { GENDERS } from '../../configs/genders';
 import { TOPICS } from '../../configs/topic';
 
 import { ImageProcess } from '../../helpers/image.helper';
-import { nanoid } from '../../helpers/nanoid.helper';
+import { NanoIdHelper } from '../../helpers/nanoid.helper';
 import moment from 'moment';
 
 function reshape(array: any[], size: number) {
@@ -134,7 +134,7 @@ export class EditProfileModal {
 
       const resized = await new ImageProcess(photo.dataUrl).resize(600, 600);
 
-      const name = `${nanoid()}_${Date.now()}`;
+      const name = `${NanoIdHelper.nanoid()}_${Date.now()}`;
       const file = await fetch(resized)
         .then((res) => res.blob())
         .then( (blob) => new File([blob], name, { type: `image/${photo.format}`}));
