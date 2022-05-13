@@ -11,4 +11,6 @@ export interface UserProfile {
   joindate?: string | null;
   ringers?: string[];
   ringings?: string[];
+  totalRingers?: number;
+  totalRinging?: number;
 }

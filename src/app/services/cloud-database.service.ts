@@ -16,7 +16,7 @@ export class CloudDatabaseService {
   }
 
   get profile(): Promise<UserProfile> {
-    return this.readProfile(this.user?.id)
+    return this.readOwnProfile(this.user?.id)
       .then((profile) => {
         if (!profile) {
           return this.createProfile();
@@ -125,7 +125,7 @@ export class CloudDatabaseService {
     });
   }
 
-  readProfile(id: string): Promise<UserProfile> {
+  readOwnProfile(id: string): Promise<UserProfile> {
     return zip(
       this.getFullProfile(id),
       this.getRingers(id),
@@ -136,6 +136,26 @@ export class CloudDatabaseService {
           ...profile,
           ringers,
           ringings,
+          totalRingers: ringers.length,
+          totalRinging: ringings.length,
+        } as UserProfile;
+      }),
+      catchError((error) => {
+        console.error(error);
+        return of(null);
+      })
+    ).toPromise();
+  }
+
+  readProfile(id: string): Promise<UserProfile> {
+    return zip(
+      this.getFullProfile(id),
+      this.countRinger(id),
+    ).pipe(
+      map(([profile, ringers]) => {
+        return {
+          ...profile,
+          totalRingers: ringers
         } as UserProfile;
       }),
       catchError((error) => {
@@ -297,6 +317,20 @@ export class CloudDatabaseService {
       } else {
         const ids: string[] = (data || []).map(ring => ring.to_id);
         resolve(ids);
+      }
+    });
+  }
+
+  countRinger(id: string): Promise<number> {
+    return new Promise(async (resolve, reject) => {
+      const { data, error, count } = await this.client.from('rings')
+        .select('from_id', {count: 'exact', head: true})
+        .eq('to_id', id);
+
+      if (error) {
+        reject(error);
+      } else {
+        resolve(count || 0);
       }
     });
   }
