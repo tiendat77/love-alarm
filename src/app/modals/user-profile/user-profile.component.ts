@@ -43,7 +43,7 @@ export class UserProfileModal {
       return;
     }
 
-    const profile = await this.data.readProfile(this.id);
+    const profile = await this.data.getProfile(this.id);
 
     if (!profile) {
       this.toast.show('Error happened');
@@ -80,7 +80,7 @@ export class UserProfileModal {
   }
 
   private reload() {
-    return this.data.readProfile(this.profile.id).then(profile => {
+    return this.data.getProfile(this.profile.id).then(profile => {
       if (!profile) {
         return;
       }

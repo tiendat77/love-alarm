@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { SupabaseClient } from '@supabase/supabase-js';
 import { of, zip } from 'rxjs';
@@ -16,7 +15,7 @@ export class CloudDatabaseService {
   }
 
   get profile(): Promise<UserProfile> {
-    return this.readOwnProfile(this.user?.id)
+    return this.getOwnProfile(this.user?.id)
       .then((profile) => {
         if (!profile) {
           return this.createProfile();
@@ -45,9 +44,7 @@ export class CloudDatabaseService {
       });
   }
 
-  constructor(
-    private readonly router: Router,
-  ) { }
+  constructor() { }
 
   init(client: SupabaseClient) {
     this.client = client;
@@ -110,7 +107,7 @@ export class CloudDatabaseService {
     });
   }
 
-  listProfiles(columns = '*'): Promise<UserProfile[]> {
+  getAllProfiles(columns = '*'): Promise<UserProfile[]> {
     return new Promise(async (resolve, reject) => {
       const { data, error } = await this.client.from('profiles')
         .select(columns)
@@ -125,7 +122,7 @@ export class CloudDatabaseService {
     });
   }
 
-  readOwnProfile(id: string): Promise<UserProfile> {
+  getOwnProfile(id: string): Promise<UserProfile> {
     return zip(
       this.getFullProfile(id),
       this.getRingers(id),
@@ -147,7 +144,7 @@ export class CloudDatabaseService {
     ).toPromise();
   }
 
-  readProfile(id: string): Promise<UserProfile> {
+  getProfile(id: string): Promise<UserProfile> {
     return zip(
       this.getFullProfile(id),
       this.countRinger(id),
@@ -165,25 +162,10 @@ export class CloudDatabaseService {
     ).toPromise();
   }
 
-  private getFullProfile(id: string): Promise<UserProfile> {
+  getFullProfile(id: string): Promise<UserProfile> {
     return new Promise(async (resolve, reject) => {
       const { data, error } = await this.client.from('profiles')
         .select('*')
-        .eq('id', id)
-        .single();
-
-      if (error) {
-        reject(error);
-      } else {
-        resolve(data);
-      }
-    });
-  }
-
-  getSingleProfile(id: string): Promise<UserProfile> {
-    return new Promise(async (resolve, reject) => {
-      const { data, error } = await this.client.from('profiles')
-        .select('id, name, gender, picture')
         .eq('id', id)
         .single();
 

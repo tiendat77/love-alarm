@@ -113,7 +113,7 @@ export class DiscoverPage {
     // list user profiles from database if not on mobile
     } else {
       this.ble.isScanning = true;
-      this.data.listProfiles('id')
+      this.data.getAllProfiles('id')
         .then(profiles => {
           if (!profiles || !profiles.length) {
             return;
