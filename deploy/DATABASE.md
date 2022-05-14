@@ -10,6 +10,7 @@
 create table profiles (
   id uuid references auth.users not null,
   updated_at timestamp with time zone,
+  created_at timestamp with time zone,
   email text unique,
   name text,
   gender text,
@@ -18,7 +19,6 @@ create table profiles (
   city text,
   interested text[],
   birthday text,
-  joindate text,
 
   primary key (id),
   unique(email),

@@ -17,22 +17,28 @@ export class ServerlessService {
   }
 
   ring(user: any) {
-    return this.http.post(`${this.serverlessUrl}/user/ring`, user, {
-      headers: this.getHttpHeaders(),
-    });
+    return this.post('user/ring', user);
   }
 
   unring(user: any) {
-    return this.http.post(`${this.serverlessUrl}/user/unring`, user, {
-      headers: this.getHttpHeaders(),
-    });
+    return this.post('user/unring', user);
   }
 
-  private getHttpHeaders() {
-    return new HttpHeaders({
+  message(user: any, message: string) {
+    return this.post('user/message', { id: user.id, message });
+  }
+
+  private post(api: string, body: any) {
+    const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.getToken()}`,
     });
+
+    return this.http.post(
+      `${this.serverlessUrl}/${api}`,
+      body,
+      {headers}
+    );
   }
 
   private getToken() {

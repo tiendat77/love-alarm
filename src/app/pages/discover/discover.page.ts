@@ -3,7 +3,7 @@ import { ActionSheetController, ModalController } from '@ionic/angular';
 
 import {
   BLEService,
-  CloudDatabaseService,
+  CloudDataApiService,
   LoaderService,
   ModalsService,
   PlatformService,
@@ -29,7 +29,7 @@ export class DiscoverPage {
 
   constructor(
     public readonly ble: BLEService,
-    private readonly data: CloudDatabaseService,
+    private readonly data: CloudDataApiService,
     private readonly loader: LoaderService,
     private readonly modals: ModalsService,
     private readonly webview: WebViewService,
@@ -113,7 +113,7 @@ export class DiscoverPage {
     // list user profiles from database if not on mobile
     } else {
       this.ble.isScanning = true;
-      this.data.getAllProfiles('id')
+      this.data.profile.listAll('id')
         .then(profiles => {
           if (!profiles || !profiles.length) {
             return;
@@ -136,7 +136,7 @@ export class DiscoverPage {
 
     try {
       this.loader.start();
-      const profiles: UserProfile[] = await this.data.getMultiProfile(users);
+      const profiles: UserProfile[] = await this.data.profile.readMultiBasic(users);
       this.loader.stop();
 
       const modal = await this.modalCtrl.create({

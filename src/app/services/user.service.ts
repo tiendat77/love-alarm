@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { CloudDatabaseService } from './cloud-database.service';
+import { CloudDataApiService } from './cloud-data-api.service';
 import { StorageService } from './storage.service';
 import { ServerlessService } from './serverless-functions.service';
 
@@ -21,7 +21,7 @@ export class UserService {
   matching$ = new BehaviorSubject<string[]>([]);
 
   constructor(
-    private data: CloudDatabaseService,
+    private data: CloudDataApiService,
     private serverless: ServerlessService,
     private storage: StorageService,
   ) { }
@@ -31,15 +31,15 @@ export class UserService {
       const metadata = this.data.user?.user_metadata;
       this.setMeta(metadata);
 
-      const profile = await this.data.profile;
+      const profile = await this.data.profile.readOwn();
       this.setProfile(profile);
 
-      const token = await this.data.token;
+      const token = await this.data.token.read();
       const notificationToken = await this.storage.get(STORAGE_KEY.NOTIFICATION_TOKEN);
 
       if (notificationToken && notificationToken !== token?.notification) {
         token.notification = notificationToken;
-        await this.data.updateToken(token);
+        await this.data.token.update(token);
         this.setToken(token);
 
       } else {
@@ -128,7 +128,7 @@ export class UserService {
     }
 
     return forkJoin([
-      this.data.createRing(this.profile.id, id),
+      this.data.ring.create(this.profile.id, id),
       this.serverless.ring({id})
     ]).pipe(
       tap(() => {
@@ -150,7 +150,7 @@ export class UserService {
 
   unring(id: string) {
     return from(
-      this.data.removeRing(this.profile.id, id)
+      this.data.ring.remove(this.profile.id, id)
     ).pipe(
       tap(() => {
         const ringings: string[] = (this.profile?.ringings || []).filter(ringing => ringing !== id);

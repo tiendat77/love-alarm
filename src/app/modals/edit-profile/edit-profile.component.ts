@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { Camera, CameraResultType } from '@capacitor/camera';
 
 import {
-  CloudDatabaseService,
+  CloudDataApiService,
   CloudStorageService,
   LoaderService,
   ToastService,
@@ -54,7 +54,7 @@ export class EditProfileModal {
     public user: UserService,
     private toast: ToastService,
     private loader: LoaderService,
-    private data: CloudDatabaseService,
+    private data: CloudDataApiService,
     private storage: CloudStorageService,
     private modalCtrl: ModalController,
   ) {
@@ -112,7 +112,7 @@ export class EditProfileModal {
     }
 
     this.loader.start();
-    this.data.updateProfile(profile)
+    this.data.profile.update(profile)
     .then(() => {
       this.loader.stop();
       this.user.setProfile(profile);
@@ -155,7 +155,7 @@ export class EditProfileModal {
       const new_avatar = await this.storage.getAvatarUrl(path);
 
       // update profile
-      await this.data.updateProfile({
+      await this.data.profile.update({
         ...this.user.profile,
         picture: new_avatar,
       });

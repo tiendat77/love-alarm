@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { AuthorizeService } from './authorize.service';
 import { CloudStorageService } from './cloud-storage.service';
-import { CloudDatabaseService } from './cloud-database.service';
+import { CloudDataApiService } from './cloud-data-api.service';
 import { environment } from '../../environments/environment';
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
@@ -19,7 +19,7 @@ export class SupabaseService {
   constructor(
     public readonly auth: AuthorizeService,
     public readonly storage: CloudStorageService,
-    public readonly database: CloudDatabaseService,
+    public readonly data: CloudDataApiService,
   ) { }
 
   init() {
@@ -31,7 +31,7 @@ export class SupabaseService {
 
       this.auth.init(this.client);
       this.storage.init(this.client);
-      this.database.init(this.client);
+      this.data.init(this.client);
       console.log(`[Supabase] Initialized Supabase client`);
 
     } catch {

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import {
-  CloudDatabaseService,
+  CloudDataApiService,
   ModalsService,
   ToastService,
   UserService
@@ -27,7 +27,7 @@ export class UserProfileModal {
 
   constructor(
     private readonly user: UserService,
-    private readonly data: CloudDatabaseService,
+    private readonly data: CloudDataApiService,
     private readonly modals: ModalsService,
     private readonly toast: ToastService,
     private readonly modalCtrl: ModalController
@@ -43,7 +43,7 @@ export class UserProfileModal {
       return;
     }
 
-    const profile = await this.data.getProfile(this.id);
+    const profile = await this.data.profile.read(this.id);
 
     if (!profile) {
       this.toast.show('Error happened');
@@ -80,7 +80,7 @@ export class UserProfileModal {
   }
 
   private reload() {
-    return this.data.getProfile(this.profile.id).then(profile => {
+    return this.data.profile.read(this.profile.id).then(profile => {
       if (!profile) {
         return;
       }

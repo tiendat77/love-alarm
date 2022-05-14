@@ -7,7 +7,7 @@ import { catchError, skip, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { UserProfile } from '../../interfaces';
 
 import {
-  CloudDatabaseService,
+  CloudDataApiService,
   ModalsService,
   ToastService,
   UserService
@@ -29,13 +29,13 @@ export class RingersModal {
   swiper: Swiper;
   activeTab = 0;
 
-  ringers = [];
-  ringings = [];
+  ringers: UserProfile[] = [];
+  ringings: UserProfile[] = [];
 
   constructor(
     public readonly user: UserService,
     private readonly toast: ToastService,
-    private readonly data: CloudDatabaseService,
+    private readonly data: CloudDataApiService,
     private readonly modals: ModalsService,
 
     private ngZone: NgZone,
@@ -50,7 +50,7 @@ export class RingersModal {
     this.user.ringings$.pipe(
       skip(1), // skip first time, it's already get in init()
       takeUntil(this.destroy$),
-      switchMap((ringings) => this.data.getMultiProfile(ringings || [])),
+      switchMap((ringings) => this.data.profile.readMultiBasic(ringings || [])),
       catchError((error) => {
         console.error(error);
         return of([] as UserProfile[]);
@@ -69,8 +69,8 @@ export class RingersModal {
     this.isLoading$.next(true);
 
     forkJoin([
-      this.data.getMultiProfile(this.profile.ringers || []),
-      this.data.getMultiProfile(this.profile.ringings || [])
+      this.data.profile.readMultiBasic(this.profile.ringers || []),
+      this.data.profile.readMultiBasic(this.profile.ringings || [])
     ]).pipe(
       tap(([ringers, ringings]) => {
         this.ringers = ringers;
