@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(): boolean {
-    const isSignedIn = !!this.supabase.session?.user;
+    const isSignedIn = !!this.currentSession() || !!this.supabase.session?.user;
 
     if (!isSignedIn) {
       this.router.navigate(['/auth']);
@@ -19,4 +19,11 @@ export class AuthGuard implements CanActivate {
 
     return isSignedIn;
   }
+
+  private currentSession() {
+    const _session = localStorage.getItem('supabase.auth.token');
+    const session = JSON.parse(_session);
+    return session?.currentSession || null;
+  }
+
 }

@@ -49,7 +49,7 @@ export class UserService {
 
     } catch (error) {
       // network error, load from storage
-      this.loadInfoFromStorage();
+      this.loadFromStorage();
       console.error('[User] Init failed', error);
     }
   }
@@ -165,22 +165,19 @@ export class UserService {
     ).toPromise();
   }
 
-  private async loadInfoFromStorage() {
-    const meta = await this.storage.get(STORAGE_KEY.USER_META);
-    const profile = await this.storage.get(STORAGE_KEY.USER_PROFILE);
-    const token = await this.storage.get(STORAGE_KEY.USER_TOKEN);
-
-    if (meta) {
-      this.meta = meta;
-    }
-
-    if (profile) {
-      this.profile = profile;
-    }
-
-    if (token) {
-      this.token = token;
-    }
+  private async loadFromStorage() {
+    forkJoin([
+      this.storage.get(STORAGE_KEY.USER_META),
+      this.storage.get(STORAGE_KEY.USER_PROFILE),
+      this.storage.get(STORAGE_KEY.USER_TOKEN),
+    ]).subscribe(
+      ([meta, profile, token]) => {
+        this.meta = meta || this.meta || null;
+        this.profile = profile || this.profile || null;
+        this.token = token || this.token || null;
+      },
+      (error) => {console.error(error)}
+    );
   }
 
 }

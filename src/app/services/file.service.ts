@@ -1,8 +1,7 @@
-import { Platform } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 
 import { Filesystem, Directory } from '@capacitor/filesystem';
-import { ToastService } from './toast.service';
+import { PlatformService } from './platform.service';
 
 import { saveAs } from 'file-saver';
 import { StringHelper } from '../helpers/string.helper';
@@ -10,25 +9,12 @@ import { StringHelper } from '../helpers/string.helper';
 @Injectable({ providedIn: 'root' })
 export class FileService {
 
-  private isNative = false;
-
   constructor(
-    private platform: Platform,
-    private toast: ToastService,
-  ) {
-    this.platform.ready().then(() => {
-      this.initialize();
-    });
-  }
-
-  private initialize() {
-    if (this.platform.is('hybrid')) {
-      this.isNative = true;
-    }
-  }
+    private readonly platform: PlatformService
+  ) {}
 
   savePng(dataUrl: string, name: string) {
-    if (this.isNative) {
+    if (this.platform.isNative) {
       return this.savePngNative(dataUrl, name);
     }
 
@@ -38,7 +24,7 @@ export class FileService {
   private savePngNative(dataUrl: string, name: string) {
     return Filesystem.writeFile({
       data: dataUrl,
-      path: 'LaSoTuVi/' + name + '.png',
+      path: 'LoveAlarm/' + name + '.png',
       recursive: true,
       directory: Directory.Documents,
     });
