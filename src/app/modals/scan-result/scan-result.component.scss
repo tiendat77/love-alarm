@@ -31,7 +31,8 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    max-width: 120px;
+    max-width: 100px;
+    min-width: 100px;
     margin-right: 10px;
 
     scroll-snap-align: start;

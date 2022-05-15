@@ -6,6 +6,15 @@ ion-menu::part(container) {
   background-color: var(--page-background-color);
 }
 
+ion-toast {
+  &::part(container) {
+    color: #fff;
+    border-radius: 16px;
+    backdrop-filter: blur(4px);
+    background-color: rgba(150, 150, 150, 0.7);
+  }
+}
+
 ion-toggle {
   --background-checked: var(--color-fuschia);
 }
