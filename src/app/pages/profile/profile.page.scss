@@ -1,7 +1,7 @@
 .page-content {
   padding: 16px 24px;
 
-  button {
+  button:not([icon-button]) {
     width: 100%;
   }
 
@@ -96,6 +96,15 @@
     height: 32px;
     margin: 0 8px;
     background-color: #e7e7e7;
+  }
+}
+
+app-card-matching {
+  display: block;
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 

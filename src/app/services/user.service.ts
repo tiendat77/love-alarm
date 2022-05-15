@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { CloudDataApiService } from './cloud-data-api.service';
 import { StorageService } from './storage.service';
 import { ServerlessService } from './serverless-functions.service';
+import { ToastService } from './toast.service';
 
 import { STORAGE_KEY } from '../configs/storage-key';
 import { UserToken, UserMeta, UserProfile } from '../interfaces';
@@ -18,12 +19,13 @@ export class UserService {
   token: UserToken;
 
   ringings$ = new BehaviorSubject<string[]>([]);
-  matching$ = new BehaviorSubject<string[]>([]);
+  matchings$ = new BehaviorSubject<UserProfile[]>([]);
 
   constructor(
-    private data: CloudDataApiService,
-    private serverless: ServerlessService,
-    private storage: StorageService,
+    private readonly data: CloudDataApiService,
+    private readonly serverless: ServerlessService,
+    private readonly storage: StorageService,
+    private readonly toast: ToastService,
   ) { }
 
   async init() {
@@ -81,6 +83,11 @@ export class UserService {
       return;
     }
 
+    const matchings: string[] = lodash.intersection(
+      data.ringers || [],
+      data.ringings || []
+    );
+
     this.profile = {
       id: data.id,
       name: data.name,
@@ -91,20 +98,16 @@ export class UserService {
       bio: data.bio || null,
       interested: data.interested || null,
       birthday: data.birthday || null,
-      ringers: data.ringers || null,
-      ringings: data.ringings || null,
+      ringers: data.ringers || [],
+      ringings: data.ringings || [],
+      mathings: matchings || [],
       joindate: data.joindate || null,
     };
 
-    const matching = lodash.intersection(
-      this.profile.ringers,
-      this.profile.ringings
-    );
-
-    this.matching$.next(matching);
     this.ringings$.next(this.profile.ringings || []);
-
     this.storage.set(STORAGE_KEY.USER_PROFILE, this.profile);
+
+    this.preLoadMatchings(matchings);
   }
 
   setToken(data: any) {
@@ -143,6 +146,7 @@ export class UserService {
       }),
       catchError(error => {
         console.error('[User] Ring failed', error);
+        this.toast.show('Ring failed, please try again');
         return of(null);
       })
     ).toPromise();
@@ -165,7 +169,21 @@ export class UserService {
     ).toPromise();
   }
 
-  private async loadFromStorage() {
+  private preLoadMatchings(ids: string[]) {
+    this.data.profile.readMultiBasic(ids)
+    .then((profiles: UserProfile[]) => {
+      this.matchings$.next(profiles);
+      this.storage.set(STORAGE_KEY.MATCHINGS, profiles);
+    })
+    .catch(async (error) => {
+      const profiles = await this.storage.get(STORAGE_KEY.MATCHINGS);
+      this.matchings$.next(profiles || []);
+
+      console.error(error);
+    });
+  }
+
+  private loadFromStorage() {
     forkJoin([
       this.storage.get(STORAGE_KEY.USER_META),
       this.storage.get(STORAGE_KEY.USER_PROFILE),

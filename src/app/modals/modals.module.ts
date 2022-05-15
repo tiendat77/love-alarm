@@ -28,6 +28,7 @@ import { PrivacyPolicyModal } from './privacy-policy/privacy-policy.component';
 import { RingersModal } from './ringers/ringers.component';
 import { ScanQrCodeModal } from './scan-qr-code/scan-qr-code.component';
 import { ScanResultModal } from './scan-result/scan-result.component';
+import { SendMessageModal } from './send-message/send-message.component';
 import { SettingsModal } from './settings/settings.component';
 import { ThemesModal } from './themes/themes.component';
 import { UserProfileModal } from './user-profile/user-profile.component';
@@ -45,6 +46,7 @@ const MODALS = [
   RingersModal,
   ScanQrCodeModal,
   ScanResultModal,
+  SendMessageModal,
   SettingsModal,
   ThemesModal,
   MyQrCodeModal,

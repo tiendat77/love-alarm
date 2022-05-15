@@ -10,4 +10,5 @@ export const STORAGE_KEY = {
   USER_META: 'user_meta',
   USER_PROFILE: 'user_profile',
   USER_TOKEN: 'user_token',
+  MATCHINGS: 'user_matchings'
 };

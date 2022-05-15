@@ -75,6 +75,19 @@
       </button>
     </section>
 
+    <ng-container *ngIf="(user.matchings$ | async)?.length > 0">
+      <section>
+        <h2>Matching</h2>
+
+        <app-card-matching
+          *ngFor="let matching of user.matchings$ | async"
+          [id]="matching.id"
+          [profile]="matching"
+        >
+        </app-card-matching>
+      </section>
+    </ng-container>
+
     <section *ngIf="user.profile?.bio">
       <h2>About me</h2>
       <article>

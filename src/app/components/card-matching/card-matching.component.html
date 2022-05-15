@@ -1,0 +1,48 @@
+<div class="container" *ngIf="profile; else skeleton">
+  <div class="info">
+    <div class="image">
+      <img avatar
+        referrerpolicy="no-referrer"
+        [name]="profile.name"
+        [src]="profile.picture" alt="">
+    </div>
+
+    <div class="text">
+      <span class="truncate">
+        {{profile.name}}
+      </span>
+    </div>
+
+    <div></div>
+  </div>
+
+  <div class="actions">
+    <button icon-button (longClick)="detail('hi')" (click)="message('hi')">
+      <img src="/assets/images/reaction-hi.png" alt="">
+    </button>
+    <button icon-button (longClick)="detail('love')" (click)="message('love')">
+      <img src="/assets/images/reaction-love.png" alt="">
+    </button>
+    <button icon-button (longClick)="detail('kiss')" (click)="message('kiss')">
+      <img src="/assets/images/reaction-kiss.png" alt="">
+    </button>
+    <button icon-button (longClick)="detail('hungry')" (click)="message('hungry')">
+      <img src="/assets/images/reaction-hungry.png" alt="">
+    </button>
+    <button icon-button (longClick)="detail('cute')" (click)="message('cute')">
+      <img src="/assets/images/reaction-cute.png" alt="">
+    </button>
+  </div>
+</div>
+
+<ng-template #skeleton>
+  <div class="loading-skeleton">
+    <div class="user">
+      <div class="skeleton avatar"></div>
+      <div class="texts">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+      </div>
+    </div>
+  </div>
+</ng-template>

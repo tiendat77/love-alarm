@@ -31,6 +31,7 @@ export class ServerlessService {
   private post(api: string, body: any) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
       'Authorization': `Bearer ${this.getToken()}`,
     });
 
