@@ -9,6 +9,7 @@ export interface UserProfile {
   interested?: string[];
   birthday?: string | null;
   joindate?: string | null;
+  mathings?: string[];
   ringers?: string[];
   ringings?: string[];
   totalRingers?: number;

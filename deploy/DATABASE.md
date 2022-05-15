@@ -96,11 +96,13 @@ create policy "Users can delete own token."
 ```sql
 -- Create a table for public rings & matchs
 create table rings (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  id UUID default gen_random_uuid() primary key,
   created_at timestamp with time zone,
 
   from_id UUID,
-  to_id UUID
+  to_id UUID,
+
+  unique (from_id, to_id)
 );
 
 -- Setup security

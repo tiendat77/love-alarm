@@ -62,7 +62,7 @@ export class RingApiService {
 
   create(from: string, to: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
-      const { data, error } = await this.client.from('rings')
+      const { data, error, status } = await this.client.from('rings')
         .insert({
           from_id: from,
           to_id: to,
@@ -71,7 +71,7 @@ export class RingApiService {
           returning: 'minimal', // Don't return the value after inserting
         });
 
-      if (error) {
+      if (error && status !== 409) {
         reject(error);
       } else {
         resolve(data);
