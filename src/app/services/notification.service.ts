@@ -42,6 +42,17 @@ export class NotificationService {
         }
       });
 
+      await PushNotifications.createChannel({
+        id: '79bbbd53',
+        name: 'Love Alarm',
+        description: 'Love Alarm ringing channel',
+        importance: 4,
+        vibration: true,
+        sound: 'lovealarm.mp3',
+      }).then(() => {
+        console.log('Push notification channel created');
+      });
+
       await PushNotifications.register();
 
     } catch (e) {
