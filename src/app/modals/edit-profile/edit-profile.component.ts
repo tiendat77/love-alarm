@@ -75,7 +75,7 @@ export class EditProfileModal {
       this.interests[topic] = true;
     });
 
-    this.joindate = this.string2Date(this.user.profile.joindate);
+    this.joindate = this.string2Date(this.user.profile.created_at);
   }
 
   private string2Date(date: string) {
@@ -115,7 +115,7 @@ export class EditProfileModal {
     this.data.profile.update(profile)
     .then(() => {
       this.loader.stop();
-      this.user.setProfile(profile);
+      this.user.profile = profile;
       this.toast.show('Profile updated', 'success');
       this.modalCtrl.dismiss();
     })
@@ -160,10 +160,10 @@ export class EditProfileModal {
         picture: new_avatar,
       });
 
-      this.user.setProfile({
+      this.user.profile = {
         ...this.user.profile,
         picture: new_avatar,
-      });
+      };
 
       // delete old avatar
       if (old_avatar) {

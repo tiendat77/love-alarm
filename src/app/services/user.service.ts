@@ -14,9 +14,82 @@ import lodash from 'lodash';
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
-  meta: UserMeta;
-  profile: UserProfile;
-  token: UserToken;
+  private _profile: UserProfile;
+
+  get profile() {
+    return this._profile;
+  }
+
+  set profile(data: any) {
+    if (!data) {
+      return;
+    }
+
+    const matchings: string[] = lodash.intersection(
+      data.ringers || [],
+      data.ringings || []
+    );
+
+    this._profile = {
+      id: data.id,
+      name: data.name,
+      gender: data.gender,
+      email: data.email,
+      city: data.city || null,
+      picture: data.picture || null,
+      bio: data.bio || null,
+      interested: data.interested || null,
+      birthday: data.birthday || null,
+      ringers: data.ringers || [],
+      ringings: data.ringings || [],
+      mathings: matchings || [],
+      created_at: data.created_at || null,
+    };
+
+    this.ringings$.next(this.profile.ringings || []);
+    this.storage.set(STORAGE_KEY.USER_PROFILE, this.profile);
+
+    this.preLoadMatchings(matchings);
+  }
+
+  private _meta: UserMeta;
+
+  get meta() {
+    return this._meta;
+  }
+
+  set meta(data: any) {
+    if (!data) {
+      return;
+    }
+
+    this._meta = {
+      ...data, // properties from provider
+      name: data.name || data.full_name
+    };
+
+    this.storage.set(STORAGE_KEY.USER_META, this.meta);
+  }
+
+  private _token: UserToken;
+
+  get token() {
+    return this._token;
+  }
+
+  set token(data: any) {
+    if (!data) {
+      return;
+    }
+
+    this._token = {
+      id: data.id,
+      notification: data.notification,
+      bluetooth: data.bluetooth,
+    };
+
+    this.storage.set(STORAGE_KEY.USER_TOKEN, this.token);
+  }
 
   ringings$ = new BehaviorSubject<string[]>([]);
   matchings$ = new BehaviorSubject<UserProfile[]>([]);
@@ -31,10 +104,10 @@ export class UserService {
   async init() {
     try {
       const metadata = this.data.user?.user_metadata;
-      this.setMeta(metadata);
+      this.meta = metadata;
 
       const profile = await this.data.profile.readOwn();
-      this.setProfile(profile);
+      this.profile = profile;
 
       const token = await this.data.token.read();
       const notificationToken = await this.storage.get(STORAGE_KEY.NOTIFICATION_TOKEN);
@@ -42,11 +115,11 @@ export class UserService {
       if (notificationToken && notificationToken !== token?.notification) {
         token.notification = notificationToken;
         await this.data.token.update(token);
-        this.setToken(token);
+        this.token = token;
 
       } else {
         // token is already exist and haven't changed
-        this.setToken(token);
+        this.token = token;
       }
 
     } catch (error) {
@@ -76,52 +149,6 @@ export class UserService {
     };
 
     this.storage.set(STORAGE_KEY.USER_META, this.meta);
-  }
-
-  setProfile(data: any) {
-    if (!data) {
-      return;
-    }
-
-    const matchings: string[] = lodash.intersection(
-      data.ringers || [],
-      data.ringings || []
-    );
-
-    this.profile = {
-      id: data.id,
-      name: data.name,
-      gender: data.gender,
-      email: data.email,
-      city: data.city || null,
-      picture: data.picture || null,
-      bio: data.bio || null,
-      interested: data.interested || null,
-      birthday: data.birthday || null,
-      ringers: data.ringers || [],
-      ringings: data.ringings || [],
-      mathings: matchings || [],
-      joindate: data.created_at || null,
-    };
-
-    this.ringings$.next(this.profile.ringings || []);
-    this.storage.set(STORAGE_KEY.USER_PROFILE, this.profile);
-
-    this.preLoadMatchings(matchings);
-  }
-
-  setToken(data: any) {
-    if (!data) {
-      return;
-    }
-
-    this.token = {
-      id: data.id,
-      notification: data.notification,
-      bluetooth: data.bluetooth,
-    };
-
-    this.storage.set(STORAGE_KEY.USER_TOKEN, this.token);
   }
 
   ring(id: string) {

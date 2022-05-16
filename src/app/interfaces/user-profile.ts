@@ -8,7 +8,7 @@ export interface UserProfile {
   bio?: string | null;
   interested?: string[];
   birthday?: string | null;
-  joindate?: string | null;
+  created_at?: string | null;
   mathings?: string[];
   ringers?: string[];
   ringings?: string[];

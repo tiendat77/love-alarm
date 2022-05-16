@@ -55,7 +55,14 @@ export class ProfileApiService {
 
   update(profile: UserProfile) {
     const update = {
-      ...profile,
+      name: profile.name || null,
+      gender: profile.gender || null,
+      city: profile.city || null,
+      picture: profile.picture || null,
+      bio: profile.bio || null,
+      birthday: profile.birthday || null,
+      interested: profile.interested || [],
+
       id: this.user?.id,
       updated_at: new Date(),
     };
