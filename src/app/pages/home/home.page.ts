@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalsService, WebViewService } from '../../services';
 
 @Component({
@@ -11,9 +12,14 @@ export class HomePage {
   ringers: number = 0;
 
   constructor(
+    private readonly router: Router,
     private readonly modals: ModalsService,
     private readonly webview: WebViewService,
   ) {}
+
+  navigate(url: string) {
+    this.router.navigateByUrl(url);
+  }
 
   async settings() {
     this.webview.setStatusBarStyle('light');

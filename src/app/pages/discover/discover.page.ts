@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 
 import {
@@ -34,13 +35,18 @@ export class DiscoverPage {
     private readonly modals: ModalsService,
     private readonly webview: WebViewService,
     private readonly platform: PlatformService,
-    private modalCtrl: ModalController,
-    private actionSheetCtrl: ActionSheetController,
+    private readonly router: Router,
+    private readonly modalCtrl: ModalController,
+    private readonly actionSheetCtrl: ActionSheetController,
   ) { }
 
   ngOnDestroy() {
     this.ble.stop();
     this.scanSubscription$?.unsubscribe();
+  }
+
+  navigate(url: string) {
+    this.router.navigateByUrl(url);
   }
 
   settings() {

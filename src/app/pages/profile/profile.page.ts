@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 import { EditProfileModal, RingersModal } from '../../modals';
@@ -22,12 +23,17 @@ export class ProfilePage {
   topics = ObjectHelper.transformArray2Object(TOPICS);
 
   constructor(
-    public user: UserService,
-    public supabase: SupabaseService,
+    public readonly user: UserService,
+    public readonly supabase: SupabaseService,
 
-    private modals: ModalsService,
-    private modal: ModalController,
+    private readonly router: Router,
+    private readonly modals: ModalsService,
+    private readonly modal: ModalController,
   ) { }
+
+  navigate(url: string) {
+    this.router.navigateByUrl(url);
+  }
 
   settings() {
     this.modals.showSettings();
