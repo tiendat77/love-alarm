@@ -101,7 +101,7 @@ export class UserService {
       ringers: data.ringers || [],
       ringings: data.ringings || [],
       mathings: matchings || [],
-      joindate: data.joindate || null,
+      joindate: data.created_at || null,
     };
 
     this.ringings$.next(this.profile.ringings || []);
@@ -188,11 +188,13 @@ export class UserService {
       this.storage.get(STORAGE_KEY.USER_META),
       this.storage.get(STORAGE_KEY.USER_PROFILE),
       this.storage.get(STORAGE_KEY.USER_TOKEN),
+      this.storage.get(STORAGE_KEY.MATCHINGS)
     ]).subscribe(
-      ([meta, profile, token]) => {
+      ([meta, profile, token, matchings]) => {
         this.meta = meta || this.meta || null;
         this.profile = profile || this.profile || null;
         this.token = token || this.token || null;
+        this.matchings$.next(matchings || []);
       },
       (error) => {console.error(error)}
     );

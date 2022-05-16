@@ -25,7 +25,7 @@ $header-height: 54px;
   overflow: auto;
   position: relative;
 
-  padding-top: var(--status-bar-safe-area);
+  margin-top: var(--status-bar-safe-area);
   color: var(--page-text-color);
   background-color: var(--page-background-color);
 

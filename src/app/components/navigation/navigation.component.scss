@@ -4,7 +4,7 @@
 
   position: relative;
   contain: size layout style;
-
+  padding-top: var(--status-bar-safe-area);
   background-color: var(--page-background-color);
 }
 
