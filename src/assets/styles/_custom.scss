@@ -8,10 +8,23 @@ ion-menu::part(container) {
 
 ion-toast {
   &::part(container) {
-    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
     border-radius: 16px;
-    backdrop-filter: blur(4px);
-    background-color: rgba(150, 150, 150, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  }
+
+  &.success {
+    color: #4caf50;
+  }
+
+  &.warning {
+    color: #ff9800;
+  }
+
+  &.error {
+    color: #f44336;
   }
 }
 

@@ -74,11 +74,11 @@ export class CardMatchingComponent {
     this.serverless.message({id: this.id}, message).subscribe(
       () => {
         this.lastMessageTime = Date.now();
-        this.toast.show('Message sent!');
+        this.toast.show('Message sent!', 'success');
       },
       error => {
         console.error(error);
-        this.toast.show('Something went wrong!');
+        this.toast.show('Something went wrong!', 'error');
       }
     );
   }

@@ -46,7 +46,7 @@ export class UserProfileModal {
     const profile = await this.data.profile.read(this.id);
 
     if (!profile) {
-      this.toast.show('Error happened');
+      this.toast.show('Error happened', 'error');
       this.close();
     }
 

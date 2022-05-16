@@ -107,7 +107,7 @@ export class EditProfileModal {
     const profile = this.getProfileFormValue();
 
     if (!profile.name) {
-      this.toast.show('Name is required');
+      this.toast.show('Name is required', 'error');
       return;
     }
 
@@ -116,13 +116,13 @@ export class EditProfileModal {
     .then(() => {
       this.loader.stop();
       this.user.setProfile(profile);
-      this.toast.show('Profile updated');
+      this.toast.show('Profile updated', 'success');
       this.modalCtrl.dismiss();
     })
     .catch(error => {
       console.log(error);
       this.loader.stop();
-      this.toast.show('Update failed, please try again later!');
+      this.toast.show('Update failed, please try again later!', 'error');
     });
   }
 
@@ -148,7 +148,7 @@ export class EditProfileModal {
         await this.storage.uploadAvatar(path, file);
       } catch (error) {
         console.error(error);
-        this.toast.show('Upload failed, please try again later!');
+        this.toast.show('Upload failed, please try again later!', 'error');
       }
 
       const old_avatar = this.user.profile.picture;

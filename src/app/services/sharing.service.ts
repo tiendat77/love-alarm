@@ -49,7 +49,7 @@ export class SharingService {
   shareLink(link = 'https://lovealarm.vercel.app/') {
     if (!this.platform.isNative) {
       Clipboard.write({string: link});
-      return this.toast.show('Copied link to clipboard!');
+      return this.toast.show('Copied link to clipboard!', 'success');
     }
 
     Share.share({

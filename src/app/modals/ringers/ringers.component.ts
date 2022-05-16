@@ -80,7 +80,7 @@ export class RingersModal {
       catchError((error) => {
         console.error(error);
         this.isLoading$.next(false);
-        this.toast.show('Load failed');
+        this.toast.show('Load failed', 'error');
 
         return of();
       })

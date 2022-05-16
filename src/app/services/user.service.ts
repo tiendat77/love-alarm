@@ -146,7 +146,7 @@ export class UserService {
       }),
       catchError(error => {
         console.error('[User] Ring failed', error);
-        this.toast.show('Ring failed, please try again');
+        this.toast.show('Ring failed, please try again', 'error');
         return of(null);
       })
     ).toPromise();

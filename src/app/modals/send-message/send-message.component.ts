@@ -28,12 +28,12 @@ export class SendMessageModal {
       this.isSending$.next(true);
       await this.serverless.message(this.profile, this.message).toPromise();
       await this.modalCtrl.dismiss();
-      this.toast.show('Message sent!');
+      this.toast.show('Message sent!', 'success');
 
     } catch (error) {
       console.error(error);
       this.isSending$.next(false);
-      this.toast.show('Something went wrong!');
+      this.toast.show('Something went wrong!', 'error');
     }
   }
 
