@@ -120,7 +120,7 @@ app-card-matching {
   .chip {
     min-height: 40px;
     border-radius: 999px;
-    border: 1px solid #cfd9de;
+    border: 1px solid var(--card-border-color);
     text-overflow: ellipsis;
 
     margin: 4px;

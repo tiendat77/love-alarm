@@ -8,7 +8,7 @@ import {
   AuthorizeService,
   SharingService,
   StorageService,
-  WebViewService,
+  ThemeService
 } from '../../services';
 
 import { AppInfoModal } from '../app-info/app-info.component';
@@ -28,7 +28,7 @@ export class SettingsModal {
   languageMap = LANGUAGES_MAP;
 
   constructor(
-    public webview: WebViewService,
+    public theme: ThemeService,
     private auth: AuthorizeService,
     private storage: StorageService,
     private sharing: SharingService,
@@ -61,8 +61,8 @@ export class SettingsModal {
     }
   }
 
-  toggleDarkTheme() {
-    this.webview.toggleDarkTheme();
+  toggleTheme() {
+    this.theme.toggle();
   }
 
   async themes() {

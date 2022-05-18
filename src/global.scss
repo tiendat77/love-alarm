@@ -32,6 +32,7 @@
 @import "./assets/styles/custom";
 @import "./assets//styles/modal";
 @import "./assets/styles/fonts";
+@import "./assets/styles/ionic";
 @import "./assets/styles/ui";
 
 :root {
@@ -42,10 +43,8 @@
   font-family: 'Baloo', sans-serif;
 }
 
-.truncate {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+body {
+  overscroll-behavior-y: contain;
 }
 
 @media screen and (min-width: 990px) {
@@ -53,10 +52,5 @@
     margin: auto;
     max-width: 990px;
     position: relative;
-  }
-
-  .splash-screen {
-    margin: auto;
-    max-width: 990px;
   }
 }

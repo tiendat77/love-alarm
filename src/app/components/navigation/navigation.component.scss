@@ -5,7 +5,7 @@
   position: relative;
   contain: size layout style;
   padding-top: var(--status-bar-safe-area);
-  background-color: var(--page-background-color);
+  background-color: var(--background-color);
 }
 
 .tabs.home {
@@ -66,12 +66,12 @@
   justify-content: center;
 
   border-radius: 40px;
-  background-color: #ffffff;
+  background-color: var(--card-background-color);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
 .tab-button {
-  color: #282828;
+  color: var(--text-color);
 
   flex: 1;
   cursor: pointer;

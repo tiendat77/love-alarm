@@ -9,7 +9,7 @@
   box-sizing: border-box;
   justify-content: center;
 
-  background-color: var(--page-background-color);
+  background-color: var(--background-color);
 }
 
 .splash-screen.hidden {
@@ -102,5 +102,12 @@
 
   100% {
     transform: scale(0.8);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .splash-screen {
+    margin: auto;
+    max-width: 990px;
   }
 }

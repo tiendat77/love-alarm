@@ -29,7 +29,8 @@
 
   position: relative;
   border-radius: 20px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border: 1px solid var(--card-border-color);
+  box-shadow: var(--box-shadow-color) 0px 8px 24px;
 
   .card-header {
     width: 80px;

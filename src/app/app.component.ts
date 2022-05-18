@@ -20,6 +20,7 @@ import {
   SplashScreenService,
   StorageService,
   SupabaseService,
+  ThemeService,
   ToastService,
   UserService,
   WebViewService,
@@ -52,11 +53,13 @@ export class AppComponent {
     private splash: SplashScreenService,
     private storage: StorageService,
     private supabase: SupabaseService,
+    private theme: ThemeService,
     private toast: ToastService,
     private ble: BLEService,
     private webview: WebViewService,
     private user: UserService,
   ) {
+    this.theme.init();
     this.storage.init();
     this.webview.init();
     this.supabase.init();

@@ -15,6 +15,7 @@ export * from './sharing.service';
 export * from './splash-screen.service';
 export * from './storage.service';
 export * from './supabase.service';
+export * from './theme.service';
 export * from './toast.service';
 export * from './user.service';
 export * from './webview.service';

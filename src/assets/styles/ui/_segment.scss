@@ -63,20 +63,12 @@ $segment-width: 50%;
       border-radius: 0.8rem;
 
       transition: transform 0.4s ease-in-out;
-      background-color: var(--page-background-color);
+      background-color: var(--background-color);
       box-shadow: 0 0.1rem 1rem -0.4rem rgba(0, 0, 0, 0.12);
     }
   }
 }
 
 .segments ul {
-  background-color: #f9f9f9;
-}
-
-body.dark {
-  // @media (prefers-color-scheme: dark)
-  // Link: https://github.com/ionic-team/ionic-framework/issues/24771
-  .segments ul {
-    background-color: #212121;
-  }
+  background-color: var(--card-background-color);
 }

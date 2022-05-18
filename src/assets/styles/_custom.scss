@@ -1,50 +1,7 @@
-/* Custom Ionic components */
-ion-menu::part(container) {
-  justify-content: flex-start;
-  border-top-right-radius: 2rem;
-  border-bottom-right-radius: 2rem;
-  background-color: var(--page-background-color);
-}
-
-ion-toast {
-  &::part(container) {
-    font-size: 18px;
-    font-weight: 500;
-    border-radius: 16px;
-    background-color: rgba(255, 255, 255, 0.7);
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
-  }
-
-  &.success {
-    color: #4caf50;
-  }
-
-  &.warning {
-    color: #ff9800;
-  }
-
-  &.error {
-    color: #f44336;
-  }
-}
-
-ion-toggle {
-  --background-checked: var(--color-fuschia);
-}
-
-.action-sheet {
-  ion-icon {
-    font-size: 26px !important;
-    margin-inline-end: 10px !important;
-  }
-
-  .action-sheet-title {
-    font-size: 16px;
-  }
-
-  .action-sheet-button {
-    color: var(--color-fuschia) !important;
-  }
+.truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /* Swiper Js */

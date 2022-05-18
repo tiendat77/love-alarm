@@ -4,8 +4,8 @@
   margin: 0px;
   position: relative;
   border-radius: 0;
-  border-top: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid var(--card-border-color);
+  border-bottom: 1px solid var(--card-border-color);
 
   &::before, &::after {
     content: '';
@@ -20,12 +20,12 @@
 
   &::before {
     top: -51px;
-    background: #fff;
+    background: var(--background-color);
   }
 
   &::after {
     bottom: -51px;
-    background: #fff;
+    background: var(--background-color);
   }
 }
 

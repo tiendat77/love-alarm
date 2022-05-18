@@ -18,8 +18,8 @@
   margin: 8px;
   padding: 16px;
   border-radius: 16px;
-  border: 1px solid #ebebeb;
-  background-color: var(--page-background-color);
+  border: 1px solid var(--card-border-color);
+  background-color: var(--background-color);
   box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 8px;
 
   display: flex;

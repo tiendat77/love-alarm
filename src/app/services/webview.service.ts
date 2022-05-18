@@ -10,8 +10,6 @@ import { STORAGE_KEY } from '../configs/storage-key';
 @Injectable({providedIn: 'root'})
 export class WebViewService {
 
-  isDarkTheme = false;
-
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private readonly meta: Meta,
@@ -19,45 +17,7 @@ export class WebViewService {
     private readonly platform: PlatformService,
   ) { }
 
-  async init() {
-    this.initStatusBar();
-    this.getTheme();
-    this.setTheme();
-  }
-
-  hideApp() {
-    const element = this.document.getElementsByTagName('app-container')[0] as HTMLElement;
-    if (element) {
-      element.style.display = 'none';
-    }
-  }
-
-  showApp() {
-    const element = this.document.getElementsByTagName('app-container')[0] as HTMLElement;
-    if (element) {
-      element.style.display = null;
-    }
-  }
-
-  private async getTheme() {
-    const isDark = !!(await this.storage.get(STORAGE_KEY.DARK_THEME));
-    this.isDarkTheme = isDark;
-  }
-
-  private setTheme(dark: boolean = this.isDarkTheme) {
-    this.storage.set(STORAGE_KEY.DARK_THEME, dark);
-
-    dark ?
-      this.document.body.classList.add('dark-theme') :
-      this.document.body.classList.remove('dark-theme');
-  }
-
-  toggleDarkTheme() {
-    this.isDarkTheme = !this.isDarkTheme;
-    this.setTheme(this.isDarkTheme);
-  }
-
-  initStatusBar() {
+  init() {
     if (!this.platform.isNative) {
       return;
     }
@@ -72,6 +32,20 @@ export class WebViewService {
         `${info?.height || 24}px`
       );
     });
+  }
+
+  hideApp() {
+    const element = this.document.getElementsByTagName('app-container')[0] as HTMLElement;
+    if (element) {
+      element.style.display = 'none';
+    }
+  }
+
+  showApp() {
+    const element = this.document.getElementsByTagName('app-container')[0] as HTMLElement;
+    if (element) {
+      element.style.display = null;
+    }
   }
 
   async setStatusBarStyle(style: 'dark' | 'light') {

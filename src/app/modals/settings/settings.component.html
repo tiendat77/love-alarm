@@ -52,7 +52,7 @@
           </div>
         </li>
 
-        <li class="list-item" (click)="toggleDarkTheme()">
+        <li class="list-item" (click)="toggleTheme()">
           <div class="list-item-content">
             <div class="list-item-icon">
               <svg width="24px" height="24px" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -65,7 +65,7 @@
             </div>
 
             <div class="list-item-text sub-text">
-              <ion-toggle [checked]="webview.isDarkTheme"></ion-toggle>
+              <ion-toggle [checked]="theme.isDark()"></ion-toggle>
             </div>
           </div>
         </li>

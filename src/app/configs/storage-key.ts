@@ -3,7 +3,7 @@
 */
 
 export const STORAGE_KEY = {
-  DARK_THEME: 'dark_theme',
+  SCHEME: 'scheme',
   LANGUAGE: 'language',
   NOTIFICATION_TOKEN: 'notification_token',
   TUTORIAL: 'did_tutorial',
