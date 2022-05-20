@@ -13,8 +13,8 @@ import { FileHelper } from '../helpers/file.helper';
 export class SharingService {
 
   constructor(
-    private platform: PlatformService,
-    private toast: ToastService,
+    private readonly platform: PlatformService,
+    private readonly toast: ToastService,
   ) {}
 
   async shareImage(name: string, imageBlob: Blob) {
