@@ -9,12 +9,15 @@ ion-menu {
 }
 
 ion-toast {
+  --background: transparent;
+  margin-top: var(--status-bar-safe-area);
+
   &::part(container) {
     font-size: 18px;
     font-weight: 500;
     border-radius: 16px;
-    background-color: rgba(255, 255, 255, 0.7);
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    background-color: var(--card-background-color);
+    box-shadow: var(--box-shadow-color);
   }
 
   &.success {
@@ -54,5 +57,11 @@ ion-action-sheet {
 
   .action-sheet-button {
     color: var(--color-fuschia) !important;
+  }
+}
+
+ion-modal {
+  &::part(content) {
+    background: var(--background-color);
   }
 }

@@ -35,8 +35,8 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: #f6f7f9;
     color: var(--color-cloud);
+    background: var(--card-background-color);
   }
 
   .edit:active {

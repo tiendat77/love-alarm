@@ -1,4 +1,10 @@
-.splash-screen {
+body.splash-screen-hidden splash-screen {
+  visibility: hidden;
+  transition: all 0.5s ease-in-out;
+  animation: splash-slide-out 0.5s cubic-bezier(0.5, 0, 0.5, 1);
+}
+
+splash-screen {
   width: 100vw;
   height: 100vh;
   z-index: 100;
@@ -12,42 +18,36 @@
   background-color: var(--background-color);
 }
 
-.splash-screen.hidden {
-  visibility: hidden;
-  transition: all 0.5s ease-in-out;
-  animation: splash-slide-out 0.5s cubic-bezier(0.5, 0, 0.5, 1);
-}
-
-.splash-screen .logo .primary-ring,
-.splash-screen .logo .secondary-ring,
-.splash-screen .logo .tertiary-ring,
-.splash-screen .logo .heart {
+splash-screen .primary-ring,
+splash-screen .secondary-ring,
+splash-screen .tertiary-ring,
+splash-screen .heart {
   transform-origin: center;
 }
 
-.splash-screen .logo svg {
+splash-screen svg {
   width: 15rem;
   height: 15rem;
   overflow: visible !important;
 }
 
-.splash-screen .logo .primary-ring {
+splash-screen .primary-ring {
   opacity: 0.4;
   animation: splash-beating 2s ease-in-out 1.2s infinite;
 }
 
-.splash-screen .logo .secondary-ring {
+splash-screen .secondary-ring {
 
   opacity: 0.6;
   animation: splash-beating 2s ease-in-out 1s infinite;
 }
 
-.splash-screen .logo .tertiary-ring {
+splash-screen .tertiary-ring {
   opacity: 0.8;
   animation: splash-beating 2s ease-in-out 0.8s infinite;
 }
 
-.splash-screen .logo .heart {
+splash-screen .heart {
   opacity: 1;
   animation: beating 2s ease-in-out infinite;
 }
@@ -106,7 +106,7 @@
 }
 
 @media screen and (min-width: 990px) {
-  .splash-screen {
+  splash-screen {
     margin: auto;
     max-width: 990px;
   }

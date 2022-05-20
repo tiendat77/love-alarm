@@ -124,7 +124,6 @@ export class AppComponent {
         if (slug.indexOf('profile') !== -1) {
           const id = slug.split('/')[1];
           setTimeout(() => {
-            this.webview.setStatusBarStyle('light');
             this.modals.showUserProfile(id);
           }, 2000);
         }

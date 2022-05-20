@@ -21,10 +21,8 @@ export class HomePage {
     this.router.navigateByUrl(url);
   }
 
-  async settings() {
-    this.webview.setStatusBarStyle('light');
-    await this.modals.showSettings();
-    this.webview.setStatusBarStyle('dark');
+  settings() {
+    this.modals.showSettings();
   }
 
   test() {

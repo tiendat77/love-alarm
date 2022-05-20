@@ -5,18 +5,16 @@ import { DOCUMENT } from '@angular/common';
 export class SplashScreenService {
 
   constructor(
-    @Inject(DOCUMENT) private document: HTMLDocument
+    @Inject(DOCUMENT) private document: Document
   ) { }
 
   show() {
-    const element = this.document.getElementById('splash-screen');
-    element.classList.remove('hidden');
+    this.document.body.classList.remove('splash-screen-hidden');
   }
 
   hide(timeout = 3) {
     setTimeout(() => {
-      const element = this.document.getElementById('splash-screen');
-      element.classList.add('hidden');
+      this.document.body.classList.add('splash-screen-hidden');
     }, timeout * 1000);
   }
 

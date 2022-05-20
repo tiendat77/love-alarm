@@ -45,6 +45,7 @@
 
 body {
   overscroll-behavior-y: contain;
+  background: var(--background-color);
 }
 
 @media screen and (min-width: 990px) {
