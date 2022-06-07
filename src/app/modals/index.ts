@@ -1,5 +1,6 @@
 export * from './modals.module';
 export * from './app-info/app-info.component';
+export * from './bluetooth-is-off/bluetooth-is-off.component';
 export * from './change-password/change-password.component';
 export * from './confim-ring/confim-ring.component';
 export * from './confim-unring/confim-unring.component';

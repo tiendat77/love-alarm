@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalsService, WebViewService } from '../../services';
+import { BLEService, ModalsService, WebViewService } from '../../services';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +15,8 @@ export class HomePage {
     private readonly router: Router,
     private readonly modals: ModalsService,
     private readonly webview: WebViewService,
+
+    public readonly ble: BLEService,
   ) {}
 
   navigate(url: string) {

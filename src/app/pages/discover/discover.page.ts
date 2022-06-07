@@ -105,8 +105,14 @@ export class DiscoverPage {
     modal.present();
   }
 
-  startScan() {
+  async startScan() {
     if (this.platform.isNative) {
+      const isEnable = await this.ble.checkStatus();
+
+      if (!isEnable) {
+        return;
+      }
+
       this.scanSubscription$ = this.ble.scan().subscribe(profiles => {
         console.log('scan complete', profiles);
         if (!profiles || !profiles.length) {

@@ -16,6 +16,7 @@ import { SwiperModule } from 'swiper/angular';
 
 /* Modals */
 import { AppInfoModal } from './app-info/app-info.component';
+import { BluetoothIsOffModal } from './bluetooth-is-off/bluetooth-is-off.component';
 import { ChangePasswordModal } from './change-password/change-password.component';
 import { ConfirmRingModal } from './confim-ring/confim-ring.component';
 import { ConfirmUnringModal } from './confim-unring/confim-unring.component';
@@ -35,6 +36,7 @@ import { UserProfileModal } from './user-profile/user-profile.component';
 
 const MODALS = [
   AppInfoModal,
+  BluetoothIsOffModal,
   ChangePasswordModal,
   ConfirmRingModal,
   ConfirmUnringModal,

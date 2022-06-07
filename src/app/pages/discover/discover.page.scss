@@ -86,6 +86,8 @@
 }
 
 .scanner.scanning {
+  pointer-events: none;
+
   .heart {
     animation: beating 1s linear infinite;
   }

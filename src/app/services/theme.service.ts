@@ -1,11 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { delay, filter, map, startWith, switchMap } from 'rxjs/operators';
+import { ModalController } from '@ionic/angular';
 import { StatusBarArea, Style } from 'capacitor-status-bar-area';
 import { STORAGE_KEY } from '../configs/storage-key';
 import { combineLatest, fromEvent } from 'rxjs';
-import { ModalController } from '@ionic/angular';
+import { delay, filter, map, startWith, switchMap } from 'rxjs/operators';
 
 export type Scheme = 'light' | 'dark';
 

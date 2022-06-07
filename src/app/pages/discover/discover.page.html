@@ -24,7 +24,10 @@
 
   <div class="page-content">
     <div class="top-content center">
-      <div class="scanner" [class.scanning]="ble.isScanning">
+      <div class="scanner"
+        [class.scanning]="ble.isScanning"
+        (click)="startScan()"
+      >
         <div class="ripple"></div>
         <div class="ripple"></div>
         <div class="ripple"></div>
@@ -44,7 +47,10 @@
     </div>
 
     <div class="bottom-content">
-      <button raised-button [disabled]="ble.isScanning" (click)="startScan()">
+      <button raised-button
+        [disabled]="ble.isScanning"
+        (click)="startScan()"
+      >
         <span>Start Now</span>
       </button>
     </div>

@@ -5,6 +5,7 @@ import { UserService } from './user.service';
 import { UserProfile } from '../interfaces';
 
 import {
+  BluetoothIsOffModal,
   ConfirmRingModal,
   ConfirmUnringModal,
   SettingsModal,
@@ -68,6 +69,18 @@ export class ModalsService {
 
     await modal.present();
     await modal.onWillDismiss();
+  }
+
+  async showBluetoothWarning() {
+    const modal = await this.modalCtrl.create({
+      component: BluetoothIsOffModal,
+      cssClass: 'adaptable'
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    return Promise.resolve(data);
   }
 
 }
